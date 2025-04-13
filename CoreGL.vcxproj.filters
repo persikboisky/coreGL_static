@@ -227,5 +227,8 @@
     <ClInclude Include="src\core\graphics\commons\rbo.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="library\include\core\core.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -168,6 +168,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="library\include\core\core.hpp" />
     <ClInclude Include="src\core\graphics\commons\ebo.hpp" />
     <ClInclude Include="src\core\graphics\commons\fbo.hpp" />
     <ClInclude Include="src\core\graphics\commons\rbo.hpp" />
