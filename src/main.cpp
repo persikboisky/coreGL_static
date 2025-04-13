@@ -1,19 +1,10 @@
-#include "core/core.hpp"
+#include <core/core.hpp>
 
 int main()
 {
 	try
 	{
 		core::Init();
-		Window window("Test", 1280, 720);
-		window.setContext();
-
-		while (!window.event->close())
-		{
-			window.event->update();
-			window.swapBuffers();
-			window.setSizeBuffer(window.width, window.height);
-		}
 	}
 	catch (...)
 	{
