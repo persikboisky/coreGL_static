@@ -19,6 +19,16 @@ void Camera::setMode(CAM_MODE mode)
 	this->mode = mode;
 }
 
+void Camera::setFov(float fov)
+{
+	this->fov = fov;
+}
+
+void Camera::setDistance(float distance)
+{
+	this->distance = distance;
+}
+
 void Camera::rotate(float x, float y, float z)
 {
 	this->rot = glm::rotate(this->rot, x, glm::vec3(1, 0, 0));

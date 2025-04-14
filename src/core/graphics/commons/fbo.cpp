@@ -1,11 +1,14 @@
 #include "fbo.hpp"
 #include "../../util/vector.hpp"
+#include "../../util/structs.hpp"
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
 
 std::vector<unsigned int> fbo::id;
 unsigned int fbo::selectID = 0;
+
+color_rgba fbo::color = color_rgba();
 
 void fbo::bind(unsigned int id)
 {
@@ -17,6 +20,54 @@ void fbo::bindDefault()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	fbo::selectID = 0;
+}
+
+void fbo::DepthTest(bool flag)
+{
+	if (flag)
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+}
+
+void fbo::setSize(int width, int height)
+{
+	glViewport(0, 0, width, height);
+}
+
+void fbo::setColor(color_rgba color)
+{
+	glClearColor(color.red, color.green, color.blue, color.alpha);
+}
+
+void fbo::setColor(float red, float green, float blue, float alpha)
+{
+	glClearColor(red, green, blue, alpha);
+}
+
+void fbo::clearBuffers(Buffer buffer1, Buffer buffer2, Buffer buffer3)
+{
+	Buffer array[3] = { buffer1, buffer2, buffer3 };
+	for (unsigned int index = 0; index < 3; index++)
+	{
+		switch (array[index])
+		{
+		case COLOR_BUFFER_BIT:
+			glClear(GL_COLOR_BUFFER_BIT);
+			break;
+
+		case DEPTH_BUFFER_BIT:
+			glClear(GL_DEPTH_BUFFER_BIT);
+			break;
+
+		default:
+			break;
+		}
+	}
 }
 
 unsigned int fbo::create()

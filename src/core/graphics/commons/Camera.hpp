@@ -29,6 +29,10 @@ public:
 
     void setMode(CAM_MODE mode);
 
+    void setFov(float fov);
+
+    void setDistance(float distance);
+
     void rotate(float x, float y, float z);
     void resetRotate();
     void move(float x, float y, float z);
