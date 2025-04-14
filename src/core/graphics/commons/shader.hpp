@@ -29,6 +29,8 @@ public:
 	static void Uniform1I(glm::ivec1 value, const char* name);
 	static void Uniform2I(glm::ivec2 value, const char* name);
 
+	static void UniformSample2D(int value, const char* name);
+
 	static void Delete(unsigned int id);
 	static void DeleteALL();
 };
@@ -52,6 +54,8 @@ public:
 
 	void Uniform1I(glm::ivec1 value, const char* name) const;
 	void Uniform2I(glm::ivec2 value, const char* name) const;
+
+	void UniformSample2D(int value, const char* name) const;
 };
 
 #endif // !SRC_CORE_GRAPHICS_SHADER_H_

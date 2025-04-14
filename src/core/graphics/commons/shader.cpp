@@ -11,6 +11,8 @@
 
 extern bool coreInfo;
 
+#pragma region shader
+
 std::vector<unsigned int> shader::id;
 unsigned int shader::SelectID;
 
@@ -176,7 +178,6 @@ void shader::Uniform3F(glm::vec3 vec3, const char* name)
     glUniform3f(getLocateUniform(shader::SelectID, name), vec3.x, vec3.y, vec3.z);
 }
 
-
 void shader::Uniform4F(glm::vec4 vec4, const char* name)
 {
     glUniform4f(getLocateUniform(shader::SelectID, name), vec4.x, vec4.y, vec4.z, vec4.w);
@@ -191,6 +192,15 @@ void shader::Uniform2I(glm::ivec2 value, const char* name)
 {
     glUniform2i(getLocateUniform(shader::SelectID, name), value.x, value.y);
 }
+
+void shader::UniformSample2D(int value, const char* name)
+{
+    glUniform1i(getLocateUniform(shader::SelectID, name), glm::ivec3(value).x);
+}
+
+#pragma endregion shader
+
+#pragma region Shader
 
 Shader::Shader(const char* pathVert, const char* pathFrag)
 {
@@ -248,3 +258,11 @@ void Shader::Uniform2I(glm::ivec2 ivec2, const char* name) const
     if (shader::getSelectID() != this->id) this->use();
     shader::Uniform2I(ivec2, name);
 }
+
+void Shader::UniformSample2D(int value, const char* name) const
+{
+    if (shader::getSelectID() != this->id) this->use();
+    shader::UniformSample2D(value, name);
+} 
+
+#pragma endregion Shader
