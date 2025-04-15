@@ -2,6 +2,7 @@
 #include <string>
 
 struct GUIstyle;
+class Window;
 class VAO;
 
 class Button
@@ -15,7 +16,7 @@ private:
 
 	unsigned int nButton = 0;
 
-	VAO* vao = nullptr;
+	Window* addrWindow = nullptr;
 
 	void compileVAO();
 	bool flagCompileVAO = false;
@@ -23,7 +24,7 @@ private:
 	unsigned int vaoID = 0;
 
 public:
-	Button();
+	Button(Window& window);
 	~Button();
 
 	void add(

@@ -6,8 +6,8 @@ struct color_rgba;
 
 enum Buffer
 {
-	COLOR_BUFFER_BIT = 1,
-	DEPTH_BUFFER_BIT = 2,
+	COLOR_BUFFER = 1,
+	DEPTH_BUFFER = 2,
 	NONE = 0
 };
 

@@ -1,5 +1,6 @@
 #include "Button.hpp"
 #include "../GUI_Style.hpp"
+#include "../../../window/Window.hpp"
 #include "../../../util/structs.hpp"
 #include "../../commons/vao.hpp"
 #include <GL/glew.h>
@@ -61,7 +62,7 @@ static void addVertexesButton(
 	vec.push_back(color.alpha / 255.0f);
 }
 
-Button::Button()
+Button::Button(Window& window) : addrWindow(&window)
 {
 
 }
@@ -211,7 +212,10 @@ void Button::update(double mouseX, double mouseY, bool LBM)
 			this->vHover[index] = true;
 			if (LBM)
 			{
-				this->vFunction[index]();
+				if (this->vFunction[index] != nullptr)
+				{
+					this->vFunction[index]();
+				}
 			}
 		}
 		else

@@ -56,11 +56,11 @@ void fbo::clearBuffers(Buffer buffer1, Buffer buffer2, Buffer buffer3)
 	{
 		switch (array[index])
 		{
-		case COLOR_BUFFER_BIT:
+		case COLOR_BUFFER:
 			glClear(GL_COLOR_BUFFER_BIT);
 			break;
 
-		case DEPTH_BUFFER_BIT:
+		case DEPTH_BUFFER:
 			glClear(GL_DEPTH_BUFFER_BIT);
 			break;
 

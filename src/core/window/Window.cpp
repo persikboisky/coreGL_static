@@ -6,12 +6,14 @@
 
 extern bool coreInfo;
 
+bool Window::flagGLewInit = true;
+
 inline void Window::getSizeWindow()
 {
 	glfwGetWindowSize(this->window, &this->width, &this->height);
 }
 
-Window::Window(const char* title, int width, int height, bool resizable) : width(width), height(height)
+Window::Window(int width, int height, const char* title, bool resizable) : width(width), height(height)
 {
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
 	this->window = glfwCreateWindow(width, height, title, nullptr, nullptr);
@@ -64,19 +66,25 @@ void Window::close()
 void Window::setContext()
 {
 	glfwMakeContextCurrent(this->window);
-	glewExperimental = GL_TRUE;
-	GLenum glewErr = glewInit();
-	if (glewErr != GLEW_OK)
+
+	if (Window::flagGLewInit)
 	{
-		if (glewErr == GLEW_ERROR_NO_GLX_DISPLAY)
+		glewExperimental = GL_TRUE;
+		GLenum glewErr = glewInit();
+		if (glewErr != GLEW_OK)
 		{
-			std::cerr << "Failed initializate GLEW error 240" << std::endl;
+			if (glewErr == GLEW_ERROR_NO_GLX_DISPLAY)
+			{
+				std::cerr << "Failed initializate GLEW error 240" << std::endl;
+			}
+			else
+			{
+				std::cerr << "Failed initializate GLEW" << std::endl;
+			}
+			throw "FAILED_INIT_GLEW";
 		}
-		else
-		{
-			std::cerr << "Failed initializate GLEW" << std::endl;
-		}
-		throw "FAILED_INIT_GLEW";
+
+		Window::flagGLewInit = false;
 	}
 }
 

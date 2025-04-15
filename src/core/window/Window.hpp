@@ -9,7 +9,9 @@ struct GLFWwindow;
 class Window
 {
 private:
-	GLFWwindow* window;
+	GLFWwindow* window = nullptr;
+
+	static bool flagGLewInit;
 
 	void Init()
 	{
@@ -25,13 +27,13 @@ public:
 		return this->window;
 	}
 
-	Event* event;
-	Cursor* cursor;
+	Event* event = nullptr;
+	Cursor* cursor = nullptr;
 
 	int width;
 	int height;
 
-	Window(const char* title, int width, int height, bool resizable = true);
+	Window(int width, int height, const char* title = "", bool resizable = true);
 	~Window();
 
 	void swapBuffers();

@@ -12,4 +12,5 @@ struct GUIstyle
 	color_rgba hoverBackground = color_rgba(0, 0, 0, 0);
 
 	std::string text = "";
+	std::string pathToImage = "";
 };
