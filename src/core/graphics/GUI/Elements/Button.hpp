@@ -1,15 +1,17 @@
 #include <vector>
 #include <string>
 
-struct GUIstyle;
+struct GuiElementStyle;
 class Window;
 class VAO;
+class BufferText2D;
+class font;
 
 class Button
 {
 private:
 	std::vector<std::string> vID;
-	std::vector<GUIstyle> vStyle;
+	std::vector<GuiElementStyle> vStyle;
 	std::vector<void(*)()> vFunction;
 	std::vector<bool> vActive;
 	std::vector<bool> vHover;
@@ -17,6 +19,8 @@ private:
 	unsigned int nButton = 0;
 
 	Window* addrWindow = nullptr;
+	BufferText2D* BT2D = nullptr;
+	font* Font = nullptr;
 
 	void compileVAO();
 	bool flagCompileVAO = false;
@@ -24,16 +28,16 @@ private:
 	unsigned int vaoID = 0;
 
 public:
-	Button(Window& window);
+	Button(Window& window, font& addrFont);
 	~Button();
 
 	void add(
-		GUIstyle style,
+		GuiElementStyle style,
 		void(*function)() = nullptr,
 		std::string ID = "button"
 	);
 
-	void setStyle(std::string ID, GUIstyle style);
+	void setStyle(std::string ID, GuiElementStyle style);
 	//void setPos(std::string ID, float x, float y);
 
 	void Delete(std::string ID);

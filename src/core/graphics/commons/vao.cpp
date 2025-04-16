@@ -242,12 +242,14 @@ void vao::draw(primitive Primitive, unsigned int VAO, int first_vert, int count_
     //bind(0);
 }
 
-VAO::VAO(float* data, int sizeOfByte, int elementToVert) : elementToVert(elementToVert), size(sizeOfByte / sizeof(float))
+VAO::VAO(float* data, int sizeOfByte, int elementToVert) : 
+    elementToVert(elementToVert), size(sizeOfByte / sizeof(float))
 {
     this->id = vao::create(data, sizeOfByte);
 }
 
-VAO::VAO(std::vector<float> data, int elementToVert) : elementToVert(elementToVert), size(data.size())
+VAO::VAO(std::vector<float> data, int elementToVert) : 
+    elementToVert(elementToVert), size(data.size())
 {
     this->id = vao::create(data);
 }
@@ -257,17 +259,17 @@ VAO::~VAO()
     vao::Delete(this->id);
 }
 
-void VAO::addAttribute(int index, int n, int indentation)
+void VAO::addAttribute(int index, int n, int indentation) const
 {
     vao::addAttribute(this->id, index, n, this->elementToVert, indentation);
 }
 
-void VAO::bind()
+void VAO::bind() const
 {
     vao::bind(this->id);
 }
 
-void VAO::draw(primitive Primitive, int first_vert, int count_vert)
+void VAO::draw(primitive Primitive, int first_vert, int count_vert) const
 {
     if (vao::getSelectId() != this->id)
     {

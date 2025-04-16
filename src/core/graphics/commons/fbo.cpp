@@ -41,12 +41,22 @@ void fbo::setSize(int width, int height)
 
 void fbo::setColor(color_rgba color)
 {
-	glClearColor(color.red, color.green, color.blue, color.alpha);
+	glClearColor(
+		color.red / 255.0f, 
+		color.green / 255.0f, 
+		color.blue / 255.0f, 
+		color.alpha / 255.0f
+	);
 }
 
 void fbo::setColor(float red, float green, float blue, float alpha)
 {
-	glClearColor(red, green, blue, alpha);
+	glClearColor(
+		red / 255.0f,
+		green / 255.0f,
+		blue / 255.0f,
+		alpha / 255.0f
+	);
 }
 
 void fbo::clearBuffers(Buffer buffer1, Buffer buffer2, Buffer buffer3)

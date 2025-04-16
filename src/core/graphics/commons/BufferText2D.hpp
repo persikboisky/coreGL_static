@@ -41,11 +41,11 @@ public:
 		float x,
 		float y,
 		float length = 1.0,
-		float RowingBetweenTheSymbols = 0.0f,
-		float c_red = 1.0,
-		float c_green = 1.0,
-		float c_blue = 1.0,
-		float c_alpha = 1.0
+		float c_red = 255.0,
+		float c_green = 255.0,
+		float c_blue = 255.0,
+		float c_alpha = 255.0,
+		float RowingBetweenTheSymbols = 0.0f
 	);
 
 	//void addText(

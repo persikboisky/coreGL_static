@@ -3,6 +3,9 @@
 #include "../../../window/Window.hpp"
 #include "../../../util/structs.hpp"
 #include "../../commons/vao.hpp"
+#include "../../commons/BufferText2D.hpp"
+#include "../../commons/font.hpp"
+#include "../../commons/shader.hpp"
 #include <GL/glew.h>
 #include <string>
 #include <vector>
@@ -62,9 +65,10 @@ static void addVertexesButton(
 	vec.push_back(color.alpha / 255.0f);
 }
 
-Button::Button(Window& window) : addrWindow(&window)
+Button::Button(Window& window, font& addrFont) : addrWindow(&window), BT2D(new BufferText2D()), Font(&addrFont)
 {
-
+	this->BT2D->linkFont(this->Font);
+	this->BT2D->linkWindow(window);
 }
 
 Button::~Button()
@@ -79,10 +83,12 @@ Button::~Button()
 	{
 		vao::Delete(this->vaoID);
 	}
+
+	delete this->BT2D;
 }
 
 void Button::add(
-	GUIstyle style,
+	GuiElementStyle style,
 	void(*function)(),
 	std::string ID
 )
@@ -99,7 +105,7 @@ void Button::add(
 	this->nButton++;
 }
 
-void Button::setStyle(std::string ID, GUIstyle style)
+void Button::setStyle(std::string ID, GuiElementStyle style)
 {
 	for (unsigned int index = 0; index < this->nButton; index++)
 	{
@@ -121,7 +127,7 @@ void Button::Delete(std::string ID)
 			std::vector<std::string>::const_iterator iterStr = this->vID.cbegin();
 			this->vID.erase(index + iterStr);
 
-			std::vector<GUIstyle>::const_iterator iterStyle = this->vStyle.cbegin();
+			std::vector<GuiElementStyle>::const_iterator iterStyle = this->vStyle.cbegin();
 			this->vStyle.erase(index + iterStyle);
 
 			std::vector<void(*)()>::const_iterator iterVoid = this->vFunction.cbegin();
@@ -185,6 +191,13 @@ void Button::compileVAO()
 		}
 
 		addVertexesButton(vertexes, pos, background);
+
+		this->BT2D->addText(
+			this->vStyle[index].text, 
+			0,
+			0,
+			0.2
+		);
 	}
 
 	this->vaoID = vao::create(vertexes);
@@ -247,4 +260,5 @@ void Button::render()
 
 	vao::bind(this->vaoID);
 	vao::draw(TRIANGLE, 0, this->nButton * 6);
+	this->BT2D->render();
 }

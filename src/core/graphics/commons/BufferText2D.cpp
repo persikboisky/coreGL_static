@@ -163,8 +163,8 @@ void BufferText2D::linkWindow(Window*& window)
 }
 
 void BufferText2D::addText(std::string text, float x, float y, float length,
-	float RowingBetweenTheSymbols,
-	float c_red, float c_green, float c_blue, float c_alpha
+	float c_red, float c_green, float c_blue, float c_alpha,
+	float RowingBetweenTheSymbols
 )
 {
 	//float decreaseWidthSymbol = -0.01;
@@ -292,11 +292,8 @@ void BufferText2D::render()
 
 	if (this->window != NULL)
 	{
-		matrix = glm::scale(matrix, glm::vec3(
-			1, 
-			(float)this->window->width / (float)this->window->height, 
-			1)
-		);
+		float aspect = (float)this->window->width / (float)this->window->height;
+		matrix = glm::scale(matrix, glm::vec3(1, aspect, 1));
 	}
 
 	this->shader2D->UniformMat4(matrix, "matrix");

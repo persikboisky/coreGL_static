@@ -90,6 +90,7 @@ void Window::setContext()
 
 void Window::setSizeBuffer(int width, int height)
 {
+	this->getSizeWindow();
 	glViewport(0, 0, width, height);
 }
 

@@ -1,10 +1,15 @@
 #include "ebo.hpp"
+#include "vao.hpp"
 #include "../../util/vector.hpp"
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
 
+#pragma region ebo
+
 std::vector<unsigned int> ebo::id;
+unsigned int ebo::SelectID = 0;
+unsigned int ebo::SelectVAO = 0;
 
 void ebo::bind(unsigned int id)
 {
@@ -49,6 +54,51 @@ unsigned int ebo::create(std::vector<unsigned int> indices)
 	return EBO;
 }
 
+void ebo::draw(primitive Primitive, unsigned int nVert)
+{
+	glDrawElements(Primitive, nVert, GL_UNSIGNED_INT, (void*)0);
+}
+
+void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int nVert)
+{
+	if (ebo::SelectID != ebo)
+	{
+		ebo::bind(ebo);
+		ebo::SelectID = ebo;
+	}
+
+	ebo::draw(Primitive, nVert);
+}
+
+void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int vao, unsigned int nVert)
+{
+	if (ebo::SelectID != ebo)
+	{
+		ebo::bind(ebo);
+		ebo::SelectID = ebo;
+	}
+
+	if (ebo::SelectVAO != vao)
+	{
+		vao::bind(vao);
+		ebo::SelectVAO = vao;
+	}
+
+	ebo::draw(Primitive, nVert);
+}
+
+void ebo::draw(primitive Primitive, unsigned int ebo, VAO& vao, unsigned int nVert)
+{
+	if (ebo::SelectID != ebo)
+	{
+		ebo::bind(ebo);
+		ebo::SelectID = ebo;
+	}
+
+	vao.bind();
+	ebo::draw(Primitive, nVert);
+}
+
 void ebo::Delete(unsigned int id)
 {
 	int index = vector::searchElemntForValue(ebo::id, id);
@@ -68,3 +118,63 @@ void ebo::DeleteALL()
 		glDeleteBuffers(1, &ebo::id[index]);
 	}
 }
+
+#pragma endregion ebo
+
+#pragma region EBO
+
+EBO::EBO(unsigned int* indices, unsigned int sizeOfByte) : 
+	vao(0), Vao(nullptr), id(0), nVert(sizeOfByte / sizeof(unsigned int))
+{
+	this->id = ebo::create(indices, sizeOfByte);
+}
+
+EBO::EBO(std::vector<unsigned int> indices) : 
+	vao(0), Vao(nullptr), id(0), nVert(indices.size())
+{
+	this->id = ebo::create(indices);
+}
+
+EBO::~EBO()
+{
+	ebo::Delete(this->id);
+}
+
+void EBO::linkVAO(unsigned int vao)
+{
+	this->vao = vao;
+	this->typeVao = 'v';
+}
+
+void EBO::linkVAO(VAO& vao)
+{
+	this->Vao = &vao;
+	this->typeVao = 'V';
+}
+
+void EBO::draw(primitive Primitive, unsigned int nVert)
+{
+	switch (this->typeVao)
+	{
+	case 'V':
+		this->Vao->bind();
+		break;
+
+	case 'v':
+		vao::bind(this->vao);
+		break;
+
+	default:
+		break;
+	}
+
+	if (nVert == 0)
+	{
+		nVert = this->nVert;
+	}
+
+	ebo::bind(this->id);
+	ebo::draw(Primitive, nVert);
+}
+
+#pragma endregion EBO

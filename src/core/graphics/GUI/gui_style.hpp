@@ -1,7 +1,7 @@
 #include "../../util/structs.hpp"
 #include <string>
 
-struct GUIstyle
+struct GuiElementStyle
 {
 	position_2f pos = position_2f(0, 0);
 	size_2f size = size_2f(0, 0);
@@ -13,4 +13,9 @@ struct GUIstyle
 
 	std::string text = "";
 	std::string pathToImage = "";
+};
+
+struct GUIstyle
+{
+
 };

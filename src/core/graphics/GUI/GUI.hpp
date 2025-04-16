@@ -5,7 +5,7 @@ class Button;
 class Image;
 
 struct font;
-struct GUIstyle;
+struct GuiElementStyle;
 
 class GUI
 {
@@ -23,7 +23,7 @@ public:
 	Image* image = nullptr;
 	//Text* text = nullptr;
 
-	void setStyle(std::string ID, GUIstyle style);
+	void setStyle(std::string ID, GuiElementStyle style);
 	void setStyle(const char* path);
 
 	void render();

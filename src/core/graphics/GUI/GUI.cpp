@@ -20,7 +20,8 @@ constexpr const char* PATH_TO_FRAGMENT_SHADER[2] = {
 unsigned int GUI::ShaderID[2] = { 0, 0 };
 
 GUI::GUI(Window& window, font& objFont) : 
-	addrWindow(&window), objFont(&objFont), button(new Button(window)), image(new Image())//, text(new Text())
+	addrWindow(&window), objFont(&objFont), button(new Button(window, *this->objFont)), 
+	image(new Image())//, text(new Text())
 {
 	if (GUI::ShaderID[0] == 0)
 	{
@@ -45,7 +46,7 @@ GUI::~GUI()
 	delete this->image;
 }
 
-void GUI::setStyle(std::string ID, GUIstyle style)
+void GUI::setStyle(std::string ID, GuiElementStyle style)
 {
 	this->button->setStyle(ID, style);
 }

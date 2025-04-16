@@ -38,6 +38,7 @@ constexpr bool CORE_INFO = true;
 #include "file/mtl.hpp"
 #include "file/wav.hpp"
 #include "graphics/commons/vao.hpp"
+#include "graphics/commons/ebo.hpp"
 #include "graphics/commons/fbo.hpp"
 #include "graphics/commons/rbo.hpp"
 #include "graphics/commons/shader.hpp"
@@ -121,6 +122,7 @@ void core::Terminate()
 {
 	shader::DeleteALL();
 	vao::DeleteALL();
+	ebo::DeleteALL();
 	fbo::DeleteALL();
 	mtl::Delete();
 	texture::DeleteALL();
