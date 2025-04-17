@@ -133,14 +133,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\audio\Abuffer.cpp" />
+    <ClCompile Include="src\core\audio\ADevice.cpp" />
+    <ClCompile Include="src\core\audio\Asource.cpp" />
     <ClCompile Include="src\core\graphics\GUI\Elements\Image.cpp" />
     <ClCompile Include="src\core\graphics\commons\ebo.cpp" />
     <ClCompile Include="src\core\graphics\commons\fbo.cpp" />
     <ClCompile Include="src\core\graphics\commons\rbo.cpp" />
     <ClCompile Include="src\core\util\math.cpp" />
-    <ClCompile Include="src\core\audio\buffer.cpp" />
-    <ClCompile Include="src\core\audio\device.cpp" />
-    <ClCompile Include="src\core\audio\source.cpp" />
     <ClCompile Include="src\core\data\info.cpp" />
     <ClCompile Include="src\core\data\time.cpp" />
     <ClCompile Include="src\core\file\mtl.cpp" />
@@ -169,16 +169,15 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\audio\Abuffer.hpp" />
+    <ClInclude Include="src\core\audio\ADevice.hpp" />
+    <ClInclude Include="src\core\audio\Asource.hpp" />
     <ClInclude Include="src\core\graphics\GUI\Elements\Image.hpp" />
     <ClInclude Include="library\include\core\core.hpp" />
     <ClInclude Include="src\core\graphics\commons\ebo.hpp" />
     <ClInclude Include="src\core\graphics\commons\fbo.hpp" />
     <ClInclude Include="src\core\graphics\commons\rbo.hpp" />
     <ClInclude Include="src\core\util\math.hpp" />
-    <ClInclude Include="src\core\audio\audio.hpp" />
-    <ClInclude Include="src\core\audio\buffer.hpp" />
-    <ClInclude Include="src\core\audio\Device.hpp" />
-    <ClInclude Include="src\core\audio\source.hpp" />
     <ClInclude Include="src\core\core.hpp" />
     <ClInclude Include="src\core\data\info.hpp" />
     <ClInclude Include="src\core\data\time.hpp" />

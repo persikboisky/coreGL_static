@@ -28,7 +28,30 @@ int vector::searchElemntForValue(std::vector<int> vec, int value)
 	return index;
 }
 
-int vector::searchElemntForValue(std::vector<unsigned int> vec, int value)
+int vector::searchElemntForValue(std::vector<unsigned int> vec, unsigned int value)
+{
+	int index;
+	bool flag = false;
+
+	for (int i = 0; i < vec.size(); i++)
+	{
+		if (vec[i] == value)
+		{
+			index = i;
+			flag = true;
+			break;
+		}
+	}
+
+	if (!flag)
+	{
+		return -1;
+	}
+
+	return index;
+}
+
+int vector::searchElemntForValue(std::vector<unsigned short> vec, unsigned short value)
 {
 	int index;
 	bool flag = false;

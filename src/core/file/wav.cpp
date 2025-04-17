@@ -1,5 +1,3 @@
-#define DEBUG false
-
 #include "wav.hpp"
 #include "text.hpp"
 #include <AL/al.h>
@@ -7,6 +5,9 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+extern bool coreInfo;
+const bool DEBUG = coreInfo;
 
 static bool check(const std::string str1, const std::string str2)
 {
@@ -20,7 +21,10 @@ static bool check(const std::string str1, const std::string str2)
 	return true;
 }
 
-static std::vector<char> readWav(const char* path, std::uint8_t& channels, std::int32_t& sampleRate, std::uint8_t& bitsPerSample, ALsizei& size)
+static std::vector<char> readWav(
+	const char* path, std::uint8_t& channels, std::int32_t& sampleRate, 
+	std::uint8_t& bitsPerSample, ALsizei& size
+)
 {
 	unsigned int infoByte = 0;
 
@@ -110,9 +114,9 @@ static std::vector<char> readWav(const char* path, std::uint8_t& channels, std::
 	//SubchunkDATA
 	for (unsigned int byte = 0;; byte += 1)
 	{
-		infoByte += 2;
 		if (!file.read(symbolBuffer, 2)) throw "FAILED_READ_WAV_FILE";
 		if (symbolBuffer[0] != 'd' || symbolBuffer[1] != 'a') continue;
+		infoByte += 2;
 
 		char symbolBuffer_2[2];
 		if (!file.read(symbolBuffer_2, 2)) throw "FAILED_READ_WAV_FILE";
@@ -143,16 +147,22 @@ static std::vector<char> readWav(const char* path, std::uint8_t& channels, std::
 	return data;
 }
 
-std::vector<char> wav::load(const char* path, std::uint8_t& channels, std::int32_t& sampleRate, std::uint8_t& bitsPerSample, ALsizei& size)
+std::vector<char> wav::load(
+	const char* path, std::uint8_t& channels, std::int32_t& sampleRate, 
+	std::uint8_t& bitsPerSample, ALsizei& size
+)
 {
-	std::vector<char> data = readWav(path, channels, sampleRate, bitsPerSample, size);
+	uint8_t channel = 0;
+	std::vector<char> data = readWav(path, channel, sampleRate, bitsPerSample, size);
 
 	if (DEBUG)
 	{
 		std::cout << "\nINFO WAV FILE: \n" << "Path: " << path << std::endl;
-		std::cout << "Channels: " << int(channels) << "\nSampleRate: " << sampleRate << std::endl;
+		std::cout << "Channels: " << (int)channel << "\nSampleRate: " << sampleRate << std::endl;
 		std::cout << "bitsPerSample: " << int(bitsPerSample) << "\nsize: " << size << std::endl;
 	}
+
+	channel = channel;
 
 	return data;
 }

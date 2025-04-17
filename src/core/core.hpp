@@ -11,6 +11,9 @@ constexpr bool WINDOW_RESIZABLE = true;
 // разрешить получение информации о состояние разных процессов
 constexpr bool CORE_INFO = true;
 
+// разрешает компилировать скрипты один раз сохраняя их в папке ресурсов
+constexpr bool ONE_COMPILE_SCRIPT = false;
+
 // библиотеки
 #include <GL/glew.h>
 #include <AL/al.h>
@@ -54,12 +57,12 @@ constexpr bool CORE_INFO = true;
 #include "graphics/GUI/Elements/Button.hpp"
 #include "graphics/GUI/Elements/Image.hpp"
 #include "graphics/commons/BufferText2D.hpp"
-#include "audio/audio.hpp"
-#include "audio/Device.hpp"
-#include "audio/buffer.hpp"
-#include "audio/source.hpp"
+#include "audio/ADevice.hpp"
+#include "audio/Abuffer.hpp"
+#include "audio/Asource.hpp"
 #include "data/time.hpp"
 #include "data/info.hpp"
+#include "script/Scripts.hpp"
 
 bool coreInfo = CORE_INFO;
 
@@ -76,7 +79,10 @@ enum primitive {
 };
 
 enum Key_code {
+	K_Q = GLFW_KEY_Q,
 	K_W = GLFW_KEY_W,
+	K_E = GLFW_KEY_E,
+	K_R = GLFW_KEY_R,
 	K_S = GLFW_KEY_S,
 	K_A = GLFW_KEY_A,
 	K_D = GLFW_KEY_D,
