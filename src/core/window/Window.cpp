@@ -1,4 +1,6 @@
 #include "Window.hpp"
+#include "Event.hpp"
+#include "Cursor.hpp"
 #include "../file/png.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -8,12 +10,24 @@ extern bool coreInfo;
 
 bool Window::flagGLewInit = true;
 
+void Window::Init()
+{
+	this->event = new Event(*this->window);
+	this->cursor = new Cursor(*this->window);
+}
+
 inline void Window::getSizeWindow()
 {
 	glfwGetWindowSize(this->window, &this->width, &this->height);
 }
 
-Window::Window(int width, int height, const char* title, bool resizable) : width(width), height(height)
+GLFWwindow* Window::getGlfwWindowObject()
+{
+	return this->window;
+}
+
+Window::Window(int width, int height, const char* title, bool resizable) : 
+	width(width), height(height)
 {
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
 	this->window = glfwCreateWindow(width, height, title, nullptr, nullptr);
@@ -42,6 +56,7 @@ Window::~Window()
 void Window::swapBuffers()
 {
 	glfwSwapBuffers(this->window);
+	this->getSizeWindow();
 }
 
 void Window::setIcon(const char* path)
@@ -90,7 +105,6 @@ void Window::setContext()
 
 void Window::setSizeBuffer(int width, int height)
 {
-	this->getSizeWindow();
 	glViewport(0, 0, width, height);
 }
 

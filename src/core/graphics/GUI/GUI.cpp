@@ -4,6 +4,8 @@
 //#include "Elements/Text.hpp"
 #include "GUI_Style.hpp"
 #include "../../window/Window.hpp"
+#include "../../window/Event.hpp"
+#include "../../window/Cursor.hpp"
 #include "../commons/shader.hpp"
 #include "../commons/font.hpp"
 

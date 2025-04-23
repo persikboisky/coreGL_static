@@ -24,8 +24,11 @@ private:
 
     CAM_MODE mode;
 
+    void update();
+
 public:
     Camera(float posX, float posY, float posZ, float fov, float distance);
+    Camera(glm::vec3 pos, float fov, float distance);
 
     void setMode(CAM_MODE mode);
 
@@ -45,6 +48,9 @@ public:
 
     void getPos3f(glm::vec3 &pos) const;
     void getPos(float &x, float &y, float &z) const;
+
+    void getTarget3f(glm::vec3& target) const;
+    void getTarget(float& x, float& y, float& z) const;
 
     glm::mat4 getProj(int width, int height) const;
     glm::mat4 getView() const;

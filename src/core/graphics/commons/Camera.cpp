@@ -4,14 +4,28 @@
 #include <glm/ext.hpp>
 #include <iostream>
 
-Camera::Camera(float posX, float posY, float posZ, float fov, float distance) : 
+void Camera::update()
+{
+	this->up = glm::vec3(rot * glm::vec4(this->startUP, 1));
+	this->target = glm::vec3(rot * glm::vec4(this->startTARGET, 1));
+}
+
+Camera::Camera(float posX, float posY, float posZ, float fov, float distance) :
 	distance(distance), mode(STATIC), startUP(glm::vec3(0, 1, 0)), startTARGET(glm::vec3(0, 0, -1))
 {
 	this->pos = glm::vec3(posX, posY, posZ);
 	this->fov = glm::radians(fov);
 
-	this->up = glm::vec3(rot * glm::vec4(this->startUP, 1));
-	this->target = glm::vec3(rot * glm::vec4(this->startTARGET, 1));
+	this->update();
+}
+
+Camera::Camera(glm::vec3 pos, float fov, float distance) :
+	distance(distance), mode(STATIC), startUP(glm::vec3(0, 1, 0)), startTARGET(glm::vec3(0, 0, -1))
+{
+	this->pos = glm::vec3(pos.x, pos.y, pos.z);
+	this->fov = glm::radians(fov);
+
+	this->update();
 }
 
 void Camera::setMode(CAM_MODE mode)
@@ -35,8 +49,7 @@ void Camera::rotate(float x, float y, float z)
 	this->rot = glm::rotate(this->rot, y, glm::vec3(0, 1, 0));
 	this->rot = glm::rotate(this->rot, z, glm::vec3(0, 0, 1));
 
-	this->up = glm::vec3(this->rot * glm::vec4(this->startUP, 1));
-	this->target = glm::vec3(this->rot * glm::vec4(this->startTARGET, 1));
+	this->update();
 }
 
 void Camera::resetRotate()
@@ -49,6 +62,8 @@ void Camera::move(float x, float y, float z)
 	this->pos.x += x;
 	this->pos.y += y;
 	this->pos.z += z;
+
+	this->update();
 }
 
 void Camera::setPos3f(glm::vec3 pos)
@@ -81,6 +96,35 @@ void Camera::getPos(float& x, float& y, float& z) const
 	x = this->pos.x;
 	y = this->pos.y;
 	z = this->pos.z;
+}
+
+void Camera::getTarget3f(glm::vec3& target) const
+{
+	if (this->mode == DYNAMIC)
+	{
+		target = this->target;
+	}
+	else
+	{
+		target = this->pos + this->target;
+	}
+}
+
+void Camera::getTarget(float& x, float& y, float& z) const
+{
+	glm::vec3 target;
+	if (this->mode == DYNAMIC)
+	{
+		target = this->target;
+	}
+	else
+	{
+		target = this->pos + this->target;
+	}
+
+	x = target.x;
+	y = target.y;
+	z = target.z;
 }
 
 glm::mat4 Camera::getProj(int width, int height) const

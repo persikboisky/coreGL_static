@@ -1,10 +1,10 @@
 #ifndef SRC_CORE_WINDOW_WINDOW_HPP_
 #define SRC_CORE_WINDOW_WINDOW_HPP_
 
-#include "Event.hpp"
-#include "Cursor.hpp"
-
 struct GLFWwindow;
+
+class Event;
+class Cursor;
 
 class Window
 {
@@ -13,19 +13,12 @@ private:
 
 	static bool flagGLewInit;
 
-	void Init()
-	{
-		this->event = new Event(*this->window);
-		this->cursor = new Cursor(*this->window);
-	}
+	void Init();
 	void getSizeWindow();
 
 public:
 
-	GLFWwindow* getGlfwWindowObject()
-	{
-		return this->window;
-	}
+	GLFWwindow* getGlfwWindowObject();
 
 	Event* event = nullptr;
 	Cursor* cursor = nullptr;

@@ -159,7 +159,7 @@ std::vector<char> wav::load(
 	{
 		std::cout << "\nINFO WAV FILE: \n" << "Path: " << path << std::endl;
 		std::cout << "Channels: " << (int)channel << "\nSampleRate: " << sampleRate << std::endl;
-		std::cout << "bitsPerSample: " << int(bitsPerSample) << "\nsize: " << size << std::endl;
+		std::cout << "bitsPerSample: " << int(bitsPerSample) << "\nsize: " << size << "\n\n";
 	}
 
 	channel = channel;

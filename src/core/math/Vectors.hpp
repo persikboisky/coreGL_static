@@ -2,7 +2,7 @@
 
 namespace math
 {
-    struct Vector2;
+	struct Vector2;
 	struct Vector3;
 	struct Vector4;
 }
@@ -18,6 +18,8 @@ struct math::Vector2 final
 	Vector2 operator - (Vector2 vector2);
 	Vector2 operator * (Vector2 vector2);
 	Vector2 operator / (Vector2 vector2);
+
+	void normalize();
 };
 
 struct math::Vector3 final
@@ -34,6 +36,8 @@ struct math::Vector3 final
 	Vector3 operator - (Vector3 vector3);
 	Vector3 operator * (Vector3 vector3);
 	Vector3 operator / (Vector3 vector3);
+
+	void normalize();
 };
 
 struct math::Vector4 final
@@ -55,4 +59,6 @@ struct math::Vector4 final
 	Vector4 operator - (Vector4 vector4);
 	Vector4 operator * (Vector4 vector4);
 	Vector4 operator / (Vector4 vector4);
+
+	void normalize();
 };

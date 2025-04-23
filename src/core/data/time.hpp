@@ -5,7 +5,7 @@ namespace Time
 	class Date
 	{
 	private:
-		char timebuf[26];
+		//char timebuf[26];
 
 	public:
 		Date();
@@ -13,6 +13,13 @@ namespace Time
 
 	class Timer
 	{
+	private:
+		double startTime;
 
+	public:
+		Timer();
+
+		void start();
+		double finish() const;
 	};
 }

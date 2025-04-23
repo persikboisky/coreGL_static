@@ -44,6 +44,9 @@ public:
 	Shader(const char* pathVert, const char* pathFrag);
 	~Shader();
 
+	// переделать за место shader::getSelectID()
+	//bool select = false;
+
 	void use() const;
 
 	void UniformMat4(glm::mat4 matrix, const char* name) const;
