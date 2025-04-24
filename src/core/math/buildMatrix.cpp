@@ -1,6 +1,6 @@
 #include "buildMatrix.hpp"
 #include "Matrix4.hpp"
-#include "Vectors.hpp"
+#include "Vector3.hpp"
 #include <math.h>
 
 constexpr auto PI = 3.141592;
@@ -70,28 +70,31 @@ Matrix4 math::getRotateMatrix(float angle, Vector3 vec3)
 		0, 0, 0, 1
 	};
 
+	const float SIN_ANGLE = sin(angle);
+	const float COS_ANGLE = cos(angle);
+
 	if (vec3.x == 1)
 	{
-		matX[5] = cos(angle);
-		matX[6] = -sin(angle);
-		matX[9] = sin(angle);
-		matX[10] = cos(angle);
+		matX[5] = COS_ANGLE;
+		matX[6] = -SIN_ANGLE;
+		matX[9] = SIN_ANGLE;
+		matX[10] = COS_ANGLE;
 	}
 
 	if (vec3.y == 1)
 	{
-		matX[0] = cos(angle);
-		matX[2] = -sin(angle);
-		matX[8] = sin(angle);
-		matX[10] = cos(angle);
+		matX[0] = COS_ANGLE;
+		matX[2] = -SIN_ANGLE;
+		matX[8] = SIN_ANGLE;
+		matX[10] = COS_ANGLE;
 	}
 
 	if (vec3.z == 1)
 	{
-		matX[0] = cos(angle);
-		matX[1] = -sin(angle);
-		matX[4] = sin(angle);
-		matX[5] = cos(angle);
+		matX[0] = COS_ANGLE;
+		matX[1] = -SIN_ANGLE;
+		matX[4] = SIN_ANGLE;
+		matX[5] = COS_ANGLE;
 	}
 
 	return math::Matrix4::Change(
@@ -113,31 +116,46 @@ Matrix4 math::getRotateMatrix(Matrix4 mat4, float angle, Vector3 vec3)
 
 Matrix4 math::getPerspectiveMatrix(float fov, float aspect, float near, float far)
 {
+	const float TAN_FOV = tan(fov / 2.0f);
+	const float DIFFERENCE_FAR_ASPECT = far - near;
+
 	float mat[16] = {
-		1.0f / tan(PI / 180.0f * fov / 2.0f) * aspect, 0, 0, 0,
-		0, 1.0f / tan(PI / 180.0f * fov / 2.0f), 0, 0,
-		0, 0, -1.0f * ((far + near) / (near - far)), -1.0f * (2.0f * far * near / (far - near)),
-		0, 0, -1.0f, 0
+		1.0f / (TAN_FOV * aspect), 0, 0, 0,
+		0, 1.0f / TAN_FOV, 0, 0,
+		0, 0, -(far + near) / DIFFERENCE_FAR_ASPECT, -1.0f,
+		0, 0, -((2.0f * far * near) / DIFFERENCE_FAR_ASPECT), 0
 	};
 
 	return Matrix4(mat);
 }
 
-Matrix4 math::getLookAtMatrix(Vector3 pos, Vector3 up, Vector3 target)
+Matrix4 math::getLookAtMatrix(const Vector3& pos, const Vector3& up, const Vector3& target)
 {
-	float mat1[16] = {
-		0, 0, 0, 0,
-		up.x, up.y, up.z, 0,
-		target.x, target.y, target.z, 0,
-		0, 0, 0, 1
+	Vector3 vecUp = Vector3(0, 1, 0);
+	Vector3 vecTarget = Vector3(0, 0, -1);
+	Vector3 vecPos = Vector3(0, 0, 4);
+
+	Vector3 forward = vecPos - vecTarget;
+	forward.normalize();
+
+	Vector3 vecLeft = forward.cross(vecUp);
+	vecLeft.normalize();
+
+	vecUp = vecLeft.cross(forward);
+		
+	float matLookAt[16] = {
+		vecLeft.x, vecLeft.y, vecLeft.z,  -vecLeft.dot(pos),
+		vecUp.x,   vecUp.y,   vecUp.z,    -vecUp.dot(pos),
+		-forward.x, -forward.y, -forward.z,   forward.dot(pos),
+		0,         0,         0,           1
 	};
 
-	float mat2[16] = {
+	float matTranslate[16] = {
 		1, 0, 0, -pos.x,
 		0, 1, 0, -pos.y,
 		0, 0, 1, -pos.z,
-		0, 0, 0, 1
+		0, 0, 0,  1
 	};
 
-	return Matrix4();
+	return Matrix4(Matrix4::Change(matLookAt, matTranslate));
 }

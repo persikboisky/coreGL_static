@@ -17,7 +17,7 @@ namespace math
 
 	Matrix4 getPerspectiveMatrix(float FOV, float aspect, float near, float far);
 
-	Matrix4 getLookAtMatrix(Vector3 pos, Vector3 up, Vector3 target);
+	Matrix4 getLookAtMatrix(const Vector3& pos, const Vector3& up, const Vector3& target);
 }
 
 #endif // !SRC_CORE_MATH_BUILDMATRIX_HPP_
