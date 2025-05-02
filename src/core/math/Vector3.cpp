@@ -1,104 +1,135 @@
-#include "Vector3.hpp"
-#include "Vector2.hpp"
-#include <math.h>
-
-constexpr float PI = 3.141592f;
+#include "Vectors.hpp"
+#include <cmath>
 
 using namespace math;
 
-Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z)
+Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+
+Vector3 Vector3::operator+(const Vector3 &vec3)
 {
+    return Vector3(
+        this->x + vec3.x,
+        this->y + vec3.y,
+        this->z + vec3.z
+    );
 }
 
-Vector3::Vector3(Vector2 vector2, float z) : x(vector2.x), y(vector2.y), z(z)
+Vector3 Vector3::operator-(const Vector3 &vec3)
 {
+    return Vector3(
+        this->x - vec3.x,
+        this->y - vec3.y,
+        this->z - vec3.z
+    );
 }
 
-Vector3::Vector3(float x, Vector2 vector2) : x(x), y(vector2.y), z(vector2.x)
+Vector3 Vector3::operator*(const Vector3 &vec3)
 {
+    return Vector3(
+        this->x * vec3.x,
+        this->y * vec3.y,
+        this->z * vec3.z
+    );
 }
 
-Vector3 Vector3::operator + (Vector3 vector3)
+Vector3 Vector3::operator/(const Vector3 &vec3)
 {
-	return Vector3(
-		this->x + vector3.x,
-		this->y + vector3.y,
-		this->z + vector3.z
-	);
+    return Vector3(
+        this->x / vec3.x,
+        this->y / vec3.y,
+        this->z / vec3.z
+    );
 }
 
-Vector3 Vector3::operator - (Vector3 vector3)
+Vector3 Vector3::operator*(const float &value)
 {
-	return Vector3(
-		this->x - vector3.x,
-		this->y - vector3.y,
-		this->z - vector3.z
-	);
+    return Vector3 (
+        this->x * value,
+        this->y * value,
+        this->z * value
+    );
 }
 
-Vector3 Vector3::operator * (Vector3 vector3)
+Vector3 Vector3::operator/(const float &value)
 {
-	return Vector3(
-		this->x * vector3.x,
-		this->y * vector3.y,
-		this->z * vector3.z
-	);
+    return Vector3 (
+        this->x / value,
+        this->y / value,
+        this->z / value
+    );
 }
 
-Vector3 Vector3::operator / (Vector3 vector3)
+Vector3 Vector3::normalize(const Vector3& vec3) 
 {
-	return Vector3(
-		this->x / vector3.x,
-		this->y / vector3.y,
-		this->z / vector3.z
-	);
+    const float length = Vector3::length(vec3);
+    return Vector3 (
+        vec3.x / length,
+        vec3.y / length,
+        vec3.z / length
+    );
 }
 
-Vector3 math::Vector3::cross(const Vector3& vector3)
+Vector3 Vector3::cross(const Vector3& vec3_1, const Vector3& vec3_2)
 {
-	return Vector3(
-		this->y * vector3.z - this->z * vector3.y,
-		this->z * vector3.x - this->x * vector3.z,
-		this->x * vector3.y - this->y * vector3.x
-	);
+    return Vector3(
+        vec3_1.y * vec3_2.z - vec3_1.z * vec3_2.y,
+        vec3_1.z * vec3_2.x - vec3_1.x * vec3_2.z,
+        vec3_1.x * vec3_2.y - vec3_1.y * vec3_2.x
+    );
 }
 
-inline float Vector3::length() const
+float Vector3::length(const Vector3& vec3)
 {
-	return sqrtf(
-		pow(this->x, 2) + 
-		pow(this->y, 2) + 
-		pow(this->z, 2)
-	);
+    return sqrtf(powf(vec3.x, 2) + powf(vec3.y, 2) + powf(vec3.z, 2));
 }
 
-float Vector3::dot(const Vector3& vector3) const
+float Vector3::dot(const Vector3& vec3_1, const Vector3&  vec3_2) 
 {
-	return this->x * vector3.x + this->y * vector3.y + this->z + vector3.z;
+    return vec3_1.x * vec3_2.x + vec3_1.y * vec3_2.y + vec3_1.z * vec3_2.z; 
 }
 
-inline float Vector3::distance(const Vector3& vector3) const
+float Vector3::distance(const Vector3&  vec3_1, const Vector3&  vec3_2)
 {
-	return sqrtf(
-		pow(this->x - vector3.x, 2) + 
-		pow(this->y - vector3.y, 2) + 
-		pow(this->y - vector3.y, 2)
-	);
+    return sqrtf(
+        powf(vec3_1.x - vec3_2.x, 2) + 
+        powf(vec3_1.y - vec3_2.y, 2) + 
+        powf(vec3_1.z - vec3_2.z, 2)
+    );
 }
 
-inline float Vector3::getAngle(const Vector3 vector3) const
+Vector3 Vector3::normalize()
 {
-	return acosf(
-		this->dot(vector3) / 
-		(this->length() * vector3.length())) / 
-		3.141592f * 180.0f;
+    const float LENGTH = this->length();
+    Vector3(
+        this->x / LENGTH,
+        this->y / LENGTH,
+        this->z / LENGTH
+    );
 }
 
-void Vector3::normalize()
+void Vector3::normal()
 {
-	const float LENGTH = this->length();
+    const float LENGTH = this->length();
+    this->x /= LENGTH;
+    this->y /= LENGTH;
+    this->z /= LENGTH;
+}
 
-	this->x = x / LENGTH;
-	this->y = y / LENGTH;
-	this->z = z / LENGTH;
+float Vector3::length() const
+{
+    return sqrtf(powf(this->x, 2) + powf(this->y, 2) + powf(this->z, 2));
+}
+
+float Vector3::dot(const Vector3&  vec3) const
+{
+    return this->x * vec3.x + this->y * vec3.y + this->z * vec3.z;
+}
+
+float Vector3::distance(const Vector3& vec3) const
+{
+    return sqrtf(
+        powf(this->x - vec3.x, 2) + 
+        powf(this->y - vec3.y, 2) + 
+        powf(this->z - vec3.z, 2)
+    );
 }

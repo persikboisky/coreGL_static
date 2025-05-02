@@ -1,19 +1,6 @@
 #ifndef SRC_CORE_CORE_H_
 #define SRC_CORE_CORE_H_
 
-// версия openGL(4.6)
-constexpr unsigned short VERSION_MAJOR = 4;
-constexpr unsigned short VERSION_MINOR = 6;
-
-// разрешить изменения размера окна(окон)
-constexpr bool WINDOW_RESIZABLE = true;
-
-// разрешить получение информации о состояние разных процессов
-constexpr bool CORE_INFO = true;
-
-// разрешает компилировать скрипты один раз сохраняя их в папке ресурсов
-constexpr bool ONE_COMPILE_SCRIPT = false;
-
 // библиотеки
 #include <GL/glew.h>
 #include <AL/al.h>
@@ -25,6 +12,9 @@ constexpr bool ONE_COMPILE_SCRIPT = false;
 #include <thread>
 #include <iostream>
 
+// конфигурационный файл
+#include "config.hpp"
+
 // моё говно
 #include "window/Window.hpp"
 #include "window/Event.hpp"
@@ -33,11 +23,9 @@ constexpr bool ONE_COMPILE_SCRIPT = false;
 #include "util/string.hpp"
 #include "util/array.hpp"
 #include "util/structs.hpp"
-#include "math/Vector2.hpp"
-#include "math/Vector3.hpp"
-#include "math/Vector4.hpp"
-#include "math/Matrix4.hpp"
-#include "math/buildMatrix.hpp"
+#include "math/math.hpp"
+#include "math/Vectors.hpp"
+#include "math/Matrixes.hpp"
 #include "file/png.hpp"
 #include "file/text.hpp"
 #include "file/toml_file.hpp"
@@ -70,6 +58,7 @@ constexpr bool ONE_COMPILE_SCRIPT = false;
 #include "script/Scripts.hpp"
 
 bool coreInfo = CORE_INFO;
+const char* ExtensionScript = EXTENSION_SCRIPTS;
 
 enum primitive {
 	TRIANGLE = GL_TRIANGLES,
@@ -104,10 +93,13 @@ enum Cursor_mode {
 
 struct core
 {
-	//static Time::Date* date;
-
+	/// Инициализация ядра
 	static void Init();
+
+	/// Прекращает работу ядра.
 	static void Terminate();
+
+	/// возвращает время в секундах с момента инициализации ядра
 	static double GetTime();
 };
 
