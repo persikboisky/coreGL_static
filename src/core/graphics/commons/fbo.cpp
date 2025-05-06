@@ -5,10 +5,12 @@
 #include <vector>
 #include <iostream>
 
+using namespace core;
+
 std::vector<unsigned int> fbo::id;
 unsigned int fbo::selectID = 0;
 
-color_rgba fbo::color = color_rgba();
+RGBA fbo::color = RGBA();
 
 void fbo::bind(unsigned int id)
 {
@@ -39,7 +41,7 @@ void fbo::setSize(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void fbo::setColor(color_rgba color)
+void fbo::setColor(RGBA color)
 {
 	glClearColor(
 		color.red / 255.0f, 
@@ -102,7 +104,7 @@ void fbo::linkTexture(unsigned int t_id)
 
 void fbo::Delete(unsigned int id)
 {
-	unsigned int index = vector::searchElemntForValue(fbo::id, id);
+	unsigned int index = vector::searchElementForValue(fbo::id, id);
 
 	if (index != -1)
 	{

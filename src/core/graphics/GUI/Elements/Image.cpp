@@ -8,6 +8,8 @@
 #include <vector>
 #include <iostream>
 
+using namespace core;
+
 static void addElementToVAO(
 	std::vector<float>& vao,
 	position_4f data,

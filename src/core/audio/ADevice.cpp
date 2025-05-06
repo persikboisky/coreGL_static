@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>	
 #include <iostream>
 
+using namespace core;
+
 extern bool coreInfo;
 
 audio::Device::Device()

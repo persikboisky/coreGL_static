@@ -2,7 +2,9 @@
 #include <vector>
 #include <iostream>
 
-int vector::searchElemntForValue(std::vector<int> vec, int value)
+using namespace core;
+
+int vector::searchElementForValue(std::vector<int> vec, int value)
 {
 	int index;
 	bool flag = false;
@@ -28,7 +30,7 @@ int vector::searchElemntForValue(std::vector<int> vec, int value)
 	return index;
 }
 
-int vector::searchElemntForValue(std::vector<unsigned int> vec, unsigned int value)
+int vector::searchElementForValue(std::vector<unsigned int> vec, unsigned int value)
 {
 	int index;
 	bool flag = false;
@@ -51,7 +53,7 @@ int vector::searchElemntForValue(std::vector<unsigned int> vec, unsigned int val
 	return index;
 }
 
-int vector::searchElemntForValue(std::vector<unsigned short> vec, unsigned short value)
+int vector::searchElementForValue(std::vector<unsigned short> vec, unsigned short value)
 {
 	int index;
 	bool flag = false;

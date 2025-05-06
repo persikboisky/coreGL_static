@@ -1,4 +1,6 @@
 ﻿#include "BufferText2D.hpp"
+#include "../../math/Vectors.hpp"
+#include "../../math/Matrixes.hpp"
 #include "font.hpp"
 #include "vao.hpp"
 #include "shader.hpp"
@@ -7,22 +9,16 @@
 #include "../../util/structs.hpp"
 #include "../../window/Window.hpp"
 #include <GL/glew.h>
-#include <glm/ext.hpp>
-#include <glm/glm.hpp>
 #include <vector>
 #include <string>
 #include <iostream>
 
+using namespace core;
+using namespace math;
+
 // путь к шейдерам для шрифтов
 constexpr const char* PATH_TO_VERTEX_SHADER = "./res/fonts/main_font_v.glsl";
 constexpr const char* PATH_TO_FRAGMENT_SHADER = "./res/fonts/main_font_f.glsl";
-
-enum primitive
-{
-	POINT = GL_POINTS,
-	TRIANGLE = GL_TRIANGLES,
-	LINER = GL_LINES
-};
 
 static void addPoligon(
 	std::vector<float>& buffer,
@@ -30,13 +26,13 @@ static void addPoligon(
 	size_2f size,
 	position_2f t_coord,
 	size_2f t_size,
-	color_rgba color,
-	glm::mat4 matrix = glm::mat4(1.0f)
+	RGBA color,
+	Matrix4 matrix = Matrix4(1.0f)
 )
 {
-	glm::vec4 pos4f = glm::vec4(pos.x, pos.y, 0.0f, 1.0f) * matrix;
-	float finishX = glm::vec4(glm::vec4(pos.x + size.width, pos.y, 0.0f, 1.0f) * matrix).x;
-	float finishY = glm::vec4(glm::vec4(pos.x, pos.y - size.height, 0.0f, 1.0f) * matrix).y;
+	Vector4 pos4f = Vector4(pos.x, pos.y, 0.0f, 1.0f) * matrix;
+	float finishX = Vector4(Vector4(pos.x + size.width, pos.y, 0.0f, 1.0f) * matrix).x;
+	float finishY = Vector4(Vector4(pos.x, pos.y - size.height, 0.0f, 1.0f) * matrix).y;
 
 	// первая вершина
 	buffer.push_back(pos4f.x);
@@ -111,7 +107,7 @@ static void addPoligon(
 	buffer.push_back(color.alpha);
 }
 
-Shader* BufferText2D::shader2D = nullptr;
+core::Shader* BufferText2D::shader2D = nullptr;
 unsigned int BufferText2D::n_Buffer = 0;
 
 BufferText2D::BufferText2D() : Font(nullptr)
@@ -132,7 +128,7 @@ BufferText2D::~BufferText2D()
 	BufferText2D::n_Buffer--;
 }
 
-void BufferText2D::linkFont(font& Font)
+void BufferText2D::linkFont(font &Font)
 {
 	this->Font = &Font;
 }
@@ -204,9 +200,9 @@ void BufferText2D::addText(std::string text, float x, float y, float length,
 		}
 
 		position_2f pos = position_2f(x + (widthSymbol + RowingBetweenTheSymbols) * (float)index, y);
-		glm::vec4 p = glm::vec4(pos.x, pos.y, 0.0f, 1.0f);
+		Vector4 p = Vector4(pos.x, pos.y, 0.0f, 1.0f);
 
-		glm::mat4 matrix = glm::mat4(1.0f);
+		Matrix4 matrix = Matrix4(1.0f);
 		/*matrix = glm::rotate(
 			matrix,
 			glm::radians(90.0f),
@@ -229,7 +225,7 @@ void BufferText2D::addText(std::string text, float x, float y, float length,
 				this->Font->widthSymbol - decreaseWidthTextureSymbol,
 				this->Font->heightSymbol - decreaseHeightTextureSymbol
 			),
-			color_rgba(c_red, c_green, c_blue, c_alpha)
+			RGBA(c_red, c_green, c_blue, c_alpha)
 			/*glm::rotate(
 				glm::mat4(1.0f),
 				glm::radians(10.0f),
@@ -287,16 +283,16 @@ void BufferText2D::render()
 	// ������
 	this->shader2D->use();
 	this->Font->textureFont->bind(0);
-	this->shader2D->Uniform1I(glm::ivec1(0), "text");
-	glm::mat4 matrix = glm::mat4(1.0f);
+	this->shader2D->UniformSample2D(0, "text");
+	Matrix4 matrix = Matrix4(1.0f);
 
-	if (this->window != NULL)
+	if (this->window != nullptr)
 	{
 		float aspect = (float)this->window->width / (float)this->window->height;
-		matrix = glm::scale(matrix, glm::vec3(1, aspect, 1));
+		matrix = Matrix4::getScale(Vector3(1, aspect, 1), matrix);
 	}
 
 	this->shader2D->UniformMat4(matrix, "matrix");
 	vao::bind(this->vao);
-	vao::draw(TRIANGLE, 0, n_vertex);
+	vao::drawTriangle(0, n_vertex);
 }

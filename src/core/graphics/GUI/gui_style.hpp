@@ -1,21 +1,30 @@
+//#include "../../config.hpp"
+//
+//#if MODULE_GUI
+
 #include "../../util/structs.hpp"
 #include <string>
 
-struct GuiElementStyle
+namespace core
 {
-	position_2f pos = position_2f(0, 0);
-	size_2f size = size_2f(0, 0);
-	color_rgba background = color_rgba(0, 0, 0, 0);
-	color_rgba activeBackground = color_rgba(0, 0, 0, 0);
+	struct GuiElementStyle
+	{
+		position_2f pos = position_2f(0, 0);
+		size_2f size = size_2f(0, 0);
+		RGBA background = RGBA(0, 0, 0, 0);
+		RGBA activeBackground = RGBA(0, 0, 0, 0);
 
-	bool hover = false;
-	color_rgba hoverBackground = color_rgba(0, 0, 0, 0);
+		bool hover = false;
+		RGBA hoverBackground = RGBA(0, 0, 0, 0);
 
-	std::string text = "";
-	std::string pathToImage = "";
-};
+		std::string text = "";
+		std::string pathToImage = "";
+	};
 
-struct GUIstyle
-{
+	struct GUIstyle
+	{
 
-};
+	};
+}
+
+//#endif // MODULE_GUI

@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm> 
 
+using namespace core;
+
 float* array::vectorToArray(std::vector<float> vector, int& sizeAr)
 {
     const int size = vector.size();

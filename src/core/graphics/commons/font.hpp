@@ -1,16 +1,19 @@
 #include <string>
 #include <vector>
 
-class Shader;
-class Texture;
-
-struct font 
+namespace core
 {
-	Texture* textureFont;
+	class Shader;
+	class Texture;
 
-	float widthSymbol;
-	float heightSymbol;
+	struct font
+	{
+		Texture* textureFont;
 
-	font(const char* name = "standard");
-	~font();
-};
+		float widthSymbol;
+		float heightSymbol;
+
+		font(const char* name = "standard");
+		~font();
+	};
+}

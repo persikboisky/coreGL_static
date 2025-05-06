@@ -1,57 +1,128 @@
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
+#include "../../math/Vectors.hpp"
+#include "../../math/Matrixes.hpp"
 
-enum CAM_MODE
+namespace core
 {
-    DYNAMIC,
-    STATIC
-};
+    enum CAM_MODE
+    {
+        /// @brief Камера смотрит в одну точку
+        DYNAMIC,
 
-class Camera
-{
-private:
-    glm::vec3 startUP = glm::vec3(0, 1, 0);
-    glm::vec3 startTARGET = glm::vec3(0, 0, -1);
+        /// @brief Камера смотрит в одно направление
+        STATIC
+    };
 
-    glm::vec3 up;
-    glm::vec3 target;
-    glm::vec3 pos;
+    /// @brief класс для работы с камерой
+    class Camera
+    {
+    private:
 
-    glm::mat4 rot = glm::mat4(1.0f);
+        math::Vector3 startUP;
+        math::Vector3 startTARGET;
 
-    float fov;  
-    float distance;
+        math::Vector3 up;
+        math::Vector3 target;
+        math::Vector3 pos;
 
-    CAM_MODE mode;
+        math::Matrix4 rot = math::Matrix4(1.0f);
 
-    void update();
+        float fov;
+        float distance;
 
-public:
-    Camera(float posX, float posY, float posZ, float fov, float distance);
-    Camera(glm::vec3 pos, float fov, float distance);
+        CAM_MODE mode;
 
-    void setMode(CAM_MODE mode);
+        void update();
 
-    void setFov(float fov);
+    public:
+        /// @brief конструктор камеры
+        /// @param posX позиция камеры по x
+        /// @param posY позиция камеры по y
+        /// @param posZ позиция камеры по z
+        /// @param fov поле зрения в градусах
+        /// @param distance дальность зрения
+        Camera(float posX, float posY, float posZ, float fov, float distance);
 
-    void setDistance(float distance);
+        /// @brief конструктор камеры
+        /// @param pos позиция камеры
+        /// @param fov поле зрения в градусах
+        /// @param distance дальность зрения
+        Camera(math::Vector3 pos, float fov, float distance);
 
-    void rotate(float x, float y, float z);
-    void resetRotate();
-    void move(float x, float y, float z);
+        /// @brief устанавливает режим камеры
+        /// @param mode режим (Пример: STATIC, DYNAMIC)
+        void setMode(CAM_MODE mode);
 
-    void setPos3f(glm::vec3 pos);
-    void setPos(float x, float y, float z);
+        /// @brief устанавливает поле зрения
+        /// @param fov поле зрения в градусах
+        void setFov(float fov);
 
-    void setTarget(float x, float y, float z);
-    void setTarget3f(glm::vec3 target);
+        /// @brief устанавливает дальность зрения
+        /// @param distance дальность зрения
+        void setDistance(float distance);
 
-    void getPos3f(glm::vec3 &pos) const;
-    void getPos(float &x, float &y, float &z) const;
+        /// @brief поворачивает камеру по заданным осям
+        /// @param x угол поворота по оси x в градусах
+        /// @param y угол поворота по оси y в градусах
+        /// @param z угол поворота по оси z в градусах
+        void rotate(float x, float y, float z);
 
-    void getTarget3f(glm::vec3& target) const;
-    void getTarget(float& x, float& y, float& z) const;
+        /// @brief обнуляет поворот камеры(возвращает в исходное положение)
+        void resetRotate();
 
-    glm::mat4 getProj(int width, int height) const;
-    glm::mat4 getView() const;
-};
+        /// @brief перемещает камеру по заданным осям
+        /// @param x сдвиг камеры по x
+        /// @param y сдвиг камеры по y
+        /// @param z сдвиг камеры по z
+        void move(float x, float y, float z);
+
+        /// @brief устанавливает камеру на заданные координаты
+        /// @param x координата x
+        /// @param y координата y
+        /// @param z координата z
+        void setPos(float x, float y, float z);
+
+        /// @brief устанавливает камеру на заданные координаты
+        /// @param pos вектор с координатами
+        void setPos(const math::Vector3& pos);
+
+        /// @brief устанавливает точку в которую смотрит камера
+        /// @param x координата x
+        /// @param y координата y
+        /// @param z координата z
+        void setTarget(float x, float y, float z);
+
+        /// @brief устанавливает точку в которую смотрит камера
+        /// @param target вектор с координатами
+        void setTarget(const math::Vector3& target);
+
+        /// @brief получает позицию камеры
+        /// @param x переменная для хранения координаты x
+        /// @param y переменная для хранения координаты y
+        /// @param z переменная для хранения координаты z
+        void getPos(float& x, float& y, float& z) const;
+
+        /// @brief получает позицию камеры
+        /// @param pos вектор для хранения координат
+        void getPos(math::Vector3& pos) const;
+
+        /// @brief получает координату куда смотрит камера
+        /// @param x переменная для хранения координаты x
+        /// @param y переменная для хранения координаты y
+        /// @param z переменная для хранения координаты z
+        void getTarget(float& x, float& y, float& z) const;
+
+        /// @brief получает координату куда смотрит камера
+        /// @param target вектор для хранения координат
+        void getTarget(math::Vector3& target) const;
+
+        /// @brief создаёт матрицу проекции камеры
+        /// @param width ширина окна
+        /// @param height высота окна
+        /// @return возвращает матрицу проекции
+        math::Matrix4 getProj(int width, int height) const;
+
+        /// @brief создаёт видовую матрицу камеры
+        /// @return возвращает видовую матрицу
+        math::Matrix4 getView();
+    };
+}

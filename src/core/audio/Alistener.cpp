@@ -1,6 +1,8 @@
 #include "Alistener.hpp"
 #include <AL/al.h>
 
+using namespace core;
+
 float data[6] = { 0, 0, 0, 0, 0, 0 };
 
 void listener::setOrientation(float pX, float pY, float pZ, float upX, float upY, float upZ)

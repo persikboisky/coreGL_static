@@ -1,30 +1,29 @@
 #include "Camera.hpp"
+#include "../../math/Vectors.hpp"
+#include "../../math/Matrixes.hpp"
+#include "../../math/math.hpp"
 #include "../../window/Window.hpp"
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <iostream>
+
+using namespace core;
+using namespace math;
 
 void Camera::update()
 {
-	this->up = glm::vec3(rot * glm::vec4(this->startUP, 1));
-	this->target = glm::vec3(rot * glm::vec4(this->startTARGET, 1));
+	this->up = Vector3(rot * Vector4(this->startUP, 1));
+	this->target = Vector3(rot * Vector4(this->startTARGET, 1));
 }
 
 Camera::Camera(float posX, float posY, float posZ, float fov, float distance) :
-	distance(distance), mode(STATIC), startUP(glm::vec3(0, 1, 0)), startTARGET(glm::vec3(0, 0, -1))
-{
-	this->pos = glm::vec3(posX, posY, posZ);
-	this->fov = glm::radians(fov);
-
+	distance(distance), mode(STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	pos(Vector3(posX, posY, posZ)), fov(radians(fov))
+{ 
 	this->update();
 }
 
-Camera::Camera(glm::vec3 pos, float fov, float distance) :
-	distance(distance), mode(STATIC), startUP(glm::vec3(0, 1, 0)), startTARGET(glm::vec3(0, 0, -1))
-{
-	this->pos = glm::vec3(pos.x, pos.y, pos.z);
-	this->fov = glm::radians(fov);
-
+Camera::Camera(Vector3 pos, float fov, float distance) :
+	distance(distance), mode(STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	pos(pos), fov(radians(fov))
+{ 
 	this->update();
 }
 
@@ -35,7 +34,7 @@ void Camera::setMode(CAM_MODE mode)
 
 void Camera::setFov(float fov)
 {
-	this->fov = fov;
+	this->fov = radians(fov);
 }
 
 void Camera::setDistance(float distance)
@@ -45,16 +44,15 @@ void Camera::setDistance(float distance)
 
 void Camera::rotate(float x, float y, float z)
 {
-	this->rot = glm::rotate(this->rot, x, glm::vec3(1, 0, 0));
-	this->rot = glm::rotate(this->rot, y, glm::vec3(0, 1, 0));
-	this->rot = glm::rotate(this->rot, z, glm::vec3(0, 0, 1));
-
+	this->rot = Matrix4::getRotate(radians(x), Vector3(1, 0, 0), this->rot);
+	this->rot = Matrix4::getRotate(radians(y), Vector3(0, 1, 0), this->rot);
+	this->rot = Matrix4::getRotate(radians(z), Vector3(0, 0, 1), this->rot);
 	this->update();
 }
 
 void Camera::resetRotate()
 {
-	Camera::rot = glm::mat4(1.0f);
+	this->rot = Matrix4(1.0f);
 }
 
 void Camera::move(float x, float y, float z)
@@ -62,33 +60,30 @@ void Camera::move(float x, float y, float z)
 	this->pos.x += x;
 	this->pos.y += y;
 	this->pos.z += z;
-
-	this->update();
-}
-
-void Camera::setPos3f(glm::vec3 pos)
-{
-	this->pos = pos;
 }
 
 void Camera::setPos(float x, float y, float z)
 {
-	this->pos = glm::vec3(x, y, z);
+	this->pos.x = x;
+	this->pos.y = y;
+	this->pos.z = z;
 }
 
-void Camera::setTarget(float tX, float tY, float tZ)
+void Camera::setPos(const Vector3& pos)
 {
-	this->startTARGET = glm::vec3(tX, tY, tZ);
+	this->setPos(pos.x, pos.y, pos.z);
 }
 
-void Camera::setTarget3f(glm::vec3 target)
+void Camera::setTarget(float x, float y, float z)
 {
-	this->startTARGET = target;
+	this->target.x = x;
+	this->target.y = y;
+	this->target.z = z;
 }
 
-void Camera::getPos3f(glm::vec3& pos) const
+void Camera::setTarget(const Vector3 &target)
 {
-	pos = this->pos;
+	this->setTarget(target.x, target.y, target.z);
 }
 
 void Camera::getPos(float& x, float& y, float& z) const
@@ -98,47 +93,39 @@ void Camera::getPos(float& x, float& y, float& z) const
 	z = this->pos.z;
 }
 
-void Camera::getTarget3f(glm::vec3& target) const
+void Camera::getPos(Vector3& pos) const
 {
-	if (this->mode == DYNAMIC)
-	{
-		target = this->target;
-	}
-	else
-	{
-		target = this->pos + this->target;
-	}
+	pos.x = this->pos.x;
+	pos.y = this->pos.y;
+	pos.z = this->pos.z;
 }
 
 void Camera::getTarget(float& x, float& y, float& z) const
 {
-	glm::vec3 target;
-	if (this->mode == DYNAMIC)
-	{
-		target = this->target;
-	}
-	else
-	{
-		target = this->pos + this->target;
-	}
-
-	x = target.x;
-	y = target.y;
-	z = target.z;
+	x = this->startTARGET.x;
+	y = this->startTARGET.y;
+	z = this->startTARGET.z;
 }
 
-glm::mat4 Camera::getProj(int width, int height) const
+void Camera::getTarget(math::Vector3& target) const
+{
+	target.x = this->startTARGET.x;
+	target.y = this->startTARGET.y;
+	target.z = this->startTARGET.z;
+}
+
+Matrix4 Camera::getProj(int width, int height) const
 {
 	float aspect = (float)width / (float)height;
-	return glm::perspective(this->fov, aspect, 0.01f, this->distance);
+	return Matrix4::getPerspective(this->fov, aspect, 0.01, this->distance);
 }
 
-glm::mat4 Camera::getView() const
+Matrix4 Camera::getView()
 {
 	if (this->mode == DYNAMIC)
 	{
-		return glm::lookAt(this->pos, this->target, this->up);
+		return Matrix4::getLookAt(this->pos, this->target, this->up);
 	}
-
-	return glm::lookAt(this->pos, this->pos + this->target, this->up);
+		
+	return Matrix4::getLookAt(this->pos, this->pos + this->target, this->up);
 }

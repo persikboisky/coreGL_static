@@ -5,6 +5,8 @@
 #include <vector>
 #include <iostream>
 
+using namespace core;
+
 #pragma region ebo
 
 std::vector<unsigned int> ebo::id;
@@ -101,7 +103,7 @@ void ebo::draw(primitive Primitive, unsigned int ebo, VAO& vao, unsigned int nVe
 
 void ebo::Delete(unsigned int id)
 {
-	int index = vector::searchElemntForValue(ebo::id, id);
+	int index = vector::searchElementForValue(ebo::id, id);
 
 	if (index != -1)
 	{

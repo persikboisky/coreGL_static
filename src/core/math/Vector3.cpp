@@ -1,9 +1,13 @@
 #include "Vectors.hpp"
 #include <cmath>
 
-using namespace math;
+using namespace core::math;
+
+Vector3::Vector3() : x(0), y(0), z(0) { }
 
 Vector3::Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+
+Vector3::Vector3(const Vector4& vec4): x(vec4.x), y(vec4.y), z(vec4.z) { }
 
 Vector3 Vector3::operator+(const Vector3 &vec3)
 {

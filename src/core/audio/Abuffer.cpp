@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 
+using namespace core;
+
 unsigned int audio::Buffer::getID() const
 {
 	return this->id;

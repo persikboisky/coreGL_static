@@ -1,15 +1,9 @@
-#ifndef SRC_CORE_CORE_H_
-#define SRC_CORE_CORE_H_
+#ifndef SRC_CORE_CORE_HPP_
+#define SRC_CORE_CORE_HPP_
 
 // библиотеки
 #include <GL/glew.h>
-#include <AL/al.h>
-#include <AL/alc.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <thread>
 #include <iostream>
 
 // конфигурационный файл
@@ -19,91 +13,63 @@
 #include "window/Window.hpp"
 #include "window/Event.hpp"
 #include "window/Cursor.hpp"
+#include "graphics/commons/vao.hpp"
+#include "graphics/commons/fbo.hpp"
+#include "graphics/commons/rbo.hpp"
+#include "graphics/commons/ebo.hpp"
+#include "graphics/commons/shader.hpp"
+#include "graphics/commons/texture.hpp"
+#include "graphics/commons/Camera.hpp"
+#include "graphics/commons/font.hpp"
+#include "graphics/commons/BufferText2D.hpp"
+#include "graphics/GUI/gui_style.hpp"
+#include "graphics/GUI/GUI.hpp"
+#include "graphics/GUI/Elements/Button.hpp"
+#include "graphics/GUI/Elements/Image.hpp"
+#include "graphics/renderer/render.hpp"
+#include "graphics/renderer/Scene.hpp"
+#include "file/png.hpp"
+#include "file/text.hpp"
+#include "file/wav.hpp"
+#include "file/binModel.hpp"
 #include "util/vector.hpp"
-#include "util/string.hpp"
-#include "util/array.hpp"
 #include "util/structs.hpp"
+#include "util/array.hpp"
+#include "util/string.hpp"
 #include "math/math.hpp"
 #include "math/Vectors.hpp"
 #include "math/Matrixes.hpp"
-#include "file/png.hpp"
-#include "file/text.hpp"
-#include "file/toml_file.hpp"
-#include "file/obj_loaders.hpp"
-#include "file/mtl.hpp"
-#include "file/wav.hpp"
-#include "graphics/commons/vao.hpp"
-#include "graphics/commons/ebo.hpp"
-#include "graphics/commons/fbo.hpp"
-#include "graphics/commons/rbo.hpp"
-#include "graphics/commons/shader.hpp"
-#include "graphics/commons/Camera.hpp"
-#include "graphics/commons/texture.hpp"
-#include "graphics/commons/font.hpp"
-#include "graphics/commons/styleText.hpp"
-#include "graphics/obj/obj_compile.hpp"
-#include "graphics/obj/OBJ.hpp"
-#include "graphics/obj/obj_mesh.hpp"
-#include "graphics/GUI/GUI.hpp"
-#include "graphics/GUI/GUI_Style.hpp"
-#include "graphics/GUI/Elements/Button.hpp"
-#include "graphics/GUI/Elements/Image.hpp"
-#include "graphics/commons/BufferText2D.hpp"
 #include "audio/ADevice.hpp"
+#include "audio/Alistener.hpp"
 #include "audio/Abuffer.hpp"
 #include "audio/Asource.hpp"
-#include "audio/Alistener.hpp"
-#include "data/time.hpp"
-#include "data/info.hpp"
-#include "script/Scripts.hpp"
 
+// конфигурационные переменные
 bool coreInfo = CORE_INFO;
 const char* ExtensionScript = EXTENSION_SCRIPTS;
 
-enum primitive {
-	TRIANGLE = GL_TRIANGLES,
-	TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-	TRIANGLE_FAN = GL_TRIANGLE_FAN,
-	QUADS = GL_QUADS,
-	QUADS_STRIP = GL_QUAD_STRIP,
-	POLYGON = GL_POLYGON,
-	POINT = GL_POINTS,
-	LINE_STRIP = GL_LINE_STRIP,
-	LINE_LOOP = GL_LINE_LOOP
-};
-
-enum Key_code {
-	K_Q = GLFW_KEY_Q,
-	K_W = GLFW_KEY_W,
-	K_E = GLFW_KEY_E,
-	K_R = GLFW_KEY_R,
-	K_S = GLFW_KEY_S,
-	K_A = GLFW_KEY_A,
-	K_D = GLFW_KEY_D,
-	K_F1 = GLFW_KEY_F1,
-	K_SPACE = GLFW_KEY_SPACE,
-	K_ESCAPE = GLFW_KEY_ESCAPE,
-	K_LEFT_SHIFT = GLFW_KEY_LEFT_SHIFT,
-	K_LEFT_CONTROL = GLFW_KEY_LEFT_CONTROL
-};
-
-enum Cursor_mode {
-
-};
-
-struct core
+namespace core
 {
-	/// Инициализация ядра
-	static void Init();
+	enum primitive;
+	enum Key_code;
+	
+	struct Core
+	{
 
-	/// Прекращает работу ядра.
-	static void Terminate();
+		/// Инициализирует ядра
+		static void Init();
 
-	/// возвращает время в секундах с момента инициализации ядра
-	static double GetTime();
-};
+		/// Выключает ядро
+		static void Terminate();
 
-void core::Init()
+		/// @brief Находит время с момента инициализации
+		/// @return время с момента инициализации в секундах
+		static double GetTime();
+
+	};
+}
+
+void core::Core::Init()
 {
 	//core::date = new Time::Date();
 
@@ -121,23 +87,50 @@ void core::Init()
 	if (coreInfo) std::cout << "[0.0]      " << "OK: init glfw" << std::endl;
 }
 
-void core::Terminate()
+void core::Core::Terminate()
 {
 	shader::DeleteALL();
 	vao::DeleteALL();
 	ebo::DeleteALL();
-	fbo::DeleteALL();
-	mtl::Delete();
+	//fbo::DeleteALL();
+	//mtl::Delete();
 	texture::DeleteALL();
 	//fonts::Text2D::DeleteALL();
-	                                     
+
 	glfwTerminate();
 	//delete date;
 }
 
-double core::GetTime()
+double core::Core::GetTime()
 {
 	return glfwGetTime();
 }
 
-#endif // !SRC_CORE_CORE_H_
+enum core::primitive {
+	TRIANGLE = GL_TRIANGLES,
+	TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+	TRIANGLE_FAN = GL_TRIANGLE_FAN,
+	QUADS = GL_QUADS,
+	QUADS_STRIP = GL_QUAD_STRIP,
+	POLYGON = GL_POLYGON,
+	POINT = GL_POINTS,
+	LINE_STRIP = GL_LINE_STRIP,
+	LINE_LOOP = GL_LINE_LOOP
+};
+
+enum core::Key_code {
+	K_Q = GLFW_KEY_Q,
+	K_W = GLFW_KEY_W,
+	K_E = GLFW_KEY_E,
+	K_R = GLFW_KEY_R,
+	K_S = GLFW_KEY_S,
+	K_A = GLFW_KEY_A,
+	K_D = GLFW_KEY_D,
+	K_F1 = GLFW_KEY_F1,
+	K_SPACE = GLFW_KEY_SPACE,
+	K_ESCAPE = GLFW_KEY_ESCAPE,
+	K_LEFT_SHIFT = GLFW_KEY_LEFT_SHIFT,
+	K_LEFT_CONTROL = GLFW_KEY_LEFT_CONTROL
+};
+
+#endif // !SRC_CORE_CORE_HPP_s

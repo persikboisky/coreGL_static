@@ -1,62 +1,68 @@
 #pragma once
+#include "../../math/Vectors.hpp"
+#include "../../math/Matrixes.hpp"
 #include <string>
 #include <vector>
 
-class Shader;
-class Window;
-
-struct position_2f;
-struct size_2f;
-struct color_rgba;
-struct font;
-struct style;
-
-class BufferText2D
+namespace core
 {
-private:
-	static Shader* shader2D;
-	static unsigned int n_Buffer;
-	font* Font;
+	enum primitive;
 
-	bool vaoCompile = true;
-	std::vector<float> vertexes;
+	class Shader;
+	class Window;
 
-	unsigned int vao = 0;
-	unsigned int n_vertex = 0;
+	struct position_2f;
+	struct size_2f;
+	struct color_rgba;
+	struct font;
+	struct style;
 
-	Window* window = nullptr;
+	class BufferText2D
+	{
+	private:
+		static Shader* shader2D;
+		static unsigned int n_Buffer;
+		font* Font;
 
-public:
-	BufferText2D();
-	~BufferText2D();
+		bool vaoCompile = true;
+		std::vector<float> vertexes;
 
-	void linkFont(font& Font);
-	void linkFont(font*& Font);
+		unsigned int vao = 0;
+		unsigned int n_vertex = 0;
 
-	void linkWindow(Window& window);
-	void linkWindow(Window*& window);
+		Window* window = nullptr;
 
-	void addText(
-		std::string text,
-		float x,
-		float y,
-		float length = 1.0,
-		float c_red = 255.0,
-		float c_green = 255.0,
-		float c_blue = 255.0,
-		float c_alpha = 255.0,
-		float RowingBetweenTheSymbols = 0.0f
-	);
+	public:
+		BufferText2D();
+		~BufferText2D();
 
-	//void addText(
-	//	std::string text,
-	//	position_2f pos,
-	//	size_2f size,
-	//	color_rgba color
-	//);
+		void linkFont(font &Font);
+		void linkFont(font*& Font);
 
-	void DeleteText();
+		void linkWindow(Window& window);
+		void linkWindow(Window*& window);
 
-	void render();
-};
+		void addText(
+			std::string text,
+			float x,
+			float y,
+			float length = 1.0,
+			float c_red = 255.0,
+			float c_green = 255.0,
+			float c_blue = 255.0,
+			float c_alpha = 255.0,
+			float RowingBetweenTheSymbols = 0.0f
+		);
 
+		//void addText(
+		//	std::string text,
+		//	position_2f pos,
+		//	size_2f size,
+		//	color_rgba color
+		//);
+
+		void DeleteText();
+
+		void render();
+	};
+}

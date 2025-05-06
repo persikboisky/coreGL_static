@@ -1,30 +1,41 @@
+//#include "../../config.hpp"
+//
+//#if MODULE_GUI
+
 #include <string>
 
-class Window;
-class Button;
-class Image;
-
-struct font;
-struct GuiElementStyle;
-
-class GUI
+namespace core
 {
-private:
-	Window* addrWindow;
-	font* objFont;
 
-	static unsigned int ShaderID[2];
+	class Window;
+	class Button;
+	class Image;
 
-public:
-	GUI(Window& window, font& objFont);
-	~GUI();
+	struct font;
+	struct GuiElementStyle;
 
-	Button* button = nullptr;
-	Image* image = nullptr;
-	//Text* text = nullptr;
+	class GUI
+	{
+	private:
+		Window* addrWindow;
+		font* objFont;
 
-	void setStyle(std::string ID, GuiElementStyle style);
-	void setStyle(const char* path);
+		static unsigned int ShaderID[2];
 
-	void render();
-};
+	public:
+		GUI(Window& window, font& objFont);
+		~GUI();
+
+		Button* button = nullptr;
+		Image* image = nullptr;
+		//Text* text = nullptr;
+
+		void setStyle(std::string ID, GuiElementStyle style);
+		void setStyle(const char* path);
+
+		void render();
+	};
+
+}
+
+//#endif // MODULE_GUI

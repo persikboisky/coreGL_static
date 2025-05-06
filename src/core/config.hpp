@@ -1,13 +1,13 @@
-// РІРµСЂСЃРёСЏ openGL(4.6)
+// версия openGL(4.6)
 constexpr unsigned short VERSION_MAJOR = 4;
 constexpr unsigned short VERSION_MINOR = 6;
 
-// СЂР°Р·СЂРµС€РёС‚СЊ РјРµРЅСЏС‚СЊ 
+// разрешить менять 
 constexpr bool WINDOW_RESIZABLE = true;
 
-// РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЂР°Р·СЂРµС€Р°РµС‚ РёР·РјРµРЅСЏС‚СЊ СЂР°Р·РјРµСЂ РѕРєРЅР°(РѕРєРѕРЅ)
+// по умолчанию разрешает изменять размер окна(окон)
 constexpr bool CORE_INFO = true;
 
-// СЂР°СЃС€РёСЂРµРЅРёРµ С„Р°Р№Р»Р° СЃРєСЂРёРїС‚РѕРІ
+// расширение файла скриптов
 constexpr const char* EXTENSION_SCRIPTS = "csl";
 

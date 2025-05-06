@@ -1,10 +1,12 @@
 #include "obj_loaders.hpp"
 #include "text.hpp"
-#include "mtl.hpp"
+//#include "mtl.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
 //#include <Windows.h>
+
+using namespace core;
 
 extern bool coreInfo;
 
@@ -36,7 +38,7 @@ void obj_loaders::load(std::vector<float> &vert, std::vector<int> &face, std::ve
 	//std::cout << pathToMtl << std::endl;
 	try
 	{
-		mtl::load(pathToMtl.c_str());
+		/*mtl::load(pathToMtl.c_str());*/
 	}
 	catch (...)
 	{

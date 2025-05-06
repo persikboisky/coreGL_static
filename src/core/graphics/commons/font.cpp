@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 
+using namespace core;
+
 // путь к шрифтам
 constexpr const char* PATH_TO_TEXTURE_FONTS = "./res/fonts/";
 

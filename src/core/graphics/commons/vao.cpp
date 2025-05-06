@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace core;
+
 // настройка obj компилятора (не изменять параметры)
 #define N_ELEMENT_TO_FACE 3
 #define N_ELEMENT_TO_VERT 3
@@ -84,7 +86,7 @@ float* vao::FileOBJtoVAO(const char* pathToObj, int& sizeArray, bool normal, boo
 
 std::vector<float> vao::addElementToVVO(std::vector<float> data, int n_elementForVert, std::vector<float> democratedData, int n_democratedElementForVert)
 {
-    std::vector<float> new_vectore;
+    std::vector<float> new_vector;
 
     const unsigned char finishVertIndex = n_elementForVert + n_democratedElementForVert;
     const unsigned int finishElementIndex = data.size() + democratedData.size();
@@ -96,13 +98,13 @@ std::vector<float> vao::addElementToVVO(std::vector<float> data, int n_elementFo
     {
         while (i < finish_i)
         {
-            new_vectore.push_back(data[i]);
+            new_vector.push_back(data[i]);
             i++;
         }
 
         while (j < finish_j)
         {
-            new_vectore.push_back(democratedData[j]);
+            new_vector.push_back(democratedData[j]);
             j++;
         }
         
@@ -110,7 +112,7 @@ std::vector<float> vao::addElementToVVO(std::vector<float> data, int n_elementFo
         finish_j += n_democratedElementForVert;
     }
 
-    return new_vectore;
+    return new_vector;
 }
 
 float* vao::addElementToVAO(float* data, int size_data, int n_elementForVert, float* democratedData, int size_democratedData, int n_democratedElementForVert, int& size_VAO)
@@ -118,9 +120,9 @@ float* vao::addElementToVAO(float* data, int size_data, int n_elementForVert, fl
     std::vector<float> v_data = vector::arrayToVector_float(data, size_data);
     std::vector<float> v_democratedData = vector::arrayToVector_float(democratedData, size_democratedData);
 
-    std::vector<float> new_vectore = vao::addElementToVVO(v_data, n_elementForVert, v_democratedData, n_democratedElementForVert);
+    std::vector<float> new_vector = vao::addElementToVVO(v_data, n_elementForVert, v_democratedData, n_democratedElementForVert);
 
-    return array::vectorToArray(new_vectore, size_VAO);
+    return array::vectorToArray(new_vector, size_VAO);
 }
 
 unsigned int vao::create(float* data, int sizeOfByte)
@@ -131,7 +133,7 @@ unsigned int vao::create(float* data, int sizeOfByte)
     glGenBuffers(1, &VBO);
 
     bool flag = true;
-    int index = vector::searchElemntForValue(vao::id, 0);
+    int index = vector::searchElementForValue(vao::id, 0);
     if (index != -1 && VAO != 0)
     {
         vao::id[index] = VAO;
@@ -171,26 +173,7 @@ unsigned int vao::create(std::vector<float> data)
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
-    bool flag = true;
-    int index = vector::searchElemntForValue(vao::id, 0);
-    if (index != -1 && VAO != 0)
-    {
-        vao::id[index] = VAO;
-        flag = false;
-    }
-
-    if (flag)
-    {
-        if (VAO != 0)
-        {
-            vao::id.push_back(VAO);
-        }
-        else
-        {
-            std::cerr << "Failed create VAO: " << VAO << "\n";
-            throw "FAILED_CREATE_VAO";
-        }
-    }
+    vao::id.push_back(VAO);
 
     bind(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -213,10 +196,13 @@ void vao::addAttribute(unsigned int id, int index, int n, int size, int indentat
 
 void vao::Delete(unsigned int id)
 {
-    if (id < vao::id.size())
+    unsigned int index = vector::searchElementForValue(vao::id, id);
+
+    if (index != -1)
     {
-        vao::id[vector::searchElemntForValue(vao::id, id)] = 0;
         glDeleteVertexArrays(1, &id);
+        std::vector<unsigned int>::const_iterator iter = vao::id.cbegin();
+        vao::id.erase(iter + index);
     }
 }
 
@@ -235,11 +221,22 @@ void vao::draw(primitive Primitive, int first_vert, int count_vert)
     glDrawArrays(Primitive, first_vert, count_vert);
 }
 
+void core::vao::drawTriangle(int first_vert, int count_vert)
+{
+    glDrawArrays(GL_TRIANGLES, first_vert, count_vert);
+}
+
 void vao::draw(primitive Primitive, unsigned int VAO, int first_vert, int count_vert)
 {
     bind(VAO);
     glDrawArrays(Primitive, first_vert, count_vert);
     //bind(0);
+}
+
+void core::vao::drawTriangle(unsigned int VAO, int first_vert, int count_vert)
+{
+    bind(VAO);
+    glDrawArrays(GL_TRIANGLES, first_vert, count_vert);
 }
 
 VAO::VAO(float* data, int sizeOfByte, int elementToVert) : 

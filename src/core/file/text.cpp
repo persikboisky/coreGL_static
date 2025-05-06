@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iostream>
 
+using namespace core;
+
 extern bool coreInfo;
 
 std::string text::load(const char* path)

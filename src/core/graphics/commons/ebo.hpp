@@ -2,52 +2,55 @@
 
 #include <vector>
 
-enum primitive;
-
-class VAO;
-
-struct ebo
+namespace core
 {
-private:
-	static std::vector<unsigned int> id;
-	static unsigned int SelectID;
+	enum primitive;
 
-	static unsigned int SelectVAO;
+	class VAO;
 
-public:
-	static void bind(unsigned int id);
+	struct ebo
+	{
+	private:
+		static std::vector<unsigned int> id;
+		static unsigned int SelectID;
 
-	static unsigned int create(unsigned int* indices, unsigned int sizeOfByte);
-	static unsigned int create(std::vector<unsigned int> indices);
+		static unsigned int SelectVAO;
 
-	static void draw(primitive Primitive, unsigned int nVert);
-	static void draw(primitive Primitive, unsigned int ebo, unsigned int nVert);
-	static void draw(primitive Primitive, unsigned int ebo, unsigned int vao, unsigned int nVert);
-	static void draw(primitive Primitive, unsigned int ebo, VAO& vao, unsigned int nVert);
+	public:
+		static void bind(unsigned int id);
 
-	static void Delete(unsigned int id);
-	static void DeleteALL();
-};
+		static unsigned int create(unsigned int* indices, unsigned int sizeOfByte);
+		static unsigned int create(std::vector<unsigned int> indices);
 
-class EBO : private ebo
-{
-private:
-	unsigned int vao;
-	VAO* Vao;
+		static void draw(primitive Primitive, unsigned int nVert);
+		static void draw(primitive Primitive, unsigned int ebo, unsigned int nVert);
+		static void draw(primitive Primitive, unsigned int ebo, unsigned int vao, unsigned int nVert);
+		static void draw(primitive Primitive, unsigned int ebo, VAO& vao, unsigned int nVert);
 
-	unsigned int id;
-	unsigned int nVert;
+		static void Delete(unsigned int id);
+		static void DeleteALL();
+	};
 
-	char typeVao = ' ';
+	class EBO : private ebo
+	{
+	private:
+		unsigned int vao;
+		VAO* Vao;
 
-public:
-	EBO(unsigned int* indices, unsigned int sizeOfByte);
-	EBO(std::vector<unsigned int> indices);
+		unsigned int id;
+		unsigned int nVert;
 
-	~EBO();
+		char typeVao = ' ';
 
-	void linkVAO(unsigned int vao);
-	void linkVAO(VAO& vao);
+	public:
+		EBO(unsigned int* indices, unsigned int sizeOfByte);
+		EBO(std::vector<unsigned int> indices);
 
-	void draw(primitive Primitive, unsigned int nVert = 0);
-};
+		~EBO();
+
+		void linkVAO(unsigned int vao);
+		void linkVAO(VAO& vao);
+
+		void draw(primitive Primitive, unsigned int nVert = 0);
+	};
+}

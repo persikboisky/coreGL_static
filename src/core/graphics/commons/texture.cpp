@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace core;
+
 extern bool coreInfo;
 
 #pragma region texture
@@ -17,34 +19,24 @@ void texture::bind(unsigned int id, unsigned int Sample)
     glBindTexture(GL_TEXTURE_2D, id);
 }
 
-unsigned int texture::load(unsigned char* image, int width, int height, int channels)
+unsigned int texture::load(unsigned char *image, int width, int height, int channels)
 {
-    //glActiveTexture(GL_TEXTURE0);
+    // glActiveTexture(GL_TEXTURE0);
     GLuint Texture;
     glGenTextures(1, &Texture);
 
-    bool flag = true;
-    int index = vector::searchElemntForValue(id, 0);
-
-    if (index != -1 && Texture != 0)
+    if (Texture >= 0)
     {
-        id[index] = Texture;
-        flag = false;
+        texture::id.push_back(Texture);
+        if (coreInfo)
+        {
+            std::cout << "[" << glfwGetTime() << "] " << "OK: create texture id = " << Texture << std::endl;
+        }
     }
-
-    if (flag)
+    else
     {
-        if (Texture != 0)
-        {
-            texture::id.push_back(Texture);
-            if (coreInfo) std::cout << "[" << glfwGetTime() << "] " <<
-                "OK: create texture id = " << Texture << std::endl;
-        }
-        else
-        {
-            std::cerr << "Failed create Texture" << "\n";
-            throw "FAILED_CREATE_VAO";
-        }
+        std::cerr << "Failed create Texture" << "\n";
+        throw "FAILED_CREATE_VAO";
     }
 
     bind(Texture);
@@ -68,25 +60,25 @@ unsigned int texture::load(unsigned char* image, int width, int height, int chan
 
     bind(0);
 
-    //glEnable(GL_CULL_FACE);
+    // glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     return Texture;
 }
 
-unsigned int texture::load(std::vector<unsigned char>& png_code, int width, int height, int channels)
+unsigned int texture::load(std::vector<unsigned char> &png_code, int width, int height, int channels)
 {
     return texture::load(png_code.data(), width, height, channels);
 }
 
-unsigned int texture::load(const char* path)
+unsigned int texture::load(const char *path)
 {
     int t_width;
     int t_height;
     int t_channels;
 
-    unsigned char* text = png::load(path, t_width, t_height, t_channels);
+    unsigned char *text = png::load(path, t_width, t_height, t_channels);
     unsigned int texture_id = load(text, t_width, t_height, t_channels);
 
     png::Delete(text);
@@ -96,7 +88,14 @@ unsigned int texture::load(const char* path)
 
 void texture::Delete(unsigned int id)
 {
-    glDeleteTextures(1, &id);
+    unsigned int index = vector::searchElementForValue(texture::id, id);
+
+    if (index != -1)
+    {
+        glDeleteTextures(1, &id);
+        std::vector<unsigned int>::const_iterator iter = texture::id.cbegin();
+        texture::id.erase(iter + index);
+    }
 }
 
 void texture::DeleteALL()
@@ -104,24 +103,24 @@ void texture::DeleteALL()
     for (int i = 0; i < id.size(); i++)
     {
         glDeleteTextures(1, &id[i]);
-        //id[i] = 0;
-        id.clear();
+        // id[i] = 0;
     }
+    id.clear();
 }
 #pragma endregion texture
 
 #pragma region Texture
-Texture::Texture(unsigned char* png_code, int width, int height, int channels)
+Texture::Texture(unsigned char *png_code, int width, int height, int channels)
 {
     this->id = texture::load(png_code, width, height, channels);
 }
 
-Texture::Texture(std::vector<unsigned char>& png_code, int width, int height, int channels)
+Texture::Texture(std::vector<unsigned char> &png_code, int width, int height, int channels)
 {
     this->id = texture::load(png_code.data(), width, height, channels);
 }
 
-Texture::Texture(const char* path)
+Texture::Texture(const char *path)
 {
     this->id = texture::load(path);
 }

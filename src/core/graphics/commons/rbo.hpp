@@ -2,22 +2,25 @@
 
 #include <vector>
 
-struct rbo
+namespace core
 {
-private:
-	static std::vector<unsigned int> id;
-	static unsigned int SelectID;
+	struct rbo
+	{
+	private:
+		static std::vector<unsigned int> id;
+		static unsigned int SelectID;
 
-public:
-	static void bind(unsigned int id);
+	public:
+		static void bind(unsigned int id);
 
-	static unsigned int create();
+		static unsigned int create();
 
-	static void Delete(unsigned int id);
-	static void DeleteALL();
-};
+		static void Delete(unsigned int id);
+		static void DeleteALL();
+	};
 
-class RBO : private rbo
-{
+	class RBO : private rbo
+	{
 
-};
+	};
+}

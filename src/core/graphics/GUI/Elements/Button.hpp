@@ -1,48 +1,52 @@
 #include <vector>
 #include <string>
 
-struct GuiElementStyle;
-class Window;
-class VAO;
-class BufferText2D;
-class font;
-
-class Button
+namespace core
 {
-private:
-	std::vector<std::string> vID;
-	std::vector<GuiElementStyle> vStyle;
-	std::vector<void(*)()> vFunction;
-	std::vector<bool> vActive;
-	std::vector<bool> vHover;
 
-	unsigned int nButton = 0;
+	struct GuiElementStyle;
+	class Window;
+	class VAO;
+	class BufferText2D;
+	class font;
 
-	Window* addrWindow = nullptr;
-	BufferText2D* BT2D = nullptr;
-	font* Font = nullptr;
+	class Button
+	{
+	private:
+		std::vector<std::string> vID;
+		std::vector<GuiElementStyle> vStyle;
+		std::vector<void(*)()> vFunction;
+		std::vector<bool> vActive;
+		std::vector<bool> vHover;
 
-	void compileVAO();
-	bool flagCompileVAO = false;
+		unsigned int nButton = 0;
 
-	unsigned int vaoID = 0;
+		Window* addrWindow = nullptr;
+		BufferText2D* BT2D = nullptr;
+		font* Font = nullptr;
 
-public:
-	Button(Window& window, font& addrFont);
-	~Button();
+		void compileVAO();
+		bool flagCompileVAO = false;
 
-	void add(
-		GuiElementStyle style,
-		void(*function)() = nullptr,
-		std::string ID = "button"
-	);
+		unsigned int vaoID = 0;
 
-	void setStyle(std::string ID, GuiElementStyle style);
-	//void setPos(std::string ID, float x, float y);
+	public:
+		Button(Window& window, font& addrFont);
+		~Button();
 
-	void Delete(std::string ID);
-	void DeleteALL();
+		void add(
+			GuiElementStyle style,
+			void(*function)() = nullptr,
+			std::string ID = "button"
+		);
 
-	void update(double mouseX, double mouseY, bool LBM);
-	void render();
-};
+		void setStyle(std::string ID, GuiElementStyle style);
+		//void setPos(std::string ID, float x, float y);
+
+		void Delete(std::string ID);
+		void DeleteALL();
+
+		void update(double mouseX, double mouseY, bool LBM);
+		void render();
+	};
+}

@@ -4,6 +4,8 @@
 #include <AL/al.h>
 #include <iostream>
 
+using namespace core;
+
 audio::Source::Source()
 {
 	alGenSources(1, &this->id);

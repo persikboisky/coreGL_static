@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 
+using namespace core;
+
 std::vector<unsigned int> rbo::id;
 unsigned int rbo::SelectID = 0;
 
@@ -30,7 +32,7 @@ unsigned int rbo::create()
 
 void rbo::Delete(unsigned int id)
 {
-	unsigned int index = vector::searchElemntForValue(rbo::id, id);
+	unsigned int index = vector::searchElementForValue(rbo::id, id);
 
 	if (index != -1)
 	{

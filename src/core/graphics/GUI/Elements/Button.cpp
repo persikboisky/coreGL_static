@@ -11,15 +11,12 @@
 #include <vector>
 #include <iostream>
 
-enum primitive
-{
-	TRIANGLE = GL_TRIANGLES
-};
+using namespace core;
 
 static void addVertexesButton(
 	std::vector<float> &vec,
 	position_4f data,
-	color_rgba color
+	RGBA color
 )
 {
 	vec.push_back(data.x);
@@ -176,7 +173,7 @@ void Button::compileVAO()
 			this->vStyle[index].size.height
 		);
 
-		color_rgba background;
+		RGBA background;
 		if (this->vActive[index])
 		{
 			background = this->vStyle[index].activeBackground;
@@ -259,6 +256,6 @@ void Button::render()
 	}
 
 	vao::bind(this->vaoID);
-	vao::draw(TRIANGLE, 0, this->nButton * 6);
+	vao::drawTriangle(0, this->nButton * 6);
 	this->BT2D->render();
 }

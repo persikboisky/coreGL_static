@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+using namespace core;
+
 extern bool coreInfo;
 
 bool Window::flagGLewInit = true;

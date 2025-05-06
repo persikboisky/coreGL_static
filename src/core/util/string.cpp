@@ -3,9 +3,11 @@
 #include <string>
 #include <iostream>
 
+using namespace core;
+
 const std::string end = "\n";
 
-std::string search(std::string file_serch, std::string file_code)
+static std::string search(std::string file_serch, std::string file_code)
 {
 	std::string result = "";
 

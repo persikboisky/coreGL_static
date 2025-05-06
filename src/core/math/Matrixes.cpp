@@ -3,7 +3,7 @@
 #include "math.hpp"
 #include <cmath>
 
-using namespace math;
+using namespace core::math;
 
 Matrix4::Matrix4(float diagonal)
 {
@@ -78,7 +78,7 @@ auto Matrix4::operator*(Vector4 vec4) -> Vector4
     return Matrix4::multiply(vec4, this->mat);
 }
 
-void math::Matrix4::operator*=(Matrix4 mat4)
+void Matrix4::operator*=(Matrix4 mat4)
 {
     Matrix4 mat = mat4 * Matrix4(this->mat);
     for (unsigned int index = 0; index < 16; index++)
@@ -87,7 +87,7 @@ void math::Matrix4::operator*=(Matrix4 mat4)
     }
 }
 
-Matrix4 Matrix4::getScale(Vector3 vecScale)
+Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4& mat4)
 {
     float ScaleMat[16] = {
         vecScale.x, 0, 0, 0,
@@ -96,10 +96,10 @@ Matrix4 Matrix4::getScale(Vector3 vecScale)
         0, 0, 0, 1
     };
 
-    return Matrix4(ScaleMat);
+    return Matrix4(ScaleMat) * mat4;
 }
 
-Matrix4 math::Matrix4::getTranslate(Vector3 vecTranslate)
+Matrix4 Matrix4::getTranslate(Vector3 vecTranslate)
 {
     float TranslateMat[16] = {
         1, 0, 0, 0,
@@ -111,7 +111,7 @@ Matrix4 math::Matrix4::getTranslate(Vector3 vecTranslate)
     return Matrix4(TranslateMat);
 }
 
-Matrix4 Matrix4::getRotate(float angle, const Vector3& axises)
+Matrix4 Matrix4::getRotate(float angle, const Vector3& axises, const Matrix4& mat4)
 {
     const float COS = cos(angle);
     const float SIN = sin(angle);
@@ -124,9 +124,9 @@ Matrix4 Matrix4::getRotate(float angle, const Vector3& axises)
     };
 
     float TranslateMatY[16] = {
-        COS, -SIN, 0, 0,
+        COS, 0, -SIN, 0,
         0, 1, 0, 0,
-        SIN, COS, 0, 0,
+        SIN, 0, COS, 0,
         0, 0, 0, 1
     };
 
@@ -154,7 +154,7 @@ Matrix4 Matrix4::getRotate(float angle, const Vector3& axises)
         rotate *= Matrix4(TranslateMatZ);
     }
 
-    return Matrix4(rotate);
+    return Matrix4(rotate) * mat4;
 }
 
 Matrix4 Matrix4::getPerspective(float fovToRadians, float aspect, float near, float far)
@@ -171,7 +171,7 @@ Matrix4 Matrix4::getPerspective(float fovToRadians, float aspect, float near, fl
     return Matrix4(perspective);
 }
 
-Matrix4 math::Matrix4::getLookAt(Vector3 pos, Vector3 target, Vector3 up)
+Matrix4 Matrix4::getLookAt(Vector3 pos, Vector3 target, Vector3 up)
 {
     Vector3 zaxis = Vector3::normalize(target - pos);
     Vector3 xaxis = Vector3::normalize(Vector3::cross(up, zaxis));

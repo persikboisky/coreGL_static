@@ -1,8 +1,9 @@
 #include "Vectors.hpp"
 #include <cmath>
 
-using namespace math;
+using namespace core::math;
 
+Vector2::Vector2() : x(0), y(0) { }
 Vector2::Vector2(float x, float y) : x(x), y(y) {}
 Vector2::Vector2(const Vector2& vec2) : x(vec2.x), y(vec2.y) {}
 

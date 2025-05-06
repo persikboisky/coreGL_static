@@ -3,54 +3,60 @@
 
 #include <vector>
 
-enum primitive;
-
-struct vao
+namespace core
 {
-private:
-	static std::vector<unsigned int> id;
-	static unsigned int selectID;
+	enum primitive;
 
-protected:
-	static unsigned int getSelectId();
+	struct vao
+	{
+	private:
+		static std::vector<unsigned int> id;
+		static unsigned int selectID;
 
-public:
-	static void bind(unsigned int id);
+	protected:
+		static unsigned int getSelectId();
 
-	static std::vector<float> FileOBJtoVVO(const char* pathToObj, bool normal = false, bool textCoord = false);
-	static float* FileOBJtoVAO(const char* pathToObj, int& sizeArray, bool normal, bool textCoord);
+	public:
+		static void bind(unsigned int id);
 
-	static std::vector<float> addElementToVVO(std::vector<float> data, int n_elementForVert, std::vector<float> democratedData, int n_democratedElementForVert);
-	static float* addElementToVAO(float* data, int size_data, int n_elementForVert, float* democratedData, int size_democratedData, int n_democratedElementForVert, int& size_VAO);
+		static std::vector<float> FileOBJtoVVO(const char* pathToObj, bool normal = false, bool textCoord = false);
+		static float* FileOBJtoVAO(const char* pathToObj, int& sizeArray, bool normal, bool textCoord);
 
-	static unsigned int create(float* data, int sizeOfByte);
-	static unsigned int create(std::vector<float> data);
+		static std::vector<float> addElementToVVO(std::vector<float> data, int n_elementForVert, std::vector<float> democratedData, int n_democratedElementForVert);
+		static float* addElementToVAO(float* data, int size_data, int n_elementForVert, float* democratedData, int size_democratedData, int n_democratedElementForVert, int& size_VAO);
 
-	static void addAttribute(unsigned int id, int index, int n, int size, int indentation);
+		static unsigned int create(float* data, int sizeOfByte);
+		static unsigned int create(std::vector<float> data);
 
-	static void Delete(unsigned int id);
-	static void DeleteALL();
+		static void addAttribute(unsigned int id, int index, int n, int size, int indentation);
 
-	static void draw(primitive Primitive, int first_vert, int count_vert);
-	static void draw(primitive Primitive, unsigned int VAO, int first_vert, int count_vert);
-};
+		static void Delete(unsigned int id);
+		static void DeleteALL();
 
-class VAO: private vao
-{
-private:
-	unsigned int id = 0;
-	unsigned int elementToVert;
-	int size;
+		static void draw(primitive Primitive, int first_vert, int count_vert);
+		static void drawTriangle(int first_vert, int count_vert);
 
-public:
-	VAO(float* data, int sizeOfByte, int elementToVert);
-	VAO(std::vector<float> data, int elementToVert);
-	~VAO();
+		static void draw(primitive Primitive, unsigned int VAO, int first_vert, int count_vert);
+		static void drawTriangle(unsigned int VAO, int first_vert, int count_vert);
+	};
 
-	void bind() const;
+	class VAO : private vao
+	{
+	private:
+		unsigned int id = 0;
+		unsigned int elementToVert;
+		int size;
 
-	void addAttribute(int index, int n, int indentation) const;
-	void draw(primitive Primitive, int first_vert = 0, int count_vert = 0) const;
-};
+	public:
+		VAO(float* data, int sizeOfByte, int elementToVert);
+		VAO(std::vector<float> data, int elementToVert);
+		~VAO();
 
+		void bind() const;
+
+		void addAttribute(int index, int n, int indentation) const;
+		void draw(primitive Primitive, int first_vert = 0, int count_vert = 0) const;
+	};
+
+}
 #endif // !SRC_CORE_GRAPHICS_VAO_HPP_

@@ -7,20 +7,23 @@
 struct ALCdevice;
 struct ALCcontext;
 
-namespace audio
+namespace core
 {
-	class Device
+	namespace audio
 	{
-	private:
-		ALCdevice* device;
-		ALCcontext* context;
+		class Device
+		{
+		private:
+			ALCdevice* device;
+			ALCcontext* context;
 
-	public:
-		Device();
-		~Device();
+		public:
+			Device();
+			~Device();
 
-		void setContext();
-	};
+			void setContext();
+		};
+	}
 }
 
 #endif // !SRC_CORE_AUDIO_DEVICE_HPP_

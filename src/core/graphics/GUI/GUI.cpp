@@ -9,6 +9,8 @@
 #include "../commons/shader.hpp"
 #include "../commons/font.hpp"
 
+using namespace core;
+
 // путь к шейдерам для интерфейса
 constexpr const char* PATH_TO_VERTEX_SHADER[2] = {
 	"./res/gui/main_gui_v.glsl",

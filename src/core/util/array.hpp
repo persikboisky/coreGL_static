@@ -1,7 +1,9 @@
 #include <vector>
 
-namespace array
+namespace core
 {
-
-	float* vectorToArray(std::vector<float> vector, int& sizeAr);
+	namespace array
+	{
+		float* vectorToArray(std::vector<float> vector, int& sizeAr);
+	}
 }

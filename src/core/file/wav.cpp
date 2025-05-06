@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+using namespace core;
+
 extern bool coreInfo;
 const bool DEBUG = coreInfo;
 

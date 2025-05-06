@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+using namespace core;
+
 extern bool coreInfo;
 
 double cursor::getCordCursorX(GLFWwindow* window)
@@ -100,9 +102,9 @@ Cursor::custom_cursor::~custom_cursor()
 	glfwDestroyCursor(this->cursor_objs);
 }
 
-Cursor::custom_cursor* Cursor::create(const char* path, int x, int y)
+Cursor::custom_cursor Cursor::create(const char* path, int x, int y)
 {
-	return new Cursor::custom_cursor(path, x, y, this->window);
+	return Cursor::custom_cursor(path, x, y, this->window);
 }
 
 void Cursor::custom_cursor::use(GLFWwindow* window)

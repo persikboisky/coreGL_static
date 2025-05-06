@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+using namespace core;
+
 bool Key[MAX_KEY_CODE];
 
 static void key_callbac(GLFWwindow* window, int key, int scancode, int action, int mods)

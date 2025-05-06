@@ -3,29 +3,32 @@
 #include <vector>
 #include <string>
 
-class VAO;
-class Texture;
-
-struct GUIstyle;
-
-class Image
+namespace core
 {
-private:
-	std::vector<std::string> vID;
-	std::vector<GUIstyle> vStyle;
-	std::vector<unsigned int> texture;
+	class VAO;
+	class Texture;
 
-	void compileVAO();
-	bool flagCompileVAO = false;
+	struct GUIstyle;
 
-	unsigned int vaoID = 0;
+	class Image
+	{
+	private:
+		std::vector<std::string> vID;
+		std::vector<GUIstyle> vStyle;
+		std::vector<unsigned int> texture;
 
-public:
-	void add(
-		GUIstyle style,
-		std::string ID = "image"
-	);
+		void compileVAO();
+		bool flagCompileVAO = false;
 
-	void render();
-};
+		unsigned int vaoID = 0;
+
+	public:
+		void add(
+			GUIstyle style,
+			std::string ID = "image"
+		);
+
+		void render();
+	};
+}
 

@@ -7,22 +7,43 @@ enum Key_code;
 struct GLFWwindow;
 typedef void (*GLFWkeyfun)(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-class Event
+namespace core
 {
-private:
-	GLFWwindow* window;
-	//void key_callbac(GLFWwindow* window, int key, int scancode, int action, int mods);
-	void setCallbackKey(GLFWwindow* window, GLFWkeyfun callback);
+	class Event
+	{
+	private:
+		GLFWwindow* window;
+		//void key_callbac(GLFWwindow* window, int key, int scancode, int action, int mods);
+		void setCallbackKey(GLFWwindow* window, GLFWkeyfun callback);
 
-public:
-	Event(GLFWwindow& addrWindow);
-	
-	void update();
-	bool close();
-	bool GetMouseLeftButton();
-	bool GetMouseRightButton();
-	bool getKey(Key_code key);
-	bool getKey(int key);
-};
+	public:
+		Event(GLFWwindow& addrWindow);
+
+		/// @brief обновляет список событий
+		void update();
+
+		/// @brief проверяет событие закрытия окна
+		/// @return true - если сработало событие на закрытие окна, иначе false
+		bool close();
+
+		/// @brief проверяет нажата ли ЛКМ
+		/// @return true - нажата, false - отпущена
+		bool GetMouseLeftButton();
+
+		/// @brief проверяет нажата ли ПКМ
+		/// @return true - нажата, false - отпущена
+		bool GetMouseRightButton();
+
+		/// @brief Проверяет состояние клавиши
+		/// @param key название клавиши (Пример: K_ESCAPE, K_W, K_LEFT_SHIFT и т.д.)
+		/// @return true - нажата, false - отпущена
+		bool getKey(Key_code key);
+
+		/// @brief Проверяет состояние клавиши
+		/// @param key номер клавиши соответсвует стандарту библиотеки GLFW
+		/// @return true - нажата, false - отпущена
+		bool getKey(int key);
+	};
+}
 
 #endif // !SRC_CORE_WINDOW_EVENT_HPP_

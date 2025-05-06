@@ -1,19 +1,21 @@
 #ifndef SRC_CORE_AUDIO_ABUFFER_HPP_
 #define SRC_CORE_AUDIO_ABUFFER_HPP_
 
-namespace audio
+namespace core
 {
-	class Buffer
+	namespace audio
 	{
-	private:
-		unsigned int id;
+		class Buffer
+		{
+		private:
+			unsigned int id;
 
-	public:
-		unsigned int getID() const;
+		public:
+			unsigned int getID() const;
 
-		Buffer(const char* path);
-		~Buffer();
-	};
+			Buffer(const char* path);
+			~Buffer();
+		};
+	}
 }
-
 #endif // !SRC_CORE_AUDIO_ABUFFER_HPP_
