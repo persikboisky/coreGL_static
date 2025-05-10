@@ -87,10 +87,10 @@ namespace core
 
 	enum CAM_MODE
 	{
-		/// @brief Камера смотрит в одну точку
+		/// @brief пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		CAM_DYNAMIC,
 
-		/// @brief Камера смотрит в одно направление
+		/// @brief пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		CAM_STATIC,
 
 		CAM_PLAYER
@@ -115,6 +115,13 @@ namespace core
 		POSITIVE_WINDOW_COORD,
 		RELATIVE_COORD,
 		POSITIVE_RELATIVE_COORD
+	};
+
+	enum Buffer
+	{
+		COLOR_BUFFER = 1,
+		DEPTH_BUFFER = 2,
+		NONE = 0
 	};
 }
 

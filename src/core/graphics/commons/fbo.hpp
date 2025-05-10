@@ -1,18 +1,13 @@
-#pragma once
+#ifndef SRC_CORE_GRAPHICS_COMMONS_FBO_HPP_
+#define SRC_CORE_GRAPHICS_COMMONS_FBO_HPP_
 
+#include "../../util/type.hpp"
 #include <vector>
 
 namespace core
 {
 
 	struct RGBA;
-
-	enum Buffer
-	{
-		COLOR_BUFFER = 1,
-		DEPTH_BUFFER = 2,
-		NONE = 0
-	};
 
 	struct fbo
 	{
@@ -32,6 +27,10 @@ namespace core
 		static void setColor(RGBA color);
 		static void setColor(float red, float green, float blue, float alpha);
 
+		/// @brief чистит указанный(ные) буфер(ы)
+		/// @param buffer1 буфер
+		/// @param beffer2 буфер (необязательно)
+		/// @param buffer3 буфер (необязательно)
 		static void clearBuffers(Buffer buffer1, Buffer beffer2 = NONE, Buffer buffer3 = NONE);
 
 		static unsigned int create();
@@ -44,7 +43,8 @@ namespace core
 
 	class FBO : private fbo
 	{
-
 	};
 
 }
+
+#endif // !SRC_CORE_GRAPHICS_COMMONS_FBO_HPP_

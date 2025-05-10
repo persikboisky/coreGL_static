@@ -82,10 +82,12 @@ void Turtle::setCoordMode(TYPE_COORD typeCoord)
 
 void Turtle::move()
 {
+	const float A = 0.001f;
+
 	this->updateVao = true;
 
-	float velX = 0.001 * sin(math::radians(this->angle - 90.0f));
-	float velY = 0.001 * cos(math::radians(this->angle - 90.0f)) * ((float)this->window->width / (float)this->window->height);
+	float velX = A * sin(math::radians(this->angle - 90.0f));
+	float velY = A * cos(math::radians(this->angle - 90.0f)) * ((float)this->window->width / (float)this->window->height);
 
 	this->x += velX;
 	this->y += velY;//(1.0f / (float)this->window->height) 
@@ -96,8 +98,6 @@ void Turtle::move()
 	this->coordPoint[this->width.size() - 1].push_back(color.red / 255.0f);
 	this->coordPoint[this->width.size() - 1].push_back(color.green / 255.0f);
 	this->coordPoint[this->width.size() - 1].push_back(color.blue / 255.0f);
-
-	std::cout << this->x << ":" << this->y << std::endl;
 }
 
 void Turtle::draw()

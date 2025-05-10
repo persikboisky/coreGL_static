@@ -19,7 +19,7 @@ void ebo::bind(unsigned int id)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
 }
 
-unsigned int ebo::create(unsigned int* indices, unsigned int sizeOfByte)
+unsigned int ebo::create(unsigned int* indexes, unsigned int sizeOfByte)
 {
 	unsigned int EBO;
 	glGenBuffers(1, &EBO);
@@ -31,14 +31,14 @@ unsigned int ebo::create(unsigned int* indices, unsigned int sizeOfByte)
 	}
 
 	ebo::bind(EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfByte, indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfByte, indexes, GL_STATIC_DRAW);
 	ebo::bind(0);
 
 	ebo::id.push_back(EBO);
 	return EBO;
 }
 
-unsigned int ebo::create(std::vector<unsigned int> indices)
+unsigned int ebo::create(std::vector<unsigned int> indexes)
 {
 	unsigned int EBO;
 	glGenBuffers(1, &EBO);
@@ -50,7 +50,7 @@ unsigned int ebo::create(std::vector<unsigned int> indices)
 	}
 
 	ebo::bind(EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(indices[0]), indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexes.size() * sizeof(indexes[0]), indexes.data(), GL_STATIC_DRAW);
 	ebo::bind(0);
 
 	ebo::id.push_back(EBO);
@@ -136,16 +136,16 @@ void ebo::setWidthLine(float width)
 
 #pragma region EBO
 
-EBO::EBO(unsigned int* indices, unsigned int sizeOfByte) : 
+EBO::EBO(unsigned int* indexes, unsigned int sizeOfByte) : 
 	vao(0), Vao(nullptr), id(0), nVert(sizeOfByte / sizeof(unsigned int))
 {
-	this->id = ebo::create(indices, sizeOfByte);
+	this->id = ebo::create(indexes, sizeOfByte);
 }
 
-EBO::EBO(std::vector<unsigned int> indices) : 
-	vao(0), Vao(nullptr), id(0), nVert(indices.size())
+EBO::EBO(std::vector<unsigned int> indexes) : 
+	vao(0), Vao(nullptr), id(0), nVert(indexes.size())
 {
-	this->id = ebo::create(indices);
+	this->id = ebo::create(indexes);
 }
 
 EBO::~EBO()

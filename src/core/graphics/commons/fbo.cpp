@@ -1,6 +1,6 @@
 #include "fbo.hpp"
 #include "../../util/vector.hpp"
-#include "../../util/structs.hpp"
+#include "../../util/type.hpp"
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
