@@ -99,7 +99,7 @@ Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4& mat4)
     return Matrix4(ScaleMat) * mat4;
 }
 
-Matrix4 Matrix4::getTranslate(Vector3 vecTranslate)
+Matrix4 Matrix4::getTranslate(Vector3 vecTranslate, const Matrix4& mat4)
 {
     float TranslateMat[16] = {
         1, 0, 0, 0,
@@ -108,7 +108,7 @@ Matrix4 Matrix4::getTranslate(Vector3 vecTranslate)
         vecTranslate.x, vecTranslate.y, vecTranslate.z, 1
     };  
 
-    return Matrix4(TranslateMat);
+    return Matrix4(TranslateMat) * mat4;
 }
 
 Matrix4 Matrix4::getRotate(float angle, const Vector3& axises, const Matrix4& mat4)

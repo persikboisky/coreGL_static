@@ -51,7 +51,7 @@ namespace core
 			/// @brief создаёт матрицу перемещения
 			/// @param vecTranslate вектор перемещения
 			/// @return матрица перемещения
-			static Matrix4 getTranslate(Vector3 vecTranslate);
+			static Matrix4 getTranslate(Vector3 vecTranslate, const Matrix4& mat4 = Matrix4(1.0f));
 
 			/// @brief создаёт матрицу поворота
 			/// @param angle угол поворота в радианах

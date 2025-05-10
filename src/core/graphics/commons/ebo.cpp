@@ -1,6 +1,7 @@
 #include "ebo.hpp"
 #include "vao.hpp"
 #include "../../util/vector.hpp"
+#include "../../util/type.hpp"
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
@@ -56,12 +57,12 @@ unsigned int ebo::create(std::vector<unsigned int> indices)
 	return EBO;
 }
 
-void ebo::draw(primitive Primitive, unsigned int nVert)
+void ebo::draw(PRIMITIVE Primitive, unsigned int nVert)
 {
-	glDrawElements(Primitive, nVert, GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(convertPrimitive(Primitive), nVert, GL_UNSIGNED_INT, (void*)0);
 }
 
-void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int nVert)
+void ebo::draw(PRIMITIVE Primitive, unsigned int ebo, unsigned int nVert)
 {
 	if (ebo::SelectID != ebo)
 	{
@@ -72,7 +73,7 @@ void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int nVert)
 	ebo::draw(Primitive, nVert);
 }
 
-void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int vao, unsigned int nVert)
+void ebo::draw(PRIMITIVE Primitive, unsigned int ebo, unsigned int vao, unsigned int nVert)
 {
 	if (ebo::SelectID != ebo)
 	{
@@ -89,7 +90,7 @@ void ebo::draw(primitive Primitive, unsigned int ebo, unsigned int vao, unsigned
 	ebo::draw(Primitive, nVert);
 }
 
-void ebo::draw(primitive Primitive, unsigned int ebo, VAO& vao, unsigned int nVert)
+void ebo::draw(PRIMITIVE Primitive, unsigned int ebo, VAO& vao, unsigned int nVert)
 {
 	if (ebo::SelectID != ebo)
 	{
@@ -119,6 +120,16 @@ void ebo::DeleteALL()
 	{
 		glDeleteBuffers(1, &ebo::id[index]);
 	}
+}
+
+void ebo::setSizePoints(float sizePixel)
+{
+	vao::setSizePoints(sizePixel);
+}
+
+void ebo::setWidthLine(float width)
+{
+	vao::setWidthLine(width);
 }
 
 #pragma endregion ebo
@@ -154,7 +165,7 @@ void EBO::linkVAO(VAO& vao)
 	this->typeVao = 'V';
 }
 
-void EBO::draw(primitive Primitive, unsigned int nVert)
+void EBO::draw(PRIMITIVE Primitive, unsigned int nVert)
 {
 	switch (this->typeVao)
 	{
@@ -176,7 +187,19 @@ void EBO::draw(primitive Primitive, unsigned int nVert)
 	}
 
 	ebo::bind(this->id);
+	vao::setSizePoints(this->sizePoint);
+	vao::setWidthLine(this->widthLine);
 	ebo::draw(Primitive, nVert);
+}
+
+void EBO::setSizePoints(float sizePixel)
+{
+	this->sizePoint = sizePoint;
+}
+
+void EBO::setWidthLine(float width)
+{
+	this->widthLine = width;
 }
 
 #pragma endregion EBO

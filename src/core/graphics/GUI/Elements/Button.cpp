@@ -1,7 +1,7 @@
 #include "Button.hpp"
 #include "../GUI_Style.hpp"
 #include "../../../window/Window.hpp"
-#include "../../../util/structs.hpp"
+#include "../../../util/type.hpp"
 #include "../../commons/vao.hpp"
 #include "../../commons/BufferText2D.hpp"
 #include "../../commons/font.hpp"
@@ -256,6 +256,6 @@ void Button::render()
 	}
 
 	vao::bind(this->vaoID);
-	vao::drawTriangle(0, this->nButton * 6);
+	vao::draw(TRIANGLES, 0, this->nButton * 6);
 	this->BT2D->render();
 }

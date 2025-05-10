@@ -3,7 +3,7 @@
 
 #define MAX_KEY_CODE 360
 
-enum Key_code;
+enum KEY_CODE;
 struct GLFWwindow;
 typedef void (*GLFWkeyfun)(GLFWwindow* window, int key, int scancode, int action, int mods);
 
@@ -37,7 +37,7 @@ namespace core
 		/// @brief Проверяет состояние клавиши
 		/// @param key название клавиши (Пример: K_ESCAPE, K_W, K_LEFT_SHIFT и т.д.)
 		/// @return true - нажата, false - отпущена
-		bool getKey(Key_code key);
+		bool getKey(KEY_CODE key);
 
 		/// @brief Проверяет состояние клавиши
 		/// @param key номер клавиши соответсвует стандарту библиотеки GLFW

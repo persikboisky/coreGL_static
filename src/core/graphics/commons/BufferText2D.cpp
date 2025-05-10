@@ -6,7 +6,7 @@
 #include "shader.hpp"
 #include "texture.hpp"
 #include "styleText.hpp"
-#include "../../util/structs.hpp"
+#include "../../util/type.hpp"
 #include "../../window/Window.hpp"
 #include <GL/glew.h>
 #include <vector>
@@ -294,5 +294,5 @@ void BufferText2D::render()
 
 	this->shader2D->UniformMat4(matrix, "matrix");
 	vao::bind(this->vao);
-	vao::drawTriangle(0, n_vertex);
+	vao::draw(TRIANGLES, 0, n_vertex);
 }

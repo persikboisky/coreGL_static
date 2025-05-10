@@ -5,12 +5,13 @@
 
 namespace core
 {
-	enum primitive;
+	enum PRIMITIVE;
 
 	struct vao
 	{
 	private:
-		static std::vector<unsigned int> id;
+		static std::vector<unsigned int> idVAO;
+		static std::vector<unsigned int> idVBO;
 		static unsigned int selectID;
 
 	protected:
@@ -33,11 +34,11 @@ namespace core
 		static void Delete(unsigned int id);
 		static void DeleteALL();
 
-		static void draw(primitive Primitive, int first_vert, int count_vert);
-		static void drawTriangle(int first_vert, int count_vert);
+		static void draw(PRIMITIVE  Primitive, int first_vert, int count_vert);
+		static void draw(PRIMITIVE  Primitive, unsigned int VAO, int first_vert, int count_vert);
 
-		static void draw(primitive Primitive, unsigned int VAO, int first_vert, int count_vert);
-		static void drawTriangle(unsigned int VAO, int first_vert, int count_vert);
+		static void setSizePoints(float sizePixel);
+		static void setWidthLine(float width);
 	};
 
 	class VAO : private vao
@@ -47,6 +48,9 @@ namespace core
 		unsigned int elementToVert;
 		int size;
 
+		float widthLine = 1.0f;
+		float sizePoint = 1.0f;
+
 	public:
 		VAO(float* data, int sizeOfByte, int elementToVert);
 		VAO(std::vector<float> data, int elementToVert);
@@ -55,7 +59,10 @@ namespace core
 		void bind() const;
 
 		void addAttribute(int index, int n, int indentation) const;
-		void draw(primitive Primitive, int first_vert = 0, int count_vert = 0) const;
+		void draw(PRIMITIVE  Primitive, int first_vert = 0, int count_vert = 0) const;
+
+		void setSizePoints(float sizePixel);
+		void setWidthLine(float width);
 	};
 
 }

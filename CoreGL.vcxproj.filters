@@ -36,9 +36,6 @@
     <ClInclude Include="src\core\graphics\commons\fbo.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\util\structs.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\util\vector.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -117,19 +114,16 @@
     <ClInclude Include="src\core\audio\Alistener.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\graphics\renderer\Scene.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\graphics\renderer\render.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\file\binModel.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\graphics\renderer\Mesh.hpp">
+    <ClInclude Include="src\core\graphics\Model\obj.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\graphics\Model\obj.hpp">
+    <ClInclude Include="src\core\graphics\renderer\Turtle.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\util\type.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -230,19 +224,16 @@
     <ClCompile Include="src\core\audio\Asource.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renderer\Scene.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\core\graphics\renderer\render.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\file\binModel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\renderer\Mesh.cpp">
+    <ClCompile Include="src\core\graphics\Model\obj.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\graphics\Model\obj.cpp">
+    <ClCompile Include="src\core\graphics\renderer\Turtle.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\util\type.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

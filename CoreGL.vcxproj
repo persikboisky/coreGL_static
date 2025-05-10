@@ -134,10 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\core\graphics\Model\obj.hpp" />
-    <ClInclude Include="src\core\graphics\renderer\Mesh.hpp" />
     <ClInclude Include="src\core\file\binModel.hpp" />
-    <ClInclude Include="src\core\graphics\renderer\render.hpp" />
-    <ClInclude Include="src\core\graphics\renderer\Scene.hpp" />
     <ClInclude Include="src\core\audio\Abuffer.hpp" />
     <ClInclude Include="src\core\audio\ADevice.hpp" />
     <ClInclude Include="src\core\audio\Alistener.hpp" />
@@ -167,18 +164,16 @@
     <ClInclude Include="src\core\math\Vectors.hpp" />
     <ClInclude Include="src\core\util\array.hpp" />
     <ClInclude Include="src\core\util\string.hpp" />
-    <ClInclude Include="src\core\util\structs.hpp" />
+    <ClInclude Include="src\core\util\type.hpp" />
     <ClInclude Include="src\core\util\vector.hpp" />
     <ClInclude Include="src\core\window\Cursor.hpp" />
     <ClInclude Include="src\core\window\Event.hpp" />
     <ClInclude Include="src\core\window\Window.hpp" />
+    <ClInclude Include="src\core\graphics\renderer\Turtle.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\core\graphics\Model\obj.cpp" />
-    <ClCompile Include="src\core\graphics\renderer\Mesh.cpp" />
     <ClCompile Include="src\core\file\binModel.cpp" />
-    <ClCompile Include="src\core\graphics\renderer\render.cpp" />
-    <ClCompile Include="src\core\graphics\renderer\Scene.cpp" />
     <ClCompile Include="src\core\audio\Abuffer.cpp" />
     <ClCompile Include="src\core\audio\ADevice.cpp" />
     <ClCompile Include="src\core\audio\Alistener.cpp" />
@@ -206,11 +201,13 @@
     <ClCompile Include="src\core\math\Vectro4.cpp" />
     <ClCompile Include="src\core\util\array.cpp" />
     <ClCompile Include="src\core\util\string.cpp" />
+    <ClCompile Include="src\core\util\type.cpp" />
     <ClCompile Include="src\core\util\vector.cpp" />
     <ClCompile Include="src\core\window\Cursor.cpp" />
     <ClCompile Include="src\core\window\Event.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\core\window\Window.cpp" />
+    <ClCompile Include="src\core\graphics\renderer\Turtle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

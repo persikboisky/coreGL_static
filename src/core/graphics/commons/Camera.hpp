@@ -3,14 +3,8 @@
 
 namespace core
 {
-    enum CAM_MODE
-    {
-        /// @brief Камера смотрит в одну точку
-        DYNAMIC,
-
-        /// @brief Камера смотрит в одно направление
-        STATIC
-    };
+    enum Key_code;
+    enum CAM_MODE;
 
     /// @brief класс для работы с камерой
     class Camera

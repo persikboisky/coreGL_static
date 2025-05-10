@@ -57,13 +57,25 @@ Window::~Window()
 
 void Window::swapBuffers()
 {
-	glfwSwapBuffers(this->window);
+	if (this->VSfps)
+	{
+		if (glfwGetTime() - time >= 1.0 / (double)this->FPS)
+		{
+			glfwSwapBuffers(this->window);
+			this->time = glfwGetTime();
+		}
+	}
+	else
+	{
+		glfwSwapBuffers(this->window);
+	}
+
 	this->getSizeWindow();
 }
 
 void Window::setIcon(const char* path)
 {
-	GLFWimage images[1];
+	GLFWimage images[1] = { };
 
 	unsigned char* img = png::load(path);
 
@@ -103,6 +115,8 @@ void Window::setContext()
 
 		Window::flagGLewInit = false;
 	}
+
+	glfwSwapInterval(0);
 }
 
 void Window::setSizeBuffer(int width, int height)
@@ -117,4 +131,14 @@ bool Window::isContext()
 		return true;
 	}
 	return false;
+}
+
+void Window::VerticalSynchronization(bool flag)
+{
+	this->VSfps = flag;
+}
+
+void core::Window::setMaxFPS(unsigned int fps)
+{
+	this->FPS = fps;
 }

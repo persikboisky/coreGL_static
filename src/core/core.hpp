@@ -26,14 +26,14 @@
 #include "graphics/GUI/GUI.hpp"
 #include "graphics/GUI/Elements/Button.hpp"
 #include "graphics/GUI/Elements/Image.hpp"
-#include "graphics/renderer/render.hpp"
-#include "graphics/renderer/Scene.hpp"
+#include "graphics/renderer/Turtle.hpp"
+//#include "graphics/renderer/Scene.hpp"
 #include "file/png.hpp"
 #include "file/text.hpp"
 #include "file/wav.hpp"
 #include "file/binModel.hpp"
 #include "util/vector.hpp"
-#include "util/structs.hpp"
+#include "util/type.hpp"
 #include "util/array.hpp"
 #include "util/string.hpp"
 #include "math/math.hpp"
@@ -51,7 +51,7 @@ const char* ExtensionScript = EXTENSION_SCRIPTS;
 namespace core
 {
 	enum primitive;
-	enum Key_code;
+	enum KEY_CODE;
 	
 	struct Core
 	{
@@ -106,19 +106,7 @@ double core::Core::GetTime()
 	return glfwGetTime();
 }
 
-enum core::primitive {
-	TRIANGLE = GL_TRIANGLES,
-	TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
-	TRIANGLE_FAN = GL_TRIANGLE_FAN,
-	QUADS = GL_QUADS,
-	QUADS_STRIP = GL_QUAD_STRIP,
-	POLYGON = GL_POLYGON,
-	POINT = GL_POINTS,
-	LINE_STRIP = GL_LINE_STRIP,
-	LINE_LOOP = GL_LINE_LOOP
-};
-
-enum core::Key_code {
+enum core::KEY_CODE {
 	K_Q = GLFW_KEY_Q,
 	K_W = GLFW_KEY_W,
 	K_E = GLFW_KEY_E,

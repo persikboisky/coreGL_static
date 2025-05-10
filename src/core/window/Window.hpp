@@ -19,6 +19,10 @@ namespace core
 		void Init();
 		void getSizeWindow();
 
+		bool VSfps = true;
+		double time = 0.0;
+		unsigned int FPS = 75;
+
 	public:
 
 		/// @brief возвращает объект окна, тип GLFWwindow
@@ -68,6 +72,10 @@ namespace core
 		/// @brief проверяет является ли окно контекстом
 		/// @return true - если является, false - если не является
 		bool isContext();
+
+		void VerticalSynchronization(bool flag);
+
+		void setMaxFPS(unsigned int fps);
 	};
 }
 

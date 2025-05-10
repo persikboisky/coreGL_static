@@ -2,7 +2,7 @@
 //
 //#if MODULE_GUI
 
-#include "../../util/structs.hpp"
+#include "../../util/type.hpp"
 #include <string>
 
 namespace core

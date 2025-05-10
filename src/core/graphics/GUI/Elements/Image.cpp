@@ -1,7 +1,7 @@
 #include "Image.hpp"
 #include "../GUI_Style.hpp"
 #include "../../../graphics/commons/texture.hpp"
-#include "../../../util/structs.hpp"
+#include "../../../util/type.hpp"
 #include "../../commons/vao.hpp"
 #include <GL/glew.h>
 #include <string>

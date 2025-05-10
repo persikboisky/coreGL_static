@@ -3,6 +3,7 @@
 #include "../../math/Matrixes.hpp"
 #include "../../math/math.hpp"
 #include "../../window/Window.hpp"
+#include "../../util/type.hpp"
 
 using namespace core;
 using namespace math;
@@ -14,14 +15,14 @@ void Camera::update()
 }
 
 Camera::Camera(float posX, float posY, float posZ, float fov, float distance) :
-	distance(distance), mode(STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	distance(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
 	pos(Vector3(posX, posY, posZ)), fov(radians(fov))
 { 
 	this->update();
 }
 
 Camera::Camera(Vector3 pos, float fov, float distance) :
-	distance(distance), mode(STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	distance(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
 	pos(pos), fov(radians(fov))
 { 
 	this->update();
@@ -122,7 +123,7 @@ Matrix4 Camera::getProj(int width, int height) const
 
 Matrix4 Camera::getView()
 {
-	if (this->mode == DYNAMIC)
+	if (this->mode == CAM_DYNAMIC)
 	{
 		return Matrix4::getLookAt(this->pos, this->target, this->up);
 	}

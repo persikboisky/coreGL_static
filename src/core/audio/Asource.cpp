@@ -1,6 +1,6 @@
 #include "Asource.hpp"
 #include "Abuffer.hpp"
-#include "../util/structs.hpp"
+#include "../util/type.hpp"
 #include <AL/al.h>
 #include <iostream>
 

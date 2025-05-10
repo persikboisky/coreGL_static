@@ -49,7 +49,7 @@ bool Event::GetMouseRightButton()
 	return glfwGetMouseButton(this->window, GLFW_MOUSE_BUTTON_RIGHT);
 }
 
-bool Event::getKey(Key_code key)
+bool Event::getKey(KEY_CODE key)
 {
 	if (key >= MAX_KEY_CODE || key < 0) std::cerr << "there is no such key in the buffer" << std::endl;
 
