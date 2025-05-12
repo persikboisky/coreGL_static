@@ -6,7 +6,8 @@
 
 namespace core
 {
-
+	
+	struct RGB;
 	struct RGBA;
 
 	struct fbo
@@ -15,15 +16,22 @@ namespace core
 		static std::vector<unsigned int> id;
 		static unsigned int selectID;
 
-		static RGBA color;
+		/*static RGBA color;*/
 
 	public:
 		static void bind(unsigned int id);
 		static void bindDefault();
 
+		/// @brief включает Z-буфер
+		/// @param flag состояние(true - включенно, false - выключенно)
 		static void DepthTest(bool flag);
+
+		/// @brief устанавливает размер буфера кадра для текущего контекста
+		/// @param width ширина
+		/// @param height высота
 		static void setSize(int width, int height);
 
+		static void setColor(RGB color);
 		static void setColor(RGBA color);
 		static void setColor(float red, float green, float blue, float alpha);
 

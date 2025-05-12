@@ -51,6 +51,11 @@ void Camera::rotate(float x, float y, float z)
 	this->update();
 }
 
+void core::Camera::rotate(const math::Vector3& axis)
+{
+	this->rotate(axis.x, axis.y, axis.z);
+}
+
 void Camera::resetRotate()
 {
 	this->rot = Matrix4(1.0f);

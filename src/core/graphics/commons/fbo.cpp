@@ -10,7 +10,7 @@ using namespace core;
 std::vector<unsigned int> fbo::id;
 unsigned int fbo::selectID = 0;
 
-RGBA fbo::color = RGBA();
+//RGBA fbo::color = RGBA();
 
 void fbo::bind(unsigned int id)
 {
@@ -39,6 +39,16 @@ void fbo::DepthTest(bool flag)
 void fbo::setSize(int width, int height)
 {
 	glViewport(0, 0, width, height);
+}
+
+void fbo::setColor(RGB color)
+{
+	glClearColor(
+		color.red / 255.0f,
+		color.green / 255.0f,
+		color.blue / 255.0f,
+		1.0f
+	);
 }
 
 void fbo::setColor(RGBA color)

@@ -60,6 +60,10 @@ namespace core
         /// @param z угол поворота по оси z в градусах
         void rotate(float x, float y, float z);
 
+        /// @brief поворачивает камеру по заданным осям
+        /// @param axis угол поворота по осям в градусах в виде вектора
+        void rotate(const math::Vector3& axis);
+
         /// @brief обнуляет поворот камеры(возвращает в исходное положение)
         void resetRotate();
 
