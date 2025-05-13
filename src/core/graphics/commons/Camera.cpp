@@ -1,4 +1,5 @@
 #include "Camera.hpp"
+#include "shader.hpp"
 #include "../../math/Vectors.hpp"
 #include "../../math/Matrixes.hpp"
 #include "../../math/math.hpp"
@@ -134,4 +135,19 @@ Matrix4 Camera::getView()
 	}
 		
 	return Matrix4::getLookAt(this->pos, this->pos + this->target, this->up);
+}
+
+void Camera::setUniformProj(Shader shader, int wWidth, int wHeight, const char* name) const
+{
+	shader.UniformMat4(this->getProj(wWidth, wHeight), name);
+}
+
+void Camera::setUniformView(Shader shader, const char* name)
+{
+	shader.UniformMat4(this->getView(), name);
+}
+
+void core::Camera::setUniformProjView(Shader shader, int wWidth, int wHeight, const char* name)
+{
+	shader.UniformMat4(this->getView() * this->getProj(wWidth, wHeight), name);
 }

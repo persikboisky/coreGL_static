@@ -1,6 +1,7 @@
 #include "fbo.hpp"
 #include "../../util/vector.hpp"
 #include "../../util/type.hpp"
+#include "../../math/Vectors.hpp"
 #include <GL/glew.h>
 #include <vector>
 #include <iostream>
@@ -39,6 +40,11 @@ void fbo::DepthTest(bool flag)
 void fbo::setSize(int width, int height)
 {
 	glViewport(0, 0, width, height);
+}
+
+void core::fbo::setSize(math::Vector2 size)
+{
+	fbo::setSize(size.x, size.y);
 }
 
 void fbo::setColor(RGB color)

@@ -107,6 +107,11 @@ Cursor::custom_cursor Cursor::create(const char* path, int x, int y)
 	return Cursor::custom_cursor(path, x, y, this->window);
 }
 
+//void Cursor::setCursor(custom_cursor cursor)
+//{
+//	cursor.use(this->window);
+//}
+
 void Cursor::custom_cursor::use(GLFWwindow* window)
 {
 	if (window == nullptr)

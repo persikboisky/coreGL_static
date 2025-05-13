@@ -10,6 +10,11 @@ namespace core
 	struct RGB;
 	struct RGBA;
 
+	namespace math
+	{
+		class Vector2;
+	}
+
 	struct fbo
 	{
 	private:
@@ -30,6 +35,7 @@ namespace core
 		/// @param width ширина
 		/// @param height высота
 		static void setSize(int width, int height);
+		static void setSize(math::Vector2 size);
 
 		static void setColor(RGB color);
 		static void setColor(RGBA color);

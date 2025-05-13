@@ -9,6 +9,8 @@ struct GLFWcursor;
 
 namespace core
 {
+	class Window;
+
 	struct cursor
 	{
 		static double getCordCursorX(GLFWwindow* window);
@@ -34,6 +36,7 @@ namespace core
 
 			/// @brief включает кастомный курсор
 			void use(GLFWwindow* window = nullptr);
+			// void use(const Window& window);
 		};
 
 		Cursor(GLFWwindow& addrWindow);
@@ -76,6 +79,8 @@ namespace core
 		/// @param y координата по y
 		/// @return возвращает объект курсора
 		custom_cursor create(const char* path, int x = 0, int y = 0);
+
+		/*void setCursor(custom_cursor cursor);*/
 	};
 }
 

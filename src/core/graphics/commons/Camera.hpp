@@ -6,6 +6,8 @@ namespace core
     enum Key_code;
     enum CAM_MODE;
 
+    class Shader;
+
     /// @brief класс для работы с камерой
     class Camera
     {
@@ -122,5 +124,9 @@ namespace core
         /// @brief создаёт видовую матрицу камеры
         /// @return возвращает видовую матрицу
         math::Matrix4 getView();
+
+        void setUniformProj(Shader shader, int wWidth, int wHeight, const char* name) const;
+        void setUniformView(Shader shader, const char* name);
+        void setUniformProjView(Shader shader, int wWidth, int wHeight, const char* name);
     };
 }

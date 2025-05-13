@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{41b62eab-a25e-4701-a2f0-90b6a3947ced}</ProjectGuid>
+    <ProjectGuid>{e6b0821a-0877-4944-a96d-66ad3c9e28d7}</ProjectGuid>
     <RootNamespace>coreGL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -121,6 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)library/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -129,18 +130,55 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)library/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\graphics\Model\obj.hpp" />
-    <ClInclude Include="src\core\file\binModel.hpp" />
+    <ClCompile Include="src\core\audio\Abuffer.cpp" />
+    <ClCompile Include="src\core\audio\ADevice.cpp" />
+    <ClCompile Include="src\core\audio\Alistener.cpp" />
+    <ClCompile Include="src\core\audio\Asource.cpp" />
+    <ClCompile Include="src\core\file\binModel.cpp" />
+    <ClCompile Include="src\core\file\obj_loaders.cpp" />
+    <ClCompile Include="src\core\file\png.cpp" />
+    <ClCompile Include="src\core\file\text.cpp" />
+    <ClCompile Include="src\core\file\wav.cpp" />
+    <ClCompile Include="src\core\graphics\commons\BufferText2D.cpp" />
+    <ClCompile Include="src\core\graphics\commons\Camera.cpp" />
+    <ClCompile Include="src\core\graphics\commons\ebo.cpp" />
+    <ClCompile Include="src\core\graphics\commons\fbo.cpp" />
+    <ClCompile Include="src\core\graphics\commons\font.cpp" />
+    <ClCompile Include="src\core\graphics\commons\rbo.cpp" />
+    <ClCompile Include="src\core\graphics\commons\shader.cpp" />
+    <ClCompile Include="src\core\graphics\commons\texture.cpp" />
+    <ClCompile Include="src\core\graphics\commons\vao.cpp" />
+    <ClCompile Include="src\core\graphics\GUI\Elements\Button.cpp" />
+    <ClCompile Include="src\core\graphics\GUI\Elements\Image.cpp" />
+    <ClCompile Include="src\core\graphics\GUI\GUI.cpp" />
+    <ClCompile Include="src\core\graphics\Model\obj.cpp" />
+    <ClCompile Include="src\core\graphics\renderer\Turtle.cpp" />
+    <ClCompile Include="src\core\math\math.cpp" />
+    <ClCompile Include="src\core\math\Matrixes.cpp" />
+    <ClCompile Include="src\core\math\Vector2.cpp" />
+    <ClCompile Include="src\core\math\Vector3.cpp" />
+    <ClCompile Include="src\core\math\Vectro4.cpp" />
+    <ClCompile Include="src\core\util\array.cpp" />
+    <ClCompile Include="src\core\util\string.cpp" />
+    <ClCompile Include="src\core\util\type.cpp" />
+    <ClCompile Include="src\core\util\vector.cpp" />
+    <ClCompile Include="src\core\window\Cursor.cpp" />
+    <ClCompile Include="src\core\window\Event.cpp" />
+    <ClCompile Include="src\core\window\Window.cpp" />
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="src\core\audio\Abuffer.hpp" />
     <ClInclude Include="src\core\audio\ADevice.hpp" />
     <ClInclude Include="src\core\audio\Alistener.hpp" />
     <ClInclude Include="src\core\audio\Asource.hpp" />
     <ClInclude Include="src\core\config.hpp" />
     <ClInclude Include="src\core\core.hpp" />
+    <ClInclude Include="src\core\file\binModel.hpp" />
     <ClInclude Include="src\core\file\obj_loaders.hpp" />
     <ClInclude Include="src\core\file\png.hpp" />
     <ClInclude Include="src\core\file\text.hpp" />
@@ -159,6 +197,8 @@
     <ClInclude Include="src\core\graphics\GUI\Elements\Image.hpp" />
     <ClInclude Include="src\core\graphics\GUI\GUI.hpp" />
     <ClInclude Include="src\core\graphics\GUI\gui_style.hpp" />
+    <ClInclude Include="src\core\graphics\Model\obj.hpp" />
+    <ClInclude Include="src\core\graphics\renderer\Turtle.hpp" />
     <ClInclude Include="src\core\math\math.hpp" />
     <ClInclude Include="src\core\math\Matrixes.hpp" />
     <ClInclude Include="src\core\math\Vectors.hpp" />
@@ -169,45 +209,6 @@
     <ClInclude Include="src\core\window\Cursor.hpp" />
     <ClInclude Include="src\core\window\Event.hpp" />
     <ClInclude Include="src\core\window\Window.hpp" />
-    <ClInclude Include="src\core\graphics\renderer\Turtle.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\core\graphics\Model\obj.cpp" />
-    <ClCompile Include="src\core\file\binModel.cpp" />
-    <ClCompile Include="src\core\audio\Abuffer.cpp" />
-    <ClCompile Include="src\core\audio\ADevice.cpp" />
-    <ClCompile Include="src\core\audio\Alistener.cpp" />
-    <ClCompile Include="src\core\audio\Asource.cpp" />
-    <ClCompile Include="src\core\file\obj_loaders.cpp" />
-    <ClCompile Include="src\core\file\png.cpp" />
-    <ClCompile Include="src\core\file\text.cpp" />
-    <ClCompile Include="src\core\file\wav.cpp" />
-    <ClCompile Include="src\core\graphics\commons\BufferText2D.cpp" />
-    <ClCompile Include="src\core\graphics\commons\Camera.cpp" />
-    <ClCompile Include="src\core\graphics\commons\ebo.cpp" />
-    <ClCompile Include="src\core\graphics\commons\fbo.cpp" />
-    <ClCompile Include="src\core\graphics\commons\font.cpp" />
-    <ClCompile Include="src\core\graphics\commons\rbo.cpp" />
-    <ClCompile Include="src\core\graphics\commons\shader.cpp" />
-    <ClCompile Include="src\core\graphics\commons\texture.cpp" />
-    <ClCompile Include="src\core\graphics\commons\vao.cpp" />
-    <ClCompile Include="src\core\graphics\GUI\Elements\Button.cpp" />
-    <ClCompile Include="src\core\graphics\GUI\Elements\Image.cpp" />
-    <ClCompile Include="src\core\graphics\GUI\GUI.cpp" />
-    <ClCompile Include="src\core\math\math.cpp" />
-    <ClCompile Include="src\core\math\Matrixes.cpp" />
-    <ClCompile Include="src\core\math\Vector2.cpp" />
-    <ClCompile Include="src\core\math\Vector3.cpp" />
-    <ClCompile Include="src\core\math\Vectro4.cpp" />
-    <ClCompile Include="src\core\util\array.cpp" />
-    <ClCompile Include="src\core\util\string.cpp" />
-    <ClCompile Include="src\core\util\type.cpp" />
-    <ClCompile Include="src\core\util\vector.cpp" />
-    <ClCompile Include="src\core\window\Cursor.cpp" />
-    <ClCompile Include="src\core\window\Event.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\core\window\Window.cpp" />
-    <ClCompile Include="src\core\graphics\renderer\Turtle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
