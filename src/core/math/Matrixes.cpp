@@ -3,6 +3,7 @@
 #include "math.hpp"
 #include <cmath>
 
+using namespace core;
 using namespace core::math;
 
 Matrix4::Matrix4(float diagonal)
