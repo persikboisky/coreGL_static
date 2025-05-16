@@ -47,7 +47,7 @@ void obj_loaders::load(std::vector<float> &vert, std::vector<int> &face, std::ve
 
 	unsigned int selectResourceFromMtl = 0;
 
-	std::string fileCode = text::load(path);
+	std::string fileCode = text::loadForFile(path);
 	std::string vertStr = "";
 	for (unsigned int index = 0; index < fileCode.length() - 1; index++)
 	{

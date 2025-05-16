@@ -11,7 +11,7 @@ namespace core
 		/// @brief читает файл
 		/// @param path путь к файлу
 		/// @return текст файла
-		static std::string load(const char* path);
+		static std::string loadForFile(const char* path);
 	};
 }
 

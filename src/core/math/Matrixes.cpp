@@ -71,7 +71,7 @@ Vector4 Matrix4::multiply(Vector4 vec, float mat[16])
 
 auto Matrix4::operator*(Matrix4 mat4) -> Matrix4
 {
-    return Matrix4(multiply(this->mat, mat4.getArray()));
+    return Matrix4(Matrix4::multiply(this->mat, mat4.getArray()));
 }
 
 auto Matrix4::operator*(Vector4 vec4) -> Vector4

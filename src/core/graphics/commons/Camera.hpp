@@ -124,9 +124,5 @@ namespace core
         /// @brief создаёт видовую матрицу камеры
         /// @return возвращает видовую матрицу
         math::Matrix4 getView();
-
-        void setUniformProj(Shader shader, int wWidth, int wHeight, const char* name) const;
-        void setUniformView(Shader shader, const char* name);
-        void setUniformProjView(Shader shader, int wWidth, int wHeight, const char* name);
     };
 }

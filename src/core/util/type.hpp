@@ -123,6 +123,13 @@ namespace core
 		DEPTH_BUFFER = 2,
 		NONE = 0
 	};
+
+	enum TYPE_SHADER 
+	{
+		FRAGMENT,
+		GEOMETRY,
+		VERTEX
+	};
 }
 
 

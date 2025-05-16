@@ -19,8 +19,8 @@ Turtle::Turtle(Window& window) : typeCoord(RELATIVE_COORD), window(&window)
 {
 	if (Turtle::shaderTurtle == 0)
 	{
-		Turtle::shaderTurtle = shader::createFromFile("./res/turtle/main.vert", "./res/turtle/main.frag");
-		Turtle::shaderLine = shader::createFromFile("./res/turtle/line.vert", "./res/turtle/line.frag");
+		Turtle::shaderTurtle = shader::createProgramFromFile("./res/turtle/main.vert", "./res/turtle/main.frag");
+		Turtle::shaderLine = shader::createProgramFromFile("./res/turtle/line.vert", "./res/turtle/line.frag");
 		Turtle::idText = texture::load("./res/turtle/turtle.png");
 	}
 

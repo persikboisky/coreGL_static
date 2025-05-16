@@ -29,18 +29,16 @@ GUI::GUI(Window& window, font& objFont) :
 {
 	if (GUI::ShaderID[0] == 0)
 	{
-		GUI::ShaderID[0] = shader::createFromFile(
+		GUI::ShaderID[0] = shader::createProgramFromFile(
 			PATH_TO_VERTEX_SHADER[0],
-			PATH_TO_FRAGMENT_SHADER[0]
-		);
+			PATH_TO_FRAGMENT_SHADER[0]);
 	}
 
 	if (GUI::ShaderID[1] == 0)
 	{
-		GUI::ShaderID[1] = shader::createFromFile(
+		GUI::ShaderID[1] = shader::createProgramFromFile(
 			PATH_TO_VERTEX_SHADER[1],
-			PATH_TO_FRAGMENT_SHADER[1]
-		);
+			PATH_TO_FRAGMENT_SHADER[1]);
 	}
 }
 

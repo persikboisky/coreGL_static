@@ -7,12 +7,19 @@
 
 namespace core
 {
+	enum TYPE_SHADER;
+	class Camera;
+
 	/// @brief структура для работы с шейдерами
 	struct shader
 	{
 	private:
 		static std::vector<unsigned int> id;
 		static unsigned int SelectID;
+
+		static unsigned int vID;
+		static unsigned int gID;
+		static unsigned int fID;
 
 	protected:
 		static unsigned int getSelectID();
@@ -22,13 +29,17 @@ namespace core
 		/// @param codeVert код вершинного шейдера
 		/// @param codeFrag код фрагментного шейдера
 		/// @return дескриптор шейдера
-		static unsigned int createFromCode(const char* codeVert, const char* codeFrag);
+		static unsigned int createProgramFromCode(const char* codeVert, const char* codeFrag);
 	
 		/// @brief создаёт шейдер из файлов
 		/// @param pathToVert путь к вершинному шейдеру
 		/// @param pathToFrag путь к фрагментному шейдеру
 		/// @return дескриптор шейдера
-		static unsigned int createFromFile(const char* pathToVert, const char* pathToFrag);
+		static unsigned int createProgramFromFile(const char* pathToVert, const char* pathToFrag);
+
+		static void compileFromCode(TYPE_SHADER type, const char* code);
+		static void compileFromFile(TYPE_SHADER type, const char* path);
+		static unsigned int createProgram();
 
 		/// @brief включает шейдер по его дескриптору
 		/// @param id дескриптор
@@ -38,6 +49,8 @@ namespace core
 		/// @param matrix матрица
 		/// @param name название юниформ переменной
 		static void UniformMat4(math::Matrix4 matrix, const char* name);
+
+		static void UniformCamMat4(Camera camera, int windowWidth, int windowHeight, const char* name);
 
 		/// @brief передаёт значение типа float в юниформ переменную шейдера
 		/// @param value значение типа float 
@@ -101,6 +114,8 @@ namespace core
 		/// @param matrix матрица
 		/// @param name название юниформ переменной
 		void UniformMat4(math::Matrix4 matrix, const char* name) const;
+
+		void UniformCamMat4(const Camera& camera, int windowWidth, int windowHeight, const char* name) const;
 
 		/// @brief передаёт значение типа float в юниформ переменную шейдера
 		/// @param value значение типа float 

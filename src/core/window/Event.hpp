@@ -3,6 +3,7 @@
 
 #define MAX_KEY_CODE 360
 
+
 enum KEY_CODE;
 struct GLFWwindow;
 typedef void (*GLFWkeyfun)(GLFWwindow* window, int key, int scancode, int action, int mods);

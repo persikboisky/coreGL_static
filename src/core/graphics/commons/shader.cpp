@@ -1,6 +1,8 @@
 #include "shader.hpp"
+#include "Camera.hpp"
 #include "../../file/text.hpp"
 #include "../../util/vector.hpp"
+#include "../../util/type.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <vector>
@@ -16,10 +18,14 @@ extern bool coreInfo;
 std::vector<unsigned int> shader::id;
 unsigned int shader::SelectID;
 
+unsigned int shader::vID = 0;
+unsigned int shader::gID = 0;
+unsigned int shader::fID = 0;
+
 std::string VertPath = "";
 std::string FragPath = "";
 
-static GLint getLocateUniform(GLuint shader, const char* name)
+static GLint getLocateUniform(GLuint shader, const char *name)
 {
     GLint locate = glGetUniformLocation(shader, name);
     if (locate != -1)
@@ -39,13 +45,13 @@ unsigned int shader::getSelectID()
 }
 
 #pragma region CREATE_SHADER
-unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
+unsigned int shader::createProgramFromCode(const char *codeVert, const char *codeFrag)
 {
-	unsigned int vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	unsigned int fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+    unsigned int vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+    unsigned int fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	GLint result = GL_FALSE;
-	int infoLogLength;
+    GLint result = GL_FALSE;
+    int infoLogLength;
 
     glShaderSource(vertexShaderID, 1, &codeVert, NULL);
     glCompileShader(vertexShaderID);
@@ -54,7 +60,7 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     glGetShaderiv(vertexShaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0)
     {
-        char* errorMessage = new char[infoLogLength + 1];
+        char *errorMessage = new char[infoLogLength + 1];
         glGetShaderInfoLog(vertexShaderID, infoLogLength, NULL, errorMessage);
         std::cerr << errorMessage;
         delete[] errorMessage;
@@ -64,7 +70,8 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     if (coreInfo)
     {
         std::cout << "[" << glfwGetTime() << "] " << "OK: compile vertex shader"
-            ": " << VertPath << std::endl;
+                                                     ": "
+                  << VertPath << std::endl;
     }
 
     glShaderSource(fragmentShaderID, 1, &codeFrag, NULL);
@@ -74,7 +81,7 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     glGetShaderiv(fragmentShaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0)
     {
-        char* errorMessage = new char[infoLogLength + 1];
+        char *errorMessage = new char[infoLogLength + 1];
         glGetShaderInfoLog(fragmentShaderID, infoLogLength, NULL, errorMessage);
         std::cerr << errorMessage;
         delete[] errorMessage;
@@ -83,8 +90,9 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     else
     {
         std::cout << "[" << glfwGetTime() << "] " << "OK: compile fragment shader"
-            ": " << FragPath << std::endl;
-        //std::cout << coreInfo << std::endl;
+                                                     ": "
+                  << FragPath << std::endl;
+        // std::cout << coreInfo << std::endl;
     }
 
     unsigned int programID = glCreateProgram();
@@ -96,7 +104,7 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0)
     {
-        char* errorMessage = new char[infoLogLength + 1];
+        char *errorMessage = new char[infoLogLength + 1];
         glGetProgramInfoLog(programID, infoLogLength, NULL, errorMessage);
         std::cerr << errorMessage;
         delete[] errorMessage;
@@ -107,32 +115,149 @@ unsigned int shader::createFromCode(const char* codeVert, const char* codeFrag)
     glDeleteShader(fragmentShaderID);
 
     std::cout << "[" << glfwGetTime() << "] " << "OK: create shader program, id = "
-        << programID << std::endl;
+              << programID << std::endl;
 
-    bool flag = true;
-    int index = vector::searchElementForValue(shader::id, 0);
-    if (index != -1 && programID != 0)
-    {
-        shader::id[index] = programID;
-        flag = false;
-    }
-
-    if (flag) shader::id.push_back(programID);
-
+    shader::id.push_back(programID);
     return programID;
 }
 #pragma endregion CREATE_SHADER
 
-unsigned int shader::createFromFile(const char* pathToVert, const char* pathToFrag)
+unsigned int shader::createProgramFromFile(const char *pathToVert, const char *pathToFrag)
 {
     VertPath = pathToVert;
     FragPath = pathToFrag;
 
-    std::string vert = text::load(pathToVert);
-    std::string frag = text::load(pathToFrag);
+    std::string vert = text::loadForFile(pathToVert);
+    std::string frag = text::loadForFile(pathToFrag);
 
-    return createFromCode(vert.c_str(), frag.c_str());
-}   
+    return createProgramFromCode(vert.c_str(), frag.c_str());
+}
+
+static std::string nameShaderFromType(TYPE_SHADER type)
+{
+    switch (type)
+    {
+    case VERTEX:
+        return "Vertex";
+    case GEOMETRY:
+        return "Geometry";
+    case FRAGMENT:
+        return "Fragment";
+    }
+}
+
+void shader::compileFromCode(TYPE_SHADER type, const char *code)
+{
+    unsigned int id = 0;
+    switch (type)
+    {
+    case VERTEX:
+        id = glCreateShader(GL_VERTEX_SHADER);
+        break;
+    case GEOMETRY:
+        id = glCreateShader(GL_GEOMETRY_SHADER);
+        break;
+    case FRAGMENT:
+        id = glCreateShader(GL_FRAGMENT_SHADER);
+        break;
+    }
+
+    GLint result = GL_FALSE;
+    int infoLogLength;
+
+    glShaderSource(id, 1, &code, NULL);
+    glCompileShader(id);
+
+    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+    glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLogLength);
+
+    if (infoLogLength > 0)
+    {
+        char *errorMessage = new char[infoLogLength + 1];
+        glGetShaderInfoLog(id, infoLogLength, NULL, errorMessage);
+        std::cerr << errorMessage;
+        delete[] errorMessage;
+        std::cout << "[" << glfwGetTime() << "]";
+        std::cout << "Failed: compile " << nameShaderFromType(type) << " shader" << std::endl;
+        throw "FAILED_COMPILE_SHADER";
+    }
+
+    if (coreInfo)
+    {
+        std::cout << "[" << glfwGetTime() << "] ";
+        std::cout << "Ok: compile " << nameShaderFromType(type) << " shader" << std::endl;
+    }
+
+    switch (type)
+    {
+    case VERTEX:
+        shader::vID = id;
+        break;
+    case GEOMETRY:
+        shader::gID = id;
+        break;
+    case FRAGMENT:
+        shader::fID = id;
+        break;
+    }
+}
+
+void shader::compileFromFile(TYPE_SHADER type, const char *path)
+{
+    std::string code = text::loadForFile(path);
+    shader::compileFromCode(type, code.c_str());
+}
+
+unsigned int shader::createProgram()
+{
+    GLint result = GL_FALSE;
+    int infoLogLength;
+
+    GLuint programID = glCreateProgram();
+    if (shader::vID > 0)
+        glAttachShader(programID, shader::vID);
+    if (shader::gID > 0)
+        glAttachShader(programID, shader::gID);
+    if (shader::fID > 0)
+        glAttachShader(programID, shader::fID);
+    glLinkProgram(programID);
+
+    glGetProgramiv(programID, GL_LINK_STATUS, &result);
+    glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &infoLogLength);
+    if (infoLogLength > 0)
+    {
+        char *errorMessage = new char[infoLogLength + 1];
+        glGetProgramInfoLog(programID, infoLogLength, NULL, errorMessage);
+        std::cerr << errorMessage;
+        delete[] errorMessage;
+        throw "FAILED_LINK_SHADER_PROGRAM";
+    }
+
+    if (shader::vID > 0)
+    {
+        glDeleteShader(shader::vID);
+        shader::vID = 0;
+    }
+    if (shader::gID > 0)
+    {
+        glDeleteShader(shader::gID);
+        shader::gID = 0;
+    }
+    if (shader::fID > 0)
+    {
+        glDeleteShader(shader::fID);
+        shader::fID = 0;
+    }
+
+    if (coreInfo)
+    {
+        std::cout << "[" << glfwGetTime() << "] ";
+        std::cout << "OK: create shader program, id = " << programID << std::endl;
+    }
+
+    shader::id.push_back(programID);
+    return programID;
+}
 
 void shader::use(unsigned int id)
 {
@@ -161,42 +286,47 @@ void shader::DeleteALL()
     }
 }
 
-void shader::UniformMat4(math::Matrix4 matrix, const char* name)
+void shader::UniformMat4(math::Matrix4 matrix, const char *name)
 {
     glUniformMatrix4fv(getLocateUniform(shader::SelectID, name), 1, GL_FALSE, matrix.getArray());
 }
 
-void shader::Uniform1F(const float value, const char* name)
+void shader::UniformCamMat4(Camera camera, int windowWidth, int windowHeight, const char *name)
+{
+    shader::UniformMat4(camera.getView() * camera.getProj(windowWidth, windowHeight), name);
+}
+
+void shader::Uniform1F(const float value, const char *name)
 {
     glUniform1f(getLocateUniform(shader::SelectID, name), GLfloat(value));
 }
 
-void shader::Uniform2F(core::math::Vector2 vec2, const char* name)
+void shader::Uniform2F(core::math::Vector2 vec2, const char *name)
 {
     glUniform2f(getLocateUniform(shader::SelectID, name), vec2.x, vec2.y);
 }
 
-void shader::Uniform3F(core::math::Vector3 vec3, const char* name)
+void shader::Uniform3F(core::math::Vector3 vec3, const char *name)
 {
     glUniform3f(getLocateUniform(shader::SelectID, name), vec3.x, vec3.y, vec3.z);
 }
 
-void shader::Uniform4F(core::math::Vector4 vec4, const char* name)
+void shader::Uniform4F(core::math::Vector4 vec4, const char *name)
 {
     glUniform4f(getLocateUniform(shader::SelectID, name), vec4.x, vec4.y, vec4.z, vec4.w);
 }
 
-//void shader::Uniform1I(glm::ivec1 value, const char* name)
+// void shader::Uniform1I(glm::ivec1 value, const char* name)
 //{
-//    glUniform1i(getLocateUniform(shader::SelectID, name), value.x);
-//}
+//     glUniform1i(getLocateUniform(shader::SelectID, name), value.x);
+// }
 //
-//void shader::Uniform2I(glm::ivec2 value, const char* name)
+// void shader::Uniform2I(glm::ivec2 value, const char* name)
 //{
-//    glUniform2i(getLocateUniform(shader::SelectID, name), value.x, value.y);
-//}
+//     glUniform2i(getLocateUniform(shader::SelectID, name), value.x, value.y);
+// }
 
-void shader::UniformSample2D(int value, const char* name)
+void shader::UniformSample2D(int value, const char *name)
 {
     glUniform1i(getLocateUniform(shader::SelectID, name), value);
 }
@@ -205,9 +335,9 @@ void shader::UniformSample2D(int value, const char* name)
 
 #pragma region Shader
 
-Shader::Shader(const char* pathVert, const char* pathFrag)
+Shader::Shader(const char *pathVert, const char *pathFrag)
 {
-    this->id = shader::createFromFile(pathVert, pathFrag);
+    this->id = shader::createProgramFromFile(pathVert, pathFrag);
 }
 
 Shader::~Shader()
@@ -225,53 +355,65 @@ void Shader::use() const
     shader::use(this->id);
 }
 
-void Shader::UniformMat4(math::Matrix4 matrix, const char* name) const
+void Shader::UniformMat4(math::Matrix4 matrix, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::UniformMat4(matrix, name);
 }
 
-void Shader::Uniform1F(const float value, const char* name) const
+void Shader::UniformCamMat4(const Camera &camera, int windowWidth, int windowHeight, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
+    shader::UniformCamMat4(camera, windowWidth, windowHeight, name);
+}
+
+void Shader::Uniform1F(const float value, const char *name) const
+{
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::Uniform1F(value, name);
 }
 
-void Shader::Uniform2F(core::math::Vector2 vec2, const char* name) const
+void Shader::Uniform2F(core::math::Vector2 vec2, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::Uniform2F(vec2, name);
 }
 
-void Shader::Uniform3F(core::math::Vector3 vec3, const char* name) const
+void Shader::Uniform3F(core::math::Vector3 vec3, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::Uniform3F(vec3, name);
 }
 
-void Shader::Uniform4F(core::math::Vector4 vec4, const char* name) const
+void Shader::Uniform4F(core::math::Vector4 vec4, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::Uniform4F(vec4, name);
-
 }
 
-//void Shader::Uniform1I(glm::ivec1 ivec1, const char* name) const
+// void Shader::Uniform1I(glm::ivec1 ivec1, const char* name) const
 //{
-//    if (shader::getSelectID() != this->id) this->use();
-//    shader::Uniform1I(ivec1, name);
-//}
+//     if (shader::getSelectID() != this->id) this->use();
+//     shader::Uniform1I(ivec1, name);
+// }
 //
-//void Shader::Uniform2I(glm::ivec2 ivec2, const char* name) const
+// void Shader::Uniform2I(glm::ivec2 ivec2, const char* name) const
 //{
-//    if (shader::getSelectID() != this->id) this->use();
-//    shader::Uniform2I(ivec2, name);
-//}
+//     if (shader::getSelectID() != this->id) this->use();
+//     shader::Uniform2I(ivec2, name);
+// }
 
-void Shader::UniformSample2D(int value, const char* name) const
+void Shader::UniformSample2D(int value, const char *name) const
 {
-    if (shader::getSelectID() != this->id) this->use();
+    if (shader::getSelectID() != this->id)
+        this->use();
     shader::UniformSample2D(value, name);
-} 
+}
 
 #pragma endregion Shader

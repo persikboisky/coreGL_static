@@ -9,7 +9,7 @@ using namespace core;
 
 extern bool coreInfo;
 
-std::string text::load(const char* path)
+std::string text::loadForFile(const char* path)
 {
     std::string text = "";
     std::ifstream file(path, std::ios::in);
