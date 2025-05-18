@@ -30,6 +30,8 @@ namespace core
 		Image* image = nullptr;
 		//Text* text = nullptr;
 
+		// void addFromXML(const char* path);
+
 		void setStyle(std::string ID, GuiElementStyle style);
 		void setStyle(const char* path);
 

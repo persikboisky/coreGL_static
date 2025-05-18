@@ -12,8 +12,8 @@ using namespace core;
 
 static void addElementToVAO(
 	std::vector<float>& vao,
-	position_4f data,
-	position_2f cooredTexture
+	pos4f data,
+	pos2f cooredTexture
 )
 {
 

@@ -3,7 +3,7 @@
 
 namespace core
 {
-	struct position_3f;
+	struct pos3f;
 
 	namespace audio
 	{
@@ -33,7 +33,7 @@ namespace core
 
 			// 3D Œœ÷»»
 			void setPos(float x, float y, float z) const;
-			void setPos(position_3f pos) const;
+			void setPos(pos3f pos) const;
 
 			void setVelocity(float x, float y, float z) const;
 		};

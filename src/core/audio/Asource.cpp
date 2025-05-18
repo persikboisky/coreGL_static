@@ -82,7 +82,7 @@ void audio::Source::setPos(float x, float y, float z) const
 	alSource3f(this->id, AL_POSITION, x, y, z);
 }
 
-void audio::Source::setPos(position_3f pos) const
+void audio::Source::setPos(pos3f pos) const
 {
 	alSource3f(this->id, AL_POSITION, pos.x, pos.y, pos.z);
 }

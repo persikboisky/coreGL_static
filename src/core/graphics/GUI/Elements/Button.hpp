@@ -8,7 +8,7 @@ namespace core
 	class Window;
 	class VAO;
 	class BufferText2D;
-	class font;
+	struct font;
 
 	class Button
 	{

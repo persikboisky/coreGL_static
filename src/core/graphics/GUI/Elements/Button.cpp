@@ -15,7 +15,7 @@ using namespace core;
 
 static void addVertexesButton(
 	std::vector<float> &vec,
-	position_4f data,
+	pos4f data,
 	RGBA color
 )
 {
@@ -166,7 +166,7 @@ void Button::compileVAO()
 
 	for (unsigned int index = 0; index < this->nButton; index++)
 	{
-		position_4f pos = position_4f(
+		pos4f pos = pos4f(
 			this->vStyle[index].pos.x,
 			this->vStyle[index].pos.y,
 			this->vStyle[index].size.width,

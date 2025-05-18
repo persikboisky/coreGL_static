@@ -31,55 +31,55 @@ namespace core
 		}
 	};
 
-	struct position_2f final
+	struct pos2f final
 	{
 		float x = 0;
 		float y = 0;
 
-		position_2f() {}
-		position_2f(float x, float y) : x(x), y(y) {}
+		pos2f() {}
+		pos2f(float x, float y) : x(x), y(y) {}
 	};
 
-	struct position_3f final
+	struct pos3f final
 	{
 		float x = 0;
 		float y = 0;
 		float z = 0;
 
-		position_3f() {}
-		position_3f(float x, float y, float z) : x(x), y(y), z(z) {}
+		pos3f() {}
+		pos3f(float x, float y, float z) : x(x), y(y), z(z) {}
 	};
 
-	struct position_4f final
+	struct pos4f final
 	{
 		float x = 0;
 		float y = 0;
 		float z = 0;
 		float w = 0;
 
-		position_4f() {}
-		position_4f(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+		pos4f() {}
+		pos4f(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 	};
 
-	struct size_2f final
+	struct size2f final
 	{
 		float width = 0;
 		float height = 0;
 
-		size_2f() {}
-		size_2f(float width, float height) : width(width), height(height)
+		size2f() {}
+		size2f(float width, float height) : width(width), height(height)
 		{
 		}
 	};
 
-	struct size_3f final
+	struct size3f final
 	{
 		float width = 0;
 		float height = 0;
 		float length = 0;
 
-		size_3f() {}
-		size_3f(float width, float height, float length) :
+		size3f() {}
+		size3f(float width, float height, float length) :
 			width(width), height(height), length(length)
 		{
 		}

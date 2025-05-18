@@ -8,7 +8,7 @@ int main()
 	try
 	{
 		Core::Init();
-		// ваш код...
+		// ваш код
 	}
 	catch (...)
 	{

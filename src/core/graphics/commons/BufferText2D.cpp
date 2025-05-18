@@ -22,10 +22,10 @@ constexpr const char* PATH_TO_FRAGMENT_SHADER = "./res/fonts/main_font_f.glsl";
 
 static void addPoligon(
 	std::vector<float>& buffer,
-	position_2f pos,
-	size_2f size,
-	position_2f t_coord,
-	size_2f t_size,
+	pos2f pos,
+	size2f size,
+	pos2f t_coord,
+	size2f t_size,
 	RGBA color,
 	Matrix4 matrix = Matrix4(1.0f)
 )
@@ -199,7 +199,7 @@ void BufferText2D::addText(std::string text, float x, float y, float length,
 			this->n_vertex += 6;
 		}
 
-		position_2f pos = position_2f(x + (widthSymbol + RowingBetweenTheSymbols) * (float)index, y);
+		pos2f pos = pos2f(x + (widthSymbol + RowingBetweenTheSymbols) * (float)index, y);
 		Vector4 p = Vector4(pos.x, pos.y, 0.0f, 1.0f);
 
 		Matrix4 matrix = Matrix4(1.0f);
@@ -216,12 +216,12 @@ void BufferText2D::addText(std::string text, float x, float y, float length,
 		addPoligon(
 			this->vertexes,
 			pos,
-			size_2f(widthSymbol, heightSymbol),
-			position_2f(
+			size2f(widthSymbol, heightSymbol),
+			pos2f(
 				this->Font->widthSymbol * (codeSymbol % 16) + 0.00001f,
 				this->Font->heightSymbol * (codeSymbol / 16) + decreaseHeightTextureSymbol / 2.0f
 			),
-			size_2f(
+			size2f(
 				this->Font->widthSymbol - decreaseWidthTextureSymbol,
 				this->Font->heightSymbol - decreaseHeightTextureSymbol
 			),
