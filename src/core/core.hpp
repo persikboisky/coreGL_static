@@ -27,6 +27,7 @@
 #include "graphics/GUI/Elements/Button.hpp"
 #include "graphics/GUI/Elements/Image.hpp"
 #include "graphics/renderer/Turtle.hpp"
+#include "graphics/renderer/Rect.hpp"
 //#include "graphics/renderer/Scene.hpp"
 #include "file/png.hpp"
 #include "file/text.hpp"

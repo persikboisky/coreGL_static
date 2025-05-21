@@ -71,5 +71,7 @@ namespace core
         /// @brief привязка текстуры
         /// @param Sample индекс привязки (этот индификатор нужен для шейдера(uniform Sample2D))
         void bind(unsigned int Sample = 0) const;
+
+        unsigned int getID() const;
     };
 }

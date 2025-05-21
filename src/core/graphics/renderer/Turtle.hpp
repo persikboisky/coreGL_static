@@ -21,8 +21,6 @@ namespace core
 		float x = 0.0f;
 		float y = -0.5f;
 
-		TYPE_COORD typeCoord;
-
 		std::vector<std::vector<float>> coordPoint;
 		std::vector<unsigned int> width{ 1 };
 
@@ -37,6 +35,9 @@ namespace core
 
 		Window* window;
 
+		double Time = 0.0;
+		float speed = 10.0f;
+
 
 	public:
 
@@ -48,7 +49,7 @@ namespace core
 
 		void clear();
 
-		void setCoordMode(TYPE_COORD typeCoord);
+		void setSpeed(float speed);
 		void move();
 		void draw();
 

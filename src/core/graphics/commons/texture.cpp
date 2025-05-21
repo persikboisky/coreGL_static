@@ -135,4 +135,9 @@ void Texture::bind(unsigned int Sample) const
     texture::bind(this->id, Sample);
 }
 
+unsigned int Texture::getID() const
+{
+    return this->id;
+}
+
 #pragma endregion Texture

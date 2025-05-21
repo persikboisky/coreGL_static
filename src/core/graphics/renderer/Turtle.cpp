@@ -6,6 +6,7 @@
 #include "../commons/texture.hpp"
 #include "../../util/type.hpp"
 #include "../../window/Window.hpp"
+#include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
 
@@ -15,7 +16,7 @@ unsigned int Turtle::shaderTurtle = 0;
 unsigned int Turtle::shaderLine = 0;
 unsigned int Turtle::idText = 0;
 
-Turtle::Turtle(Window& window) : typeCoord(RELATIVE_COORD), window(&window)
+Turtle::Turtle(Window& window) : window(&window)
 {
 	if (Turtle::shaderTurtle == 0)
 	{
@@ -75,29 +76,34 @@ void Turtle::clear()
 	this->vaoPoints.push_back(0);
 }
 
-void Turtle::setCoordMode(TYPE_COORD typeCoord)
+void Turtle::setSpeed(float speed)
 {
-	this->typeCoord = typeCoord;
+	this->speed = speed;
 }
 
 void Turtle::move()
 {
-	const float A = 0.001f;
+	constexpr float A = 0.001f;
 
-	this->updateVao = true;
+	if (this->Time + 1.0 / this->speed <= glfwGetTime())
+	{
+		this->updateVao = true;
 
-	float velX = A * sin(math::radians(this->angle - 90.0f));
-	float velY = A * cos(math::radians(this->angle - 90.0f)) * ((float)this->window->width / (float)this->window->height);
+		float velX = A * sin(math::radians(this->angle - 90.0f));
+		float velY = A * cos(math::radians(this->angle - 90.0f)) * ((float)this->window->width / (float)this->window->height);
 
-	this->x += velX;
-	this->y += velY;//(1.0f / (float)this->window->height) 
-	// * ((float)thi->window->width / (float)this->window->height);
+		this->x += velX;
+		this->y += velY;//(1.0f / (float)this->window->height) 
+		// * ((float)thi->window->width / (float)this->window->height);
 
-	this->coordPoint[this->width.size() - 1].push_back(this->x);
-	this->coordPoint[this->width.size() - 1].push_back(this->y);
-	this->coordPoint[this->width.size() - 1].push_back(color.red / 255.0f);
-	this->coordPoint[this->width.size() - 1].push_back(color.green / 255.0f);
-	this->coordPoint[this->width.size() - 1].push_back(color.blue / 255.0f);
+		this->coordPoint[this->width.size() - 1].push_back(this->x);
+		this->coordPoint[this->width.size() - 1].push_back(this->y);
+		this->coordPoint[this->width.size() - 1].push_back(color.red / 255.0f);
+		this->coordPoint[this->width.size() - 1].push_back(color.green / 255.0f);
+		this->coordPoint[this->width.size() - 1].push_back(color.blue / 255.0f);
+	
+		this->Time = glfwGetTime();
+	}
 }
 
 void Turtle::draw()
@@ -117,6 +123,15 @@ void Turtle::draw()
 	float x = this->x;
 	float y = this->y;
 
+	shader::use(Turtle::shaderLine);
+
+	for (unsigned int index = 0; index < this->vaoPoints.size(); index++)
+	{
+		vao::bind(this->vaoPoints[index]);
+		vao::setSizePoints(this->width[index]);
+		vao::draw(POINTS, 0, this->coordPoint[index].size());
+	}
+
 	if (this->bodyTurtleDraw)
 	{
 		math::Matrix4 model = math::Matrix4(1.0f);
@@ -128,16 +143,6 @@ void Turtle::draw()
 		shader::UniformMat4(model, "model");
 		vao::bind(this->vaoTurtle);
 		vao::draw(TRIANGLES_FAN, 0, 4);
-	}
-
-
-	shader::use(Turtle::shaderLine);
-
-	for (unsigned int index = 0; index < this->vaoPoints.size(); index++)
-	{
-		vao::bind(this->vaoPoints[index]);
-		vao::setSizePoints(this->width[index]);
-		vao::draw(POINTS, 0, this->coordPoint[index].size());
 	}
 }
 

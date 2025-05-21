@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\graphics\renderer\Rect.cpp" />
     <ClCompile Include="src\core\audio\Abuffer.cpp" />
     <ClCompile Include="src\core\audio\ADevice.cpp" />
     <ClCompile Include="src\core\audio\Alistener.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\graphics\renderer\Rect.hpp" />
     <ClInclude Include="src\core\audio\Abuffer.hpp" />
     <ClInclude Include="src\core\audio\ADevice.hpp" />
     <ClInclude Include="src\core\audio\Alistener.hpp" />
