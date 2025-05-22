@@ -15,6 +15,8 @@ namespace core
 			red(red), green(green), blue(blue)
 		{
 		}
+
+		void operator = (const RGB& color);
 	};
 
 	struct RGBA final
@@ -29,6 +31,9 @@ namespace core
 			red(red), green(green), blue(blue), alpha(alpha)
 		{
 		}
+
+		void operator = (const RGB& color);
+		void operator = (const RGBA& color);
 	};
 
 	struct pos2f final

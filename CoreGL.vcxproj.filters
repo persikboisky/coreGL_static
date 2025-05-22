@@ -243,4 +243,8 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="main.vert" />
+    <None Include="main.frag" />
+  </ItemGroup>
 </Project>

@@ -27,6 +27,8 @@ namespace core
 			Vector2 operator*(const float& value);
 			Vector2 operator/(const float& value);
 
+			void operator = (const Vector2& vec2);
+
 			static Vector2 normalize(const Vector2& vec2);
 
 			static float length(const Vector2& vec2);
@@ -65,6 +67,8 @@ namespace core
 			Vector3 operator*(const float& value);
 			Vector3 operator/(const float& value);
 
+			void operator = (const Vector3& vec3);
+
 			static Vector3 normalize(const Vector3& vec3);
 			static Vector3 cross(const Vector3& vec3_1, const Vector3& vec3_2);
 
@@ -101,6 +105,8 @@ namespace core
 
 			Vector4 operator*(const float& value);
 			Vector4 operator/(const float& value);
+
+			void operator = (const Vector4& vec4);
 
 			static Vector4 normalize(const Vector4& vec4);
 

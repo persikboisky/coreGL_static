@@ -21,8 +21,10 @@ namespace core
 		float x = 0.0f;
 		float y = -0.5f;
 
+		float valueWidth = 1.0f;
+
 		std::vector<std::vector<float>> coordPoint;
-		std::vector<unsigned int> width{ 1 };
+		std::vector<float> width{ this->valueWidth };
 
 		bool updateVao = true;
 		std::vector<unsigned int> vaoPoints{ 0 };
@@ -54,7 +56,9 @@ namespace core
 		void draw();
 
 		void setAngle(float degree);
+		void setColor(float red, float green, float blue, float alpha = 255.0f);
 		void setColor(RGB color);
+		void setColor(RGBA color);
 		void setWidth(float width);
 
 		void enableDrawBody(bool flag);

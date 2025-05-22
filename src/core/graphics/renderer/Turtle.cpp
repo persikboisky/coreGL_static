@@ -72,7 +72,7 @@ void Turtle::clear()
 
 	std::vector<float> v;
 	this->coordPoint.push_back(v);
-	this->width.push_back(1);
+	this->width.push_back(this->valueWidth);
 	this->vaoPoints.push_back(0);
 }
 
@@ -98,9 +98,9 @@ void Turtle::move()
 
 		this->coordPoint[this->width.size() - 1].push_back(this->x);
 		this->coordPoint[this->width.size() - 1].push_back(this->y);
-		this->coordPoint[this->width.size() - 1].push_back(color.red / 255.0f);
-		this->coordPoint[this->width.size() - 1].push_back(color.green / 255.0f);
-		this->coordPoint[this->width.size() - 1].push_back(color.blue / 255.0f);
+		this->coordPoint[this->width.size() - 1].push_back(color.red);
+		this->coordPoint[this->width.size() - 1].push_back(color.green);
+		this->coordPoint[this->width.size() - 1].push_back(color.blue);
 	
 		this->Time = glfwGetTime();
 	}
@@ -151,6 +151,22 @@ void Turtle::setAngle(float degree)
 	this->angle = degree;
 }
 
+void Turtle::setColor(float red, float green, float blue, float alpha)
+{
+	this->color.red = red * (alpha / 255.0f);
+	this->color.green = green * (alpha / 255.0f);
+	this->color.blue = blue * (alpha / 255.0f);
+}
+
+void Turtle::setColor(RGBA color)
+{
+	this->color = RGB(
+		color.red * (color.alpha / 255.0f),
+		color.green * (color.alpha / 255.0f),
+		color.blue * (color.alpha / 255.0f)
+	);
+}
+
 void Turtle::setColor(RGB color)
 {
 	this->color = color;
@@ -166,6 +182,8 @@ void Turtle::setWidth(float width)
 		std::vector<float> v;
 		this->coordPoint.push_back(v);
 	}
+
+	this->valueWidth = width;
 }
 
 void Turtle::enableDrawBody(bool flag)

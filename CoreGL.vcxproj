@@ -123,6 +123,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)library/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -211,6 +212,10 @@
     <ClInclude Include="src\core\window\Cursor.hpp" />
     <ClInclude Include="src\core\window\Event.hpp" />
     <ClInclude Include="src\core\window\Window.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="main.frag" />
+    <None Include="main.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

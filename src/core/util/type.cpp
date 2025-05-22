@@ -1,29 +1,54 @@
 #include "type.hpp"
 #include <GL/glew.h>
 
+using namespace core;
+
+void core::RGB::operator=(const RGB& color)
+{
+	this->red = color.red;
+	this->green = color.green;
+	this->blue = color.blue;
+}
+
+void RGBA::operator=(const RGB& color)
+{
+	this->red = color.red;
+	this->green = color.green;
+	this->blue = color.blue;
+	this->alpha = 255.0f;
+}
+
+void RGBA::operator=(const core::RGBA& color)
+{
+	this->red = color.red;
+	this->green = color.green;
+	this->blue = color.blue;
+	this->alpha = color.alpha;
+}
+
 unsigned int core::convertPrimitive(PRIMITIVE primitive)
 {
 	switch (primitive)
 	{
-	case core::POINTS:
+	case POINTS:
 		return GL_POINTS;
 
-	case core::TRIANGLES:
+	case TRIANGLES:
 		return GL_TRIANGLES;
 
-	case core::LINES:
+	case LINES:
 		return GL_LINES;
 
-	case core::LINE_STRIP:
+	case LINE_STRIP:
 		return GL_LINE_STRIP;
 
-	case core::LINE_LOOP:
+	case LINE_LOOP:
 		return GL_LINE_LOOP;
 
-	case core::TRIANGLES_FAN:
+	case TRIANGLES_FAN:
 		return GL_TRIANGLE_FAN;
 
-	case core::TRIANGLES_STRIP:
+	case TRIANGLES_STRIP:
 		return GL_TRIANGLE_STRIP;
 
 	default:

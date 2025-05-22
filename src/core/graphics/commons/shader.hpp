@@ -9,6 +9,7 @@ namespace core
 {
 	enum TYPE_SHADER;
 	class Camera;
+	class Window;
 
 	/// @brief структура для работы с шейдерами
 	struct shader
@@ -97,6 +98,11 @@ namespace core
 		/// @param pathFrag путь к фрагментному шейдеру
 		Shader(const char* pathVert, const char* pathFrag);
 
+		Shader();
+
+		void add(TYPE_SHADER type, const char* path);
+		void create();
+
 		/// @brief удаляет шейдер и его объект
 		~Shader();
 
@@ -116,6 +122,8 @@ namespace core
 		void UniformMat4(math::Matrix4 matrix, const char* name) const;
 
 		void UniformCamMat4(const Camera& camera, int windowWidth, int windowHeight, const char* name) const;
+
+		void UniformCamMat4(const Camera& camera, const Window& window, const char* name) const;
 
 		/// @brief передаёт значение типа float в юниформ переменную шейдера
 		/// @param value значение типа float 

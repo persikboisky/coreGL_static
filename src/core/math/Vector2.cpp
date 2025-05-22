@@ -55,6 +55,12 @@ Vector2 Vector2::operator/(const float &value)
 	);
 }
 
+void Vector2::operator=(const Vector2& vec2)
+{
+	this->x = vec2.x;
+	this->y = vec2.y;
+}
+
 Vector2 Vector2::normalize(const Vector2& vec2)
 {
 	const float LENGTH = Vector2::length(vec2);

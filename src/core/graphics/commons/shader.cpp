@@ -1,5 +1,6 @@
 #include "shader.hpp"
 #include "Camera.hpp"
+#include "../../window/Window.hpp"
 #include "../../file/text.hpp"
 #include "../../util/vector.hpp"
 #include "../../util/type.hpp"
@@ -160,6 +161,19 @@ void shader::compileFromCode(TYPE_SHADER type, const char *code)
     case FRAGMENT:
         id = glCreateShader(GL_FRAGMENT_SHADER);
         break;
+    }
+
+    if (type == VERTEX && shader::vID != 0)
+    {
+        glDeleteProgram(shader::vID);
+    }
+    else if (type == GEOMETRY && shader::gID != 0)
+    {
+        glDeleteProgram(shader::gID);
+    }
+    else if (type == FRAGMENT && shader::fID != 0)
+    {
+        glDeleteProgram(shader::fID);
     }
 
     GLint result = GL_FALSE;
@@ -340,6 +354,20 @@ Shader::Shader(const char *pathVert, const char *pathFrag)
     this->id = shader::createProgramFromFile(pathVert, pathFrag);
 }
 
+Shader::Shader() : id(0)
+{
+}
+
+void Shader::add(TYPE_SHADER type, const char* path)
+{
+    shader::compileFromFile(type, path);
+}
+
+void Shader::create()
+{
+    this->id = shader::createProgram();
+}
+
 Shader::~Shader()
 {
     shader::Delete(this->id);
@@ -367,6 +395,13 @@ void Shader::UniformCamMat4(const Camera &camera, int windowWidth, int windowHei
     if (shader::getSelectID() != this->id)
         this->use();
     shader::UniformCamMat4(camera, windowWidth, windowHeight, name);
+}
+
+void core::Shader::UniformCamMat4(const Camera& camera, const Window& window, const char* name) const
+{
+    if (shader::getSelectID() != this->id)
+        this->use();
+    shader::UniformCamMat4(camera, window.width, window.height, name);
 }
 
 void Shader::Uniform1F(const float value, const char *name) const

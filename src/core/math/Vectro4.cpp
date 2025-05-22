@@ -72,6 +72,14 @@ Vector4 Vector4::operator/(const float &value)
     );
 }
 
+void Vector4::operator=(const Vector4& vec4)
+{
+    this->x = vec4.x;
+    this->y = vec4.y;
+    this->z = vec4.z;
+    this->w = vec4.w;
+}
+
 Vector4 Vector4::normalize(const Vector4 &vec4)
 {
     const float LENGTH = Vector4::length(vec4);

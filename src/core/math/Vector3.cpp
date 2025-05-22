@@ -63,6 +63,13 @@ Vector3 Vector3::operator/(const float &value)
     );
 }
 
+void Vector3::operator=(const Vector3& vec3)
+{
+    this->x = vec3.x;
+    this->y = vec3.y;
+    this->z = vec3.z;
+}
+
 Vector3 Vector3::normalize(const Vector3& vec3) 
 {
     const float length = Vector3::length(vec3);

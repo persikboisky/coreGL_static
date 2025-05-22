@@ -1,4 +1,5 @@
 #include "Event.hpp"
+#include "Window.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -27,6 +28,11 @@ Event::Event(GLFWwindow &addrWindow) : window(&addrWindow)
 {
 	this->setCallbackKey(this->window, key_callbac);
 	//glfwSetKeyCallback(this->window, key_callbac);
+}
+
+Event::Event(Window& window) : window(window.getGlfwWindowObject())
+{
+	this->setCallbackKey(this->window, key_callbac);
 }
 
 void Event::update()

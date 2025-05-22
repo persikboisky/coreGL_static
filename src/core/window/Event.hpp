@@ -10,6 +10,7 @@ typedef void (*GLFWkeyfun)(GLFWwindow* window, int key, int scancode, int action
 
 namespace core
 {
+	class Window;
 	class Event
 	{
 	private:
@@ -19,6 +20,7 @@ namespace core
 
 	public:
 		Event(GLFWwindow& addrWindow);
+		Event(Window& window);
 
 		/// @brief обновляет список событий
 		void update();
