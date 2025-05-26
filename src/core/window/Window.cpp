@@ -1,14 +1,13 @@
 #include "Window.hpp"
 #include "Event.hpp"
 #include "Cursor.hpp"
+#include "../config.hpp"
 #include "../file/png.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 using namespace core;
-
-extern bool coreInfo;
 
 bool Window::flagGLewInit = true;
 
@@ -40,7 +39,7 @@ Window::Window(int width, int height, const char* title, bool resizable) :
 		throw "FAILED_CREATE_WINDOW";
 	}
 
-	if (coreInfo)
+	if (CORE_INFO)
 	{
 		std::cout << "[" << glfwGetTime() << "] " << "OK: to create GLFW Window" << std::endl;
 	}

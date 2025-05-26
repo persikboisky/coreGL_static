@@ -111,7 +111,7 @@ float Vector3::distance(const Vector3&  vec3_1, const Vector3&  vec3_2)
 Vector3 Vector3::normalize()
 {
     const float LENGTH = this->length();
-    Vector3(
+    return Vector3(
         this->x / LENGTH,
         this->y / LENGTH,
         this->z / LENGTH

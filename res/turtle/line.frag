@@ -6,5 +6,5 @@ in vec3 vColor;
 
 void main()
 {
-	f_color = vec4(vColor, 1);
+	f_color = vec4(vColor.x / 255.0f, vColor.y / 255.0f, vColor.z / 255.0f, 1);
 }

@@ -1,12 +1,11 @@
 #include "ADevice.hpp"
+#include "../config.hpp"
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <GLFW/glfw3.h>	
 #include <iostream>
 
 using namespace core;
-
-extern bool coreInfo;
 
 audio::Device::Device()
 {
@@ -17,7 +16,7 @@ audio::Device::Device()
 		throw "FAILED_CREATE_AUDIO_DEVICE";
 	}
 
-	if (coreInfo) std::cout << "[" << glfwGetTime() << "] " <<
+	if (CORE_INFO) std::cout << "[" << glfwGetTime() << "] " <<
 		"OK: create audio device" << std::endl;
 
 	this->context = alcCreateContext(this->device, nullptr);
@@ -27,7 +26,7 @@ audio::Device::Device()
 		throw "FAILED_CREATE_AUDIO_CONTEXT";
 	}
 
-	if (coreInfo) std::cout << "[" << glfwGetTime() << "] " <<
+	if (CORE_INFO) std::cout << "[" << glfwGetTime() << "] " <<
 		"OK: create audio context" << std::endl;
 }
 

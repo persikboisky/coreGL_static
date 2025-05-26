@@ -1,4 +1,5 @@
 #include "texture.hpp"
+#include "../../config.hpp"
 #include "../../util/vector.hpp"
 #include "../../file/png.hpp"
 #include <GL/glew.h>
@@ -7,8 +8,6 @@
 #include <vector>
 
 using namespace core;
-
-extern bool coreInfo;
 
 #pragma region texture
 std::vector<unsigned int> texture::id;
@@ -28,7 +27,7 @@ unsigned int texture::load(unsigned char *image, int width, int height, int chan
     if (Texture >= 0)
     {
         texture::id.push_back(Texture);
-        if (coreInfo)
+        if (CORE_INFO)
         {
             std::cout << "[" << glfwGetTime() << "] " << "OK: create texture id = " << Texture << std::endl;
         }

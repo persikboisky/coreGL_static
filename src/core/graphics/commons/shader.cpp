@@ -1,5 +1,6 @@
 #include "shader.hpp"
 #include "Camera.hpp"
+#include "../../config.hpp"
 #include "../../window/Window.hpp"
 #include "../../file/text.hpp"
 #include "../../util/vector.hpp"
@@ -10,9 +11,7 @@
 #include <string>
 #include <iostream>
 
-using namespace core;
-
-extern bool coreInfo;
+using namespace core;;
 
 #pragma region shader
 
@@ -26,7 +25,7 @@ unsigned int shader::fID = 0;
 std::string VertPath = "";
 std::string FragPath = "";
 
-static GLint getLocateUniform(GLuint shader, const char *name)
+static inline GLint getLocateUniform(GLuint shader, const char *name)
 {
     GLint locate = glGetUniformLocation(shader, name);
     if (locate != -1)
@@ -68,7 +67,7 @@ unsigned int shader::createProgramFromCode(const char *codeVert, const char *cod
         throw "FAILED_COMPILE_VERTEX_SHADER";
     }
 
-    if (coreInfo)
+    if (CORE_INFO)
     {
         std::cout << "[" << glfwGetTime() << "] " << "OK: compile vertex shader"
                                                      ": "
@@ -134,7 +133,7 @@ unsigned int shader::createProgramFromFile(const char *pathToVert, const char *p
     return createProgramFromCode(vert.c_str(), frag.c_str());
 }
 
-static std::string nameShaderFromType(TYPE_SHADER type)
+static inline std::string nameShaderFromType(TYPE_SHADER type)
 {
     switch (type)
     {
@@ -196,7 +195,7 @@ void shader::compileFromCode(TYPE_SHADER type, const char *code)
         throw "FAILED_COMPILE_SHADER";
     }
 
-    if (coreInfo)
+    if (CORE_INFO)
     {
         std::cout << "[" << glfwGetTime() << "] ";
         std::cout << "Ok: compile " << nameShaderFromType(type) << " shader" << std::endl;
@@ -263,7 +262,7 @@ unsigned int shader::createProgram()
         shader::fID = 0;
     }
 
-    if (coreInfo)
+    if (CORE_INFO)
     {
         std::cout << "[" << glfwGetTime() << "] ";
         std::cout << "OK: create shader program, id = " << programID << std::endl;
@@ -343,6 +342,16 @@ void shader::Uniform4F(core::math::Vector4 vec4, const char *name)
 void shader::UniformSample2D(int value, const char *name)
 {
     glUniform1i(getLocateUniform(shader::SelectID, name), value);
+}
+
+void shader::UniformRGBA(const RGBA& color, const char* name)
+{
+    shader::Uniform4F(math::Vector4(color.red, color.green, color.blue, color.alpha), name);
+}
+
+void shader::UniformRGB(const RGB& color, const char* name)
+{
+    shader::Uniform3F(math::Vector3(color.red, color.green, color.blue), name);
 }
 
 #pragma endregion shader
@@ -450,5 +459,20 @@ void Shader::UniformSample2D(int value, const char *name) const
         this->use();
     shader::UniformSample2D(value, name);
 }
+
+void Shader::UniformRGBA(const RGBA& color, const char* name) const
+{
+    if (shader::getSelectID() != this->id)
+        this->use();
+    shader::UniformRGBA(color, name);
+}
+
+void Shader::UniformRGB(const RGB& color, const char* name) const
+{
+    if (shader::getSelectID() != this->id)
+        this->use();
+    shader::UniformRGB(color, name);
+}
+
 
 #pragma endregion Shader

@@ -1,5 +1,6 @@
 #include "wav.hpp"
 #include "text.hpp"
+#include "../config.hpp"
 #include <AL/al.h>
 #include <string>
 #include <fstream>
@@ -8,8 +9,7 @@
 
 using namespace core;
 
-extern bool coreInfo;
-const bool DEBUG = coreInfo;
+const bool DEBUG = CORE_INFO;
 
 static bool check(const std::string str1, const std::string str2)
 {

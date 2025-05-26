@@ -1,14 +1,13 @@
 #include "obj_loaders.hpp"
 #include "text.hpp"
 //#include "mtl.hpp"
+#include "../config.hpp"
 #include <vector>
 #include <string>
 #include <iostream>
 //#include <Windows.h>
 
 using namespace core;
-
-extern bool coreInfo;
 
 const std::string specSymbol = "\n";
 
@@ -204,6 +203,6 @@ void obj_loaders::load(std::vector<float> &vert, std::vector<int> &face, std::ve
 		else;
 	}
 	//std::cout << vert[4] << std::endl;
-	if (coreInfo) std::cout << "OK: compile object, paligons: " << face.size() / 9 << ", path: " << path << std::endl;
+	if (CORE_INFO) std::cout << "OK: compile object, paligons: " << face.size() / 9 << ", path: " << path << std::endl;
 	//throw "f";
 }

@@ -1,13 +1,12 @@
 #include "text.hpp"
+#include "../config.hpp"
 #include <GLFW/glfw3.h>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-using namespace core;
-
-extern bool coreInfo;
+using namespace core;;
 
 std::string text::loadForFile(const char* path)
 {
@@ -26,7 +25,7 @@ std::string text::loadForFile(const char* path)
         throw "FAILED_READ_FILE";
     }
 
-    if (coreInfo) std::cout << "[" <<  glfwGetTime() << "] " 
+    if (CORE_INFO) std::cout << "[" <<  glfwGetTime() << "] " 
         << "OK: read file: " << path << std::endl;
     return text;
 }

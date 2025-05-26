@@ -1,11 +1,11 @@
 #include "Cursor.hpp"
+#include "Window.hpp"
+#include "../config.hpp"
 #include "../file/png.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 using namespace core;
-
-extern bool coreInfo;
 
 double cursor::getCordCursorX(GLFWwindow* window)
 {
@@ -28,7 +28,10 @@ void cursor::getCordCursor(GLFWwindow* window, double& x, double& y)
 
 Cursor::Cursor(GLFWwindow& addrWindow) : window(&addrWindow)
 {
+}
 
+Cursor::Cursor(Window& window) : window(window.getGlfwWindowObject())
+{
 }
 
 Cursor::~Cursor()
@@ -94,7 +97,7 @@ Cursor::custom_cursor::custom_cursor(const char* pathToPng, int x, int y, GLFWwi
 		throw "FAILED_CREATE_CURSOR_OBJ";
 	}
 
-	if (coreInfo) std::cout << "OK: created cursor > " << pathToPng << std::endl;
+	if (CORE_INFO) std::cout << "OK: created cursor > " << pathToPng << std::endl;
 }
 
 Cursor::custom_cursor::~custom_cursor()

@@ -6,15 +6,18 @@
 namespace core
 {
 	class Texture;
+	class Window;
 
 	class Rect
 	{
 	private:
-		static unsigned int vaoID;
 		static unsigned int shaderID;
-
-		unsigned int tID = 0;
+		static unsigned int textureID;
+		
+		unsigned int userTID = 0;
 		RGBA color;
+
+		TYPE_COORD typeCoord = POSITIVE_WINDOW_COORD;
 
 	public:
 		Rect();
@@ -26,7 +29,9 @@ namespace core
 		void setColor(const RGB& color);
 		void setColor(const RGBA& color);
 
-		void draw(float x, float y, float width, float height);
+		void setCoordType(TYPE_COORD typeCoord);
+
+		void draw(float x, float y, float width, float height, Window& window);
 	};
 }
 

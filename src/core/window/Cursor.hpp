@@ -40,6 +40,7 @@ namespace core
 		};
 
 		Cursor(GLFWwindow& addrWindow);
+		Cursor(Window& window);
 		~Cursor();
 
 		/// @brief устанавливает режим курсора

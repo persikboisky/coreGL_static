@@ -1,4 +1,5 @@
 #include "png.hpp"
+#include "../config.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
@@ -6,8 +7,6 @@
 #include <iostream>
 
 using namespace core;
-
-extern bool coreInfo;
 
 int png::width;
 int png::height;
@@ -22,7 +21,7 @@ unsigned char *png::load(const char *path, int &width, int &height, int &channel
 		throw "FAILED_LOAD_PNG_FILE";
 	}
 
-	if (coreInfo)
+	if (CORE_INFO)
 	{
 		std::cout << "[" << glfwGetTime() << "] " << "OK: load png: "
 				  << path << std::endl;

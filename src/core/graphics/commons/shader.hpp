@@ -10,6 +10,8 @@ namespace core
 	enum TYPE_SHADER;
 	class Camera;
 	class Window;
+	struct RGB;
+	struct RGBA;
 
 	/// @brief структура для работы с шейдерами
 	struct shader
@@ -77,6 +79,10 @@ namespace core
 		/// @param value значение типа Sampler2D
 		/// @param name название юниформ переменной
 		static void UniformSample2D(int value, const char* name);
+
+		static void UniformRGBA(const RGBA& color, const char* name);
+
+		static void UniformRGB(const RGB& color, const char* name);
 
 		/// @brief удаляет шейдер по его дескриптору
 		/// @param id дескриптор
@@ -152,6 +158,10 @@ namespace core
 		/// @param value значение типа Sampler2D
 		/// @param name название юниформ переменной		
 		void UniformSample2D(int value, const char* name) const;
+
+		void UniformRGBA(const RGBA& color, const char* name) const;
+
+		void UniformRGB(const RGB& color, const char* name) const;
 	};
 }
 
