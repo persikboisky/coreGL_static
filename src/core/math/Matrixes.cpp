@@ -13,7 +13,7 @@ Matrix4::Matrix4(float diagonal)
     {
         this->mat[element] = 0;
     }
-    
+
     this->mat[0] = diagonal;
     this->mat[5] = diagonal;
     this->mat[10] = diagonal;
@@ -33,7 +33,7 @@ float *Matrix4::getArray()
     return *&this->mat;
 }
 
-float* Matrix4::multiply(float mat1[16], float mat2[16])
+float *Matrix4::multiply(float mat1[16], float mat2[16])
 {
     std::array<float, 16> newMat = {
         mat1[0] * mat2[0] + mat1[1] * mat2[4] + mat1[2] * mat2[8] + mat1[3] * mat2[12],
@@ -89,7 +89,7 @@ void Matrix4::operator*=(Matrix4 mat4)
     }
 }
 
-Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4& mat4)
+Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4 &mat4)
 {
     float ScaleMat[16] = {
         vecScale.x, 0, 0, 0,
@@ -101,19 +101,19 @@ Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4& mat4)
     return Matrix4(ScaleMat) * mat4;
 }
 
-Matrix4 Matrix4::getTranslate(Vector3 vecTranslate, const Matrix4& mat4)
+Matrix4 Matrix4::getTranslate(Vector3 vecTranslate, const Matrix4 &mat4)
 {
     float TranslateMat[16] = {
         1, 0, 0, 0,
         0, 1, 0, 0,
         0, 0, 1, 0,
         vecTranslate.x, vecTranslate.y, vecTranslate.z, 1
-    };  
+    };
 
     return Matrix4(TranslateMat) * mat4;
 }
 
-Matrix4 Matrix4::getRotate(float angle, const Vector3& axises, const Matrix4& mat4)
+Matrix4 Matrix4::getRotate(float angle, const Vector3 &axises, const Matrix4 &mat4)
 {
     const float COS = cos(angle);
     const float SIN = sin(angle);
@@ -183,7 +183,7 @@ Matrix4 Matrix4::getLookAt(Vector3 pos, Vector3 target, Vector3 up)
         xaxis.x, yaxis.x, zaxis.x, 0,
         xaxis.y, yaxis.y, zaxis.y, 0,
         xaxis.z, yaxis.z, zaxis.z, 0,
-       Vector3::dot(xaxis, pos), Vector3::dot(yaxis, pos), Vector3::dot(zaxis, pos), 1
+        Vector3::dot(xaxis, pos), Vector3::dot(yaxis, pos), Vector3::dot(zaxis, pos), 1
     };
 
     return Matrix4(lookAT);

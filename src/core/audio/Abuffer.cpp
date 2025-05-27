@@ -26,7 +26,7 @@ audio::Buffer::Buffer(const char* path)
 	ALsizei size;
 	std::vector<char> code = wav::load(path, channels, sampleRate, bitsPerSample, size);
 
-	ALenum format;
+	ALenum format = AL_FORMAT_MONO8;
 	if (channels == (uint8_t)1 && bitsPerSample == (uint8_t)8)
 		format = AL_FORMAT_MONO8;
 	else if (channels == (uint8_t)1 && bitsPerSample == (uint8_t)16)

@@ -59,7 +59,7 @@ void core::Rect::setCoordType(TYPE_COORD typeCoord)
 	this->typeCoord = typeCoord;
 }
 
-void Rect::draw(float x, float y, float width, float height, Window& window)
+void Rect::draw(float x, float y, float width, float height, Window& window) const
 {
 	if (!window.isContext())
 	{

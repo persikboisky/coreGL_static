@@ -31,7 +31,7 @@ namespace core
 
 		void setCoordType(TYPE_COORD typeCoord);
 
-		void draw(float x, float y, float width, float height, Window& window);
+		void draw(float x, float y, float width, float height, Window& window) const;
 	};
 }
 

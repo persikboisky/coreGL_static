@@ -164,7 +164,7 @@ std::vector<char> wav::load(
 		std::cout << "bitsPerSample: " << int(bitsPerSample) << "\nsize: " << size << "\n\n";
 	}
 
-	channel = channel;
+	channels = channel;
 
 	return data;
 }
