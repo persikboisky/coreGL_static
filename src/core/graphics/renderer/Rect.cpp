@@ -72,20 +72,26 @@ void Rect::draw(float x, float y, float width, float height, Window& window)
 	if (this->typeCoord == WINDOW_COORD)
 	{
 		y2 = y + height;
-		x = x / ((float)window.width / 2.0) - 1.0;
-		y = -(y / ((float)window.height / 2.0) - 1.0);
-		x2 = x2 / ((float)window.width / 2.0) - 1.0;
-		y2 = -(y2 / ((float)window.height / 2.0) - 1.0);
+		x = x / ((float)window.width / 2.0);
+		y = y / ((float)window.height / 2.0);
+		x2 = x2 / ((float)window.width / 2.0);
+		y2 = y2 / ((float)window.height / 2.0);
 	}
 	else if (this->typeCoord == POSITIVE_WINDOW_COORD)
 	{
 		y2 = y + height;
 		x = x / ((float)window.width / 2.0) - 1.0;
-		y = 2.0 - y / ((float)window.height / 2.0);
+		y = -(y / ((float)window.height / 2.0) - 1.0);
 		x2 = x2 / ((float)window.width / 2.0) - 1.0;
-		y2 = 2.0 - y2 / ((float)window.height / 2.0);
+		y2 = -(y2 / ((float)window.height / 2.0) - 1.0);
+	}
+	else if (this->typeCoord == POSITIVE_RELATIVE_COORD)
+	{
+		x = (x - 0.5) * 2.0;
+		y = (y - 0.5) * 2.0;
+		x2 = (x2 - 0.5) * 2.0;
+		y2 = (y2 - 0.5) * 2.0;
 
-		std::cout << x << ":" << y << std::endl;
 		std::cout << x2 << ":" << y2 << std::endl;
 	}
 	
@@ -110,6 +116,7 @@ void Rect::draw(float x, float y, float width, float height, Window& window)
 	}
 	else
 	{
+		shader::UniformSample2D(0, "uTexture");
 		texture::bind(textureID, 0);
 	}
 
