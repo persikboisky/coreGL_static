@@ -55,7 +55,7 @@ namespace core
 
 			/// @brief создаёт матрицу поворота
 			/// @param angle угол поворота в радианах
-			/// @param axises вектор осей поворота (Пример: math::vector3(1, 0, 0) - означает поворот по оси x и z);
+			/// @param axises вектор осей поворота (Пример: math::vector3(1, 0, 1) - означает поворот по оси x и z);
 			/// @return матрица поворота
 			static Matrix4 getRotate(float angle, const Vector3& axises, const Matrix4& mat4 = Matrix4(1.0f));
 
