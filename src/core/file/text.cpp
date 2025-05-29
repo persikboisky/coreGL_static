@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iostream>
 
-using namespace core;;
+using namespace core;
 
 std::string text::loadForFile(const char* path)
 {

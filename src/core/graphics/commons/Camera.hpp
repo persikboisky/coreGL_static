@@ -8,6 +8,11 @@ namespace core
 
     class Shader;
 
+    //struct infoCam
+    //{
+
+    //};
+
     /// @brief класс для работы с камерой
     class Camera
     {

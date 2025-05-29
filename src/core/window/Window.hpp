@@ -8,6 +8,20 @@ namespace core
 	class Event;
 	class Cursor;
 
+	struct windowInfo
+	{
+		const char* title = "CoreGL";
+		const char* pathToIcon = nullptr;
+		int width = 640;
+		int height = 480;
+		int FPS = 75;
+		bool VerticalSynchronization = true;
+		bool resizable = false;
+		bool debugInfo = true;
+
+		windowInfo();
+	};
+
 	/// @brief класс для работы с окном
 	class Window
 	{
@@ -43,6 +57,7 @@ namespace core
 		/// @param title     заголовок
 		/// @param resizable разрешение на изменение размера окна
 		Window(int width, int height, const char* title = "", bool resizable = true);
+		Window(const windowInfo& info);
 
 		~Window();
 

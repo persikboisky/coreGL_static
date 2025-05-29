@@ -89,7 +89,23 @@ void Matrix4::operator*=(Matrix4 mat4)
     }
 }
 
-Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4 &mat4)
+void Matrix4::operator=(Matrix4 mat4)
+{
+    for (unsigned int element = 0; element < 16; element++)
+    {
+        this->mat[element] = mat4.getArray()[element];
+    }
+}
+
+void Matrix4::operator=(float mat4[16])
+{
+    for (unsigned int element = 0; element < 16; element++)
+    {
+        this->mat[element] = mat4[element];
+    }
+}
+
+Matrix4 Matrix4::getScale(const Vector3& vecScale, const Matrix4 &mat4)
 {
     float ScaleMat[16] = {
         vecScale.x, 0, 0, 0,
@@ -101,7 +117,7 @@ Matrix4 Matrix4::getScale(Vector3 vecScale, const Matrix4 &mat4)
     return Matrix4(ScaleMat) * mat4;
 }
 
-Matrix4 Matrix4::getTranslate(Vector3 vecTranslate, const Matrix4 &mat4)
+Matrix4 Matrix4::getTranslate(const Vector3& vecTranslate, const Matrix4 &mat4)
 {
     float TranslateMat[16] = {
         1, 0, 0, 0,

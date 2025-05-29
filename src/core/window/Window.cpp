@@ -9,6 +9,11 @@
 
 using namespace core;
 
+windowInfo::windowInfo()
+{
+	this->debugInfo = CORE_INFO;
+}
+
 bool Window::flagGLewInit = true;
 
 void Window::Init()
@@ -27,25 +32,57 @@ GLFWwindow* Window::getGlfwWindowObject()
 	return this->window;
 }
 
-Window::Window(int width, int height, const char* title, bool resizable) : 
-	width(width), height(height)
+static void createWindow(
+	GLFWwindow*& window, int width, int height, 
+	const char* title, bool resizable, bool debuginfo
+)
 {
 	glfwWindowHint(GLFW_RESIZABLE, resizable);
-	this->window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-	if (this->window == nullptr)
+	window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+	if (window == nullptr)
 	{
 		std::cerr << "Failed to create GLFW Window" << std::endl;
 		glfwTerminate();
 		throw "FAILED_CREATE_WINDOW";
 	}
 
-	if (CORE_INFO)
+	if (debuginfo)
 	{
 		std::cout << "[" << glfwGetTime() << "] " << "OK: to create GLFW Window" << std::endl;
 	}
+}
 
+Window::Window(int width, int height, const char* title, bool resizable) : 
+	width(width), height(height)
+{
+	createWindow(
+		this->window, 
+		width, height, 
+		title, 
+		resizable, 
+		CORE_INFO
+	);
 	this->Init();
-}	
+}
+
+Window::Window(const windowInfo& info) : width(info.width), height(info.height)
+{
+	createWindow(
+		this->window,
+		info.width,
+		info.height,
+		info.title,
+		info.resizable,
+		info.debugInfo
+	);
+	this->Init();
+	if (info.pathToIcon != nullptr)
+	{
+		this->setIcon(info.pathToIcon);
+	}
+	this->FPS = info.FPS;
+	this->VerticalSynchronization(info.VerticalSynchronization);
+}
 	
 Window::~Window()
 {

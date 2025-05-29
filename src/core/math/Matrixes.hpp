@@ -41,21 +41,24 @@ namespace core
 
 			auto operator * (Matrix4 mat4) -> Matrix4;
 			auto operator * (Vector4 vec4) -> Vector4;
+
 			void operator *= (Matrix4 mat4);
+			void operator = (Matrix4 mat4);
+			void operator = (float mat4[16]);
 
 			/// @brief создаёт матрицу масштабирования
 			/// @param vecScale вектор коэффициентов масштабирования 
 			/// @return матрица масштабирования
-			static Matrix4 getScale(Vector3 vecScale, const Matrix4& mat4 = Matrix4(1.0f));
+			static Matrix4 getScale(const Vector3& vecScale, const Matrix4& mat4 = Matrix4(1.0f));
 
 			/// @brief создаёт матрицу перемещения
 			/// @param vecTranslate вектор перемещения
 			/// @return матрица перемещения
-			static Matrix4 getTranslate(Vector3 vecTranslate, const Matrix4& mat4 = Matrix4(1.0f));
+			static Matrix4 getTranslate(const Vector3& vecTranslate, const Matrix4& mat4 = Matrix4(1.0f));
 
 			/// @brief создаёт матрицу поворота
 			/// @param angle угол поворота в радианах
-			/// @param axises вектор осей поворота (Пример: math::vector3(1, 0, 1) - означает поворот по оси x и z);
+			/// @param axises вектор осей поворота (Пример: math::vector3(1, 0, 0) - означает поворот по оси x и z);
 			/// @return матрица поворота
 			static Matrix4 getRotate(float angle, const Vector3& axises, const Matrix4& mat4 = Matrix4(1.0f));
 
