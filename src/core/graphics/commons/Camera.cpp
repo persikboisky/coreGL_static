@@ -9,6 +9,8 @@
 using namespace core;
 using namespace math;
 
+camInfo::camInfo() : mode(CAM_DYNAMIC) {}
+
 void Camera::update()
 {
 	this->up = Vector3(rot * Vector4(this->startUP, 1));
@@ -16,16 +18,23 @@ void Camera::update()
 }
 
 Camera::Camera(float posX, float posY, float posZ, float fov, float distance) :
-	distance(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
-	pos(Vector3(posX, posY, posZ)), fov(radians(fov))
+	far(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	pos(Vector3(posX, posY, posZ)), fov(radians(fov)), near(0.1f)
 { 
 	this->update();
 }
 
 Camera::Camera(Vector3 pos, float fov, float distance) :
-	distance(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
-	pos(pos), fov(radians(fov))
+	far(distance), mode(CAM_STATIC), startUP(Vector3(0, 1, 0)), startTARGET(Vector3(0, 0, -1)),
+	pos(pos), fov(radians(fov)), near(0.1f)
 { 
+	this->update();
+}
+
+Camera::Camera(const camInfo& info) :
+	far(info.far), mode(info.mode), near(info.near), pos(info.position),
+	startUP(info.up), startTARGET(info.target), fov(radians(info.fov))
+{
 	this->update();
 }
 
@@ -41,7 +50,7 @@ void Camera::setFov(float fov)
 
 void Camera::setDistance(float distance)
 {
-	this->distance = distance;
+	this->far = distance;
 }
 
 void Camera::rotate(float x, float y, float z)
@@ -52,7 +61,7 @@ void Camera::rotate(float x, float y, float z)
 	this->update();
 }
 
-void core::Camera::rotate(const math::Vector3& axis)
+void Camera::rotate(const math::Vector3& axis)
 {
 	this->rotate(axis.x, axis.y, axis.z);
 }
@@ -67,6 +76,11 @@ void Camera::move(float x, float y, float z)
 	this->pos.x += x;
 	this->pos.y += y;
 	this->pos.z += z;
+}
+
+void Camera::move(const math::Vector3 vec3)
+{
+	this->pos += vec3;
 }
 
 void Camera::setPos(float x, float y, float z)
@@ -124,7 +138,7 @@ void Camera::getTarget(math::Vector3& target) const
 Matrix4 Camera::getProj(int width, int height) const
 {
 	float aspect = (float)width / (float)height;
-	return Matrix4::getPerspective(this->fov, aspect, 0.01, this->distance);
+	return Matrix4::getPerspective(this->fov, aspect, this->near, this->far);
 }
 
 Matrix4 Camera::getView()

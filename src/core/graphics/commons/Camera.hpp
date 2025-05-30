@@ -8,10 +8,18 @@ namespace core
 
     class Shader;
 
-    //struct infoCam
-    //{
+    struct camInfo
+    {
+        math::Vector3 up = math::Vector3(0, 1, 0);
+        math::Vector3 position = math::Vector3(0, 0, 4);
+        math::Vector3 target = math::Vector3(0, 0, -1);
+        float fov = 70.0f;
+        float far = 100.0f;
+        float near = 0.1f;
+        CAM_MODE mode;
 
-    //};
+        camInfo();
+    };
 
     /// @brief класс для работы с камерой
     class Camera
@@ -28,7 +36,8 @@ namespace core
         math::Matrix4 rot = math::Matrix4(1.0f);
 
         float fov;
-        float distance;
+        float far;
+        float near;
 
         CAM_MODE mode;
 
@@ -48,6 +57,9 @@ namespace core
         /// @param fov поле зрения в градусах
         /// @param distance дальность зрения
         Camera(math::Vector3 pos, float fov, float distance);
+
+        //rf
+        Camera(const camInfo& info);
 
         /// @brief устанавливает режим камеры
         /// @param mode режим (Пример: STATIC, DYNAMIC)
@@ -79,6 +91,8 @@ namespace core
         /// @param y сдвиг камеры по y
         /// @param z сдвиг камеры по z
         void move(float x, float y, float z);
+
+        void move(const math::Vector3 vec3);
 
         /// @brief устанавливает камеру на заданные координаты
         /// @param x координата x
