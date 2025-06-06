@@ -6,7 +6,7 @@ namespace core
     struct texture
     {
     private:
-        static std::vector<unsigned int> id;
+        [[maybe_unused]] static std::vector<unsigned int> id;
 
     public:
         /// @brief привязка текстуры

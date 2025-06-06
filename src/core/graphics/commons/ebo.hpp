@@ -12,10 +12,10 @@ namespace core
 	struct ebo
 	{
 	private:
-		static std::vector<unsigned int> id;
-		static unsigned int SelectID;
+		[[maybe_unused]] static std::vector<unsigned int> id;
+		[[maybe_unused]] static unsigned int SelectID;
 
-		static unsigned int SelectVAO;
+		[[maybe_unused]] static unsigned int SelectVAO;
 
 	public:
 		/// @brief включает ebo по его дескриптору

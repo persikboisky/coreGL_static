@@ -35,8 +35,10 @@ namespace core
 			~custom_cursor();
 
 			/// @brief включает кастомный курсор
-			void use(GLFWwindow* window = nullptr);
-			// void use(const Window& window);
+			void use();
+
+			/// @brief сбрасывает курсор
+			void unUse();
 		};
 
 		Cursor(GLFWwindow& addrWindow);

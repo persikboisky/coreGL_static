@@ -1,5 +1,6 @@
 #include "Event.hpp"
 #include "Window.hpp"
+#include "../util/type.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -19,24 +20,42 @@ static void key_callbac(GLFWwindow* window, int key, int scancode, int action, i
 	}
 }
 
-inline void Event::setCallbackKey(GLFWwindow* window, GLFWkeyfun callback)
+void Event::setCallbackKey(GLFWkeyfun callback)
 {
-	glfwSetKeyCallback(window, callback);
+	glfwSetKeyCallback(this->window, callback);
+
+	for (unsigned int index = 0; index < MAX_KEY_CODE; index++)
+	{
+		this->key[index] = Key[index];
+	}
 }
 
 Event::Event(GLFWwindow &addrWindow) : window(&addrWindow)
 {
-	this->setCallbackKey(this->window, key_callbac);
+	this->setCallbackKey(key_callbac);
 	//glfwSetKeyCallback(this->window, key_callbac);
+	memset(this->saveKey, false, MAX_KEY_CODE);
 }
 
 Event::Event(Window& window) : window(window.getGlfwWindowObject())
 {
-	this->setCallbackKey(this->window, key_callbac);
+	this->setCallbackKey(key_callbac);
+	memset(this->saveKey, false, MAX_KEY_CODE);
+}
+
+Event::~Event()
+{
+	delete this->key;
+	delete this->saveKey;
 }
 
 void Event::update()
 {
+	for (unsigned int index = 0; index < MAX_KEY_CODE; index++)
+	{
+		this->saveKey[index] = this->key[index];
+	}
+	this->setCallbackKey(key_callbac);
 	glfwPollEvents();
 }
 
@@ -55,16 +74,42 @@ bool Event::GetMouseRightButton()
 	return glfwGetMouseButton(this->window, GLFW_MOUSE_BUTTON_RIGHT);
 }
 
-bool Event::getKey(KEY_CODE key)
+bool Event::stateKey(int key)
 {
 	if (key >= MAX_KEY_CODE || key < 0) std::cerr << "there is no such key in the buffer" << std::endl;
 
-	else return Key[key];
+	else return this->key[key];
 }
 
-bool Event::getKey(int key)
+bool Event::stateKey(KEY_CODE key)
 {
-	if (key >= MAX_KEY_CODE || key < 0) std::cerr << "there is no such key in the buffer" << std::endl;
+	return this->stateKey(convertKeyCode(key));
+}
 
-	else return Key[key];
+bool Event::downKey(int key)
+{
+	if (this->key[key] > this->saveKey[key])
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Event::downKey(KEY_CODE key)
+{
+	return this->downKey(convertKeyCode(key));
+}
+
+bool Event::upKey(int key)
+{
+	if (this->key[key] < this->saveKey[key])
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Event::upKey(KEY_CODE key)
+{
+	return this->upKey(convertKeyCode(key));
 }

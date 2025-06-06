@@ -36,6 +36,7 @@ Cursor::Cursor(Window& window) : window(window.getGlfwWindowObject())
 
 Cursor::~Cursor()
 {
+	glfwSetCursor(this->window, nullptr);
 	//this->DeleteALL();
 }
 
@@ -102,6 +103,7 @@ Cursor::custom_cursor::custom_cursor(const char* pathToPng, int x, int y, GLFWwi
 
 Cursor::custom_cursor::~custom_cursor()
 {
+	this->unUse();
 	glfwDestroyCursor(this->cursor_objs);
 }
 
@@ -110,16 +112,12 @@ Cursor::custom_cursor Cursor::create(const char* path, int x, int y)
 	return Cursor::custom_cursor(path, x, y, this->window);
 }
 
-//void Cursor::setCursor(custom_cursor cursor)
-//{
-//	cursor.use(this->window);
-//}
-
-void Cursor::custom_cursor::use(GLFWwindow* window)
+void Cursor::custom_cursor::use()
 {
-	if (window == nullptr)
-	{
-		window = &addrWindow;
-	}
-	glfwSetCursor(window, this->cursor_objs);
+	glfwSetCursor(&this->addrWindow, this->cursor_objs);
+}
+
+void Cursor::custom_cursor::unUse()
+{
+	glfwSetCursor(&this->addrWindow, nullptr);
 }

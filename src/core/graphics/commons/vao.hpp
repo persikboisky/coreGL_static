@@ -11,9 +11,9 @@ namespace core
 	struct vao
 	{
 	private:
-		static std::vector<unsigned int> idVAO;
-		static std::vector<unsigned int> idVBO;
-		static unsigned int selectID;
+		[[maybe_unused]] static std::vector<unsigned int> idVAO;
+		[[maybe_unused]] static std::vector<unsigned int> idVBO;
+		[[maybe_unused]] static unsigned int selectID;
 
 	protected:
 		static unsigned int getSelectId();
@@ -21,7 +21,7 @@ namespace core
 	public:
 		/// @brief включает VAO по его дескриптору
 		/// @param id дескриптор VAO
-		static void bind(unsigned int id);
+		[[noreturn]] static void bind(unsigned int id);
 
 		static std::vector<float> FileOBJtoVVO(const char *pathToObj, bool normal = false, bool textCoord = false);
 		static float *FileOBJtoVAO(const char *pathToObj, int &sizeArray, bool normal, bool textCoord);

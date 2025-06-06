@@ -20,8 +20,8 @@ namespace core
 	class BufferText2D
 	{
 	private:
-		static Shader* shader2D;
-		static unsigned int n_Buffer;
+		[[maybe_unused]] static Shader* shader2D;
+		[[maybe_unused]] static unsigned int n_Buffer;
 		font* Font;
 
 		bool vaoCompile = true;

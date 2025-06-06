@@ -2,8 +2,8 @@
 #define SRC_CORE_CORE_HPP_
 
 // библиотеки
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+//#include <GL/glew.h>
+//#include <GLFW/glfw3.h>
 #include <iostream>
 
 // моё говно
@@ -44,8 +44,6 @@
 
 namespace core
 {
-	enum primitive;
-	enum KEY_CODE;
 	
 	struct Core
 	{
@@ -62,20 +60,5 @@ namespace core
 
 	};
 }
-
-enum core::KEY_CODE {
-	K_Q = GLFW_KEY_Q,
-	K_W = GLFW_KEY_W,
-	K_E = GLFW_KEY_E,
-	K_R = GLFW_KEY_R,
-	K_S = GLFW_KEY_S,
-	K_A = GLFW_KEY_A,
-	K_D = GLFW_KEY_D,
-	K_F1 = GLFW_KEY_F1,
-	K_SPACE = GLFW_KEY_SPACE,
-	K_ESCAPE = GLFW_KEY_ESCAPE,
-	K_LEFT_SHIFT = GLFW_KEY_LEFT_SHIFT,
-	K_LEFT_CONTROL = GLFW_KEY_LEFT_CONTROL
-};
 
 #endif // !SRC_CORE_CORE_HPP_s
