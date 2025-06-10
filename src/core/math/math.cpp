@@ -2,9 +2,12 @@
 
 using namespace core;
 
-inline constexpr double PI = 3.1415926535;
-
 float math::radians(float degrees)
 {
 	return PI / 180.0 * degrees;
+}
+
+float core::math::degrees(float radians)
+{
+	return 180.0 / PI * radians;
 }

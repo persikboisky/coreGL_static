@@ -44,7 +44,6 @@ unsigned int shader::getSelectID()
     return SelectID;
 }
 
-#pragma region CREATE_SHADER
 unsigned int shader::createProgramFromCode(const char *codeVert, const char *codeFrag)
 {
     unsigned int vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -120,7 +119,6 @@ unsigned int shader::createProgramFromCode(const char *codeVert, const char *cod
     shader::id.push_back(programID);
     return programID;
 }
-#pragma endregion CREATE_SHADER
 
 unsigned int shader::createProgramFromFile(const char *pathToVert, const char *pathToFrag)
 {

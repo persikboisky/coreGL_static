@@ -88,7 +88,7 @@ bool Event::stateKey(KEY_CODE key)
 
 bool Event::downKey(int key)
 {
-	if (this->key[key] > this->saveKey[key])
+	if (this->key[key] && this->saveKey[key] == false)
 	{
 		return true;
 	}
@@ -102,7 +102,7 @@ bool Event::downKey(KEY_CODE key)
 
 bool Event::upKey(int key)
 {
-	if (this->key[key] < this->saveKey[key])
+	if (this->key[key] == false && this->saveKey[key])
 	{
 		return true;
 	}

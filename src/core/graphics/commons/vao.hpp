@@ -21,7 +21,7 @@ namespace core
 	public:
 		/// @brief включает VAO по его дескриптору
 		/// @param id дескриптор VAO
-		[[noreturn]] static void bind(unsigned int id);
+		static void bind(unsigned int id);
 
 		static std::vector<float> FileOBJtoVVO(const char *pathToObj, bool normal = false, bool textCoord = false);
 		static float *FileOBJtoVAO(const char *pathToObj, int &sizeArray, bool normal, bool textCoord);

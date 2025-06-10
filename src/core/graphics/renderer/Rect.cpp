@@ -4,6 +4,7 @@
 #include "../commons/texture.hpp"
 #include "../commons/shader.hpp"
 #include "../../util/type.hpp"
+#include "../../math/Vectors.hpp"
 #include <iostream>
 
 using namespace core;
@@ -31,6 +32,19 @@ void Rect::setTexture(unsigned int id)
 void Rect::setTexture(const Texture& texture)
 {
 	this->userTID = texture.getID();
+}
+
+void Rect::setTextureCoord(float u1, float v1, float u2, float v2)
+{
+	this->u1 = u1;
+	this->u2 = u2;
+	this->v1 = v1;
+	this->v2 = v2;
+}
+
+void Rect::setTextureCoord(math::Vector2 vec2_1, math::Vector2 vec2_2)
+{
+	this->setTextureCoord(vec2_1.x, vec2_1.y, vec2_2.x, vec2_2.y);
 }
 
 void Rect::setColor(float red, float green, float blue, float alpha)
@@ -96,12 +110,12 @@ void Rect::draw(float x, float y, float width, float height, Window& window) con
 	}
 	
 	VAO vao = VAO({
-		x, y, 0.0f, 1.0f,
-		x, y2, 0.0f, 0.0f,
-		x2, y2, 1.0f, 0.0f,
-		x, y, 0.0f, 1.0f,
-		x2, y2, 1.0f, 0.0f,
-		x2, y, 1.0f, 1.0f,
+		x, y, this->u1, this->v2,
+		x, y2, this->u1, this->v1,
+		x2, y2, this->u2, this->v1,
+		x, y, this->u1, this->v2,
+		x2, y2, this->u2, this->v1,
+		x2, y, this->u2, this->v2,
 	}, 4);
 	vao.addAttribute(0, 2, 0);
 	vao.addAttribute(1, 2, 2);

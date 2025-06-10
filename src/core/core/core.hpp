@@ -14,6 +14,7 @@
 #include "../graphics/commons/fbo.hpp"
 #include "../graphics/commons/rbo.hpp"
 #include "../graphics/commons/ebo.hpp"
+#include "../graphics/commons/ubo.hpp"
 #include "../graphics/commons/shader.hpp"
 #include "../graphics/commons/texture.hpp"
 #include "../graphics/commons/Camera.hpp"

@@ -15,7 +15,7 @@ using namespace core;
 #define N_ELEMENT_TO_NORMAL_VERT 3
 #define N_ELEMENT_TO_TEXTURE_VERT 2
 
-unsigned int saveID;
+unsigned int saveID = 0;
 
 #pragma region vao
 

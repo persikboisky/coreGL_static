@@ -11,7 +11,16 @@ void core::RGB::operator=(const RGB& color)
 	this->blue = color.blue;
 }
 
-void RGBA::operator=(const RGB& color)
+RGBA::RGBA(COLOR color)
+{
+	RGBA Color = convertColor(color);
+	this->red = Color.red;
+	this->green = Color.green;
+	this->blue = Color.blue;
+	this->alpha = Color.alpha;
+}
+
+void RGBA::operator=(const core::RGB& color)
 {
 	this->red = color.red;
 	this->green = color.green;
@@ -173,5 +182,22 @@ int core::convertKeyCode(core::KEY_CODE keyCode)
 		return GLFW_KEY_LEFT_CONTROL;
 	default:
 		break;
+	}
+}
+
+RGBA core::convertColor(COLOR color)
+{
+	switch (color)
+	{
+	case core::RED:
+		return RGBA(255, 0, 0);
+	case core::GREEN:
+		return RGBA(0, 255, 0);
+	case core::BLUE:
+		return RGBA(0, 0, 255);
+	case core::WHITE:
+		return RGBA(255, 255, 255);
+	default:
+		return RGBA(0, 0, 0, 0);
 	}
 }

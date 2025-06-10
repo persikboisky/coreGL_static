@@ -27,7 +27,7 @@ namespace core
 		static class custom_cursor
 		{
 		private:
-			GLFWcursor* cursor_objs;
+			GLFWcursor* cursor_objs = nullptr;
 			GLFWwindow& addrWindow;
 
 		public:

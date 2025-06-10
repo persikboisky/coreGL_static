@@ -3,6 +3,7 @@
 
 namespace core
 {
+	enum COLOR;
 
 	struct RGB final
 	{
@@ -26,11 +27,13 @@ namespace core
 		float blue;
 		float alpha;
 
+		RGBA(COLOR color);
 		RGBA() : red(0), green(0), blue(0), alpha(1.0) {}
 		RGBA(float red, float green, float blue, float alpha = 255.0f) :
 			red(red), green(green), blue(blue), alpha(alpha)
 		{
 		}
+
 
 		void operator = (const RGB& color);
 		void operator = (const RGBA& color);
@@ -194,6 +197,16 @@ namespace core
 		GEOMETRY,
 		VERTEX
 	};
+
+	enum COLOR
+	{
+		RED,
+		GREEN,
+		BLUE,
+		WHITE
+	};
+
+	RGBA convertColor(COLOR color);
 }
 
 #endif // !SRC_CORE_DATA_TYPE_HPP_
