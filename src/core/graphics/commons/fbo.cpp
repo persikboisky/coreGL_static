@@ -47,7 +47,7 @@ void core::fbo::setSize(math::Vector2 size)
 	fbo::setSize(size.x, size.y);
 }
 
-void fbo::setColor(RGB color)
+void fbo::setColor(color::RGB color)
 {
 	glClearColor(
 		color.red / 255.0f,
@@ -57,7 +57,7 @@ void fbo::setColor(RGB color)
 	);
 }
 
-void fbo::setColor(RGBA color)
+void fbo::setColor(color::RGBA color)
 {
 	glClearColor(
 		color.red / 255.0f, 

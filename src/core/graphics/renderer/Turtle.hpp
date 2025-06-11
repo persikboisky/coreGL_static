@@ -7,9 +7,7 @@
 
 namespace core
 {
-	enum TYPE_COORD;
 	class Window;
-	struct RGBA;
 
 	class Turtle
 	{
@@ -33,7 +31,7 @@ namespace core
 		bool bodyTurtleDraw = true;
 
 		float angle = 270.0f;
-		RGB color;
+		color::RGB color;
 
 		Window* window;
 
@@ -56,9 +54,11 @@ namespace core
 		void draw();
 
 		void setAngle(float degree);
+
 		void setColor(float red, float green, float blue, float alpha = 255.0f);
-		void setColor(RGB color);
-		void setColor(RGBA color);
+		void setColor(color::RGB color);
+		void setColor(color::RGBA color);
+
 		void setWidth(float width);
 
 		void enableDrawBody(bool flag);

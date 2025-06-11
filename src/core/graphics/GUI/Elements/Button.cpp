@@ -16,7 +16,7 @@ using namespace core;
 static void addVertexesButton(
 	std::vector<float> &vec,
 	pos4f data,
-	RGBA color
+	color::RGBA color
 )
 {
 	vec.push_back(data.x);
@@ -173,7 +173,7 @@ void Button::compileVAO()
 			this->vStyle[index].size.height
 		);
 
-		RGBA background;
+		color::RGBA background;
 		if (this->vActive[index])
 		{
 			background = this->vStyle[index].activeBackground;

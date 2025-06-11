@@ -6,9 +6,6 @@
 
 namespace core
 {
-	
-	struct RGB;
-	struct RGBA;
 
 	namespace math
 	{
@@ -37,8 +34,8 @@ namespace core
 		static void setSize(int width, int height);
 		static void setSize(math::Vector2 size);
 
-		static void setColor(RGB color);
-		static void setColor(RGBA color);
+		static void setColor(color::RGB color);
+		static void setColor(color::RGBA color);
 		static void setColor(float red, float green, float blue, float alpha);
 
 		/// @brief чистит указанный(ные) буфер(ы)

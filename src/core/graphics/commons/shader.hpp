@@ -3,15 +3,13 @@
 
 #include "../../math/Vectors.hpp"
 #include "../../math/Matrixes.hpp"
+#include "../../util/type.hpp"
 #include <vector>
 
 namespace core
 {
-	enum TYPE_SHADER;
 	class Camera;
 	class Window;
-	struct RGB;
-	struct RGBA;
 
 	/// @brief структура для работы с шейдерами
 	struct shader
@@ -80,9 +78,9 @@ namespace core
 		/// @param name название юниформ переменной
 		static void UniformSample2D(int value, const char* name);
 
-		static void UniformRGBA(const RGBA& color, const char* name);
+		static void UniformRGBA(const color::RGBA& color, const char* name);
 
-		static void UniformRGB(const RGB& color, const char* name);
+		static void UniformRGB(const color::RGB& color, const char* name);
 
 		/// @brief удаляет шейдер по его дескриптору
 		/// @param id дескриптор
@@ -159,9 +157,9 @@ namespace core
 		/// @param name название юниформ переменной		
 		void UniformSample2D(int value, const char* name) const;
 
-		void UniformRGBA(const RGBA& color, const char* name) const;
+		void UniformRGBA(const color::RGBA& color, const char* name) const;
 
-		void UniformRGB(const RGB& color, const char* name) const;
+		void UniformRGB(const color::RGB& color, const char* name) const;
 	};
 }
 

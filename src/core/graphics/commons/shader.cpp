@@ -342,12 +342,12 @@ void shader::UniformSample2D(int value, const char *name)
     glUniform1i(getLocateUniform(shader::SelectID, name), value);
 }
 
-void shader::UniformRGBA(const RGBA& color, const char* name)
+void shader::UniformRGBA(const color::RGBA& color, const char* name)
 {
     shader::Uniform4F(math::Vector4(color.red, color.green, color.blue, color.alpha), name);
 }
 
-void shader::UniformRGB(const RGB& color, const char* name)
+void shader::UniformRGB(const color::RGB& color, const char* name)
 {
     shader::Uniform3F(math::Vector3(color.red, color.green, color.blue), name);
 }
@@ -458,14 +458,14 @@ void Shader::UniformSample2D(int value, const char *name) const
     shader::UniformSample2D(value, name);
 }
 
-void Shader::UniformRGBA(const RGBA& color, const char* name) const
+void Shader::UniformRGBA(const color::RGBA& color, const char* name) const
 {
     if (shader::getSelectID() != this->id)
         this->use();
     shader::UniformRGBA(color, name);
 }
 
-void Shader::UniformRGB(const RGB& color, const char* name) const
+void Shader::UniformRGB(const color::RGB& color, const char* name) const
 {
     if (shader::getSelectID() != this->id)
         this->use();

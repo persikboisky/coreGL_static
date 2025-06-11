@@ -20,7 +20,7 @@ namespace core
 		static unsigned int textureID;
 		
 		unsigned int userTID = 0;
-		RGBA color;
+		color::RGBA color;
 
 		TYPE_COORD typeCoord = POSITIVE_WINDOW_COORD;
 
@@ -56,13 +56,29 @@ namespace core
 		/// @param red красный канал (от 0 до 255)
 		/// @param green зелёный канал (от 0 до 255)
 		/// @param blue синий канал (от 0 до 255)
-		/// @param alpha альфа канал (от 0 до 255), по ум
-		void setColor(float red, float green, float blue, float alpha = 1.0f);
-		void setColor(const RGB& color);
-		void setColor(const RGBA& color);
+		/// @param alpha альфа канал (от 0 до 255), по умолчанию = 255
+		void setColor(float red, float green, float blue, float alpha = 255.0f);
 
+		/// @brief устанавливает цвет
+		/// @param color объект RGB цвета
+		void setColor(const color::RGB& color);
+
+		/// @brief устанавливает цвет
+		/// @param color объект RGBA цвета
+		void setColor(const color::RGBA& color);
+
+		void setColor(const color::COLOR& color);
+
+		/// @brief устанавливает тип координат
+		/// @param typeCoord тип
 		void setCoordType(TYPE_COORD typeCoord);
 
+		/// @brief рисует прямоугольник
+		/// @param x координата
+		/// @param y координата
+		/// @param width ширина
+		/// @param height высота
+		/// @param window объект окна
 		void draw(float x, float y, float width, float height, Window& window) const;
 	};
 }

@@ -12,7 +12,7 @@ using namespace core;
 unsigned int Rect::shaderID = 0;
 unsigned int Rect::textureID = 0;
 
-Rect::Rect() : color(RGBA(255.f, 255.f, 255.f, 255.f))
+Rect::Rect() : color(color::RGBA(255.f, 255.f, 255.f, 255.f))
 {
 	if (Rect::shaderID == 0)
 	{
@@ -55,7 +55,7 @@ void Rect::setColor(float red, float green, float blue, float alpha)
 	this->color.alpha = alpha;
 }
 
-void Rect::setColor(const RGB& color)
+void Rect::setColor(const color::RGB& color)
 {
 	this->color.red = color.red;
 	this->color.green = color.green;
@@ -63,9 +63,14 @@ void Rect::setColor(const RGB& color)
 	this->color.alpha = 255.0f;
 }
 
-void Rect::setColor(const RGBA& color)
+void Rect::setColor(const color::RGBA& color)
 {
 	this->color = color;
+}
+
+void core::Rect::setColor(const color::COLOR& color)
+{
+	this->color = color::RGBA(color);
 }
 
 void core::Rect::setCoordType(TYPE_COORD typeCoord)

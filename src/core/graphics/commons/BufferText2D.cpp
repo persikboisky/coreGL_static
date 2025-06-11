@@ -26,7 +26,7 @@ static void addPoligon(
 	size2f size,
 	pos2f t_coord,
 	size2f t_size,
-	RGBA color,
+	color::RGBA color,
 	Matrix4 matrix = Matrix4(1.0f)
 )
 {
@@ -225,7 +225,7 @@ void BufferText2D::addText(std::string text, float x, float y, float length,
 				this->Font->widthSymbol - decreaseWidthTextureSymbol,
 				this->Font->heightSymbol - decreaseHeightTextureSymbol
 			),
-			RGBA(c_red, c_green, c_blue, c_alpha)
+			color::RGBA(c_red, c_green, c_blue, c_alpha)
 			/*glm::rotate(
 				glm::mat4(1.0f),
 				glm::radians(10.0f),

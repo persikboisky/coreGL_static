@@ -158,16 +158,16 @@ void Turtle::setColor(float red, float green, float blue, float alpha)
 	this->color.blue = blue * (alpha / 255.0f);
 }
 
-void Turtle::setColor(RGBA color)
+void Turtle::setColor(color::RGBA color)
 {
-	this->color = RGB(
+	this->color = color::RGB(
 		color.red * (color.alpha / 255.0f),
 		color.green * (color.alpha / 255.0f),
 		color.blue * (color.alpha / 255.0f)
 	);
 }
 
-void Turtle::setColor(RGB color)
+void Turtle::setColor(color::RGB color)
 {
 	this->color = color;
 }
